@@ -20,10 +20,22 @@ defmodule MensaplanWeb.Router do
     get "/", PageController, :home
   end
 
+  scope "/auth", MensaplanWeb do
+    pipe_through :browser
+
+    get "/logout", AuthController, :delete
+    delete "/logout", AuthController, :delete
+    get "/:provider", AuthController, :request
+    get "/:provider/callback", AuthController, :callback
+    post "/:provider/callback", AuthController, :callback
+  end
+
   # Other scopes may use custom stacks.
-  # scope "/api", MensaplanWeb do
-  #   pipe_through :api
-  # end
+  scope "/api", MensaplanWeb do
+    pipe_through :api
+
+    resources "/positions", PositionController, except: [:update]
+  end
 
   # Enable LiveDashboard and Swoosh mailbox preview in development
   if Application.compile_env(:mensaplan, :dev_routes) do

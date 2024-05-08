@@ -31,6 +31,16 @@ config :mensaplan, MensaplanWeb.Endpoint,
 # at the `config/runtime.exs`.
 config :mensaplan, Mensaplan.Mailer, adapter: Swoosh.Adapters.Local
 
+config :ueberauth, Ueberauth,
+  providers: [
+    auth0: {Ueberauth.Strategy.Auth0, []}
+  ]
+
+config :ueberauth, Ueberauth.Strategy.Auth0.OAuth,
+  domain: System.get_env("AUTH0_DOMAIN"),
+  client_id: System.get_env("AUTH0_CLIENT_ID"),
+  client_secret: System.get_env("AUTH0_CLIENT_SECRET")
+
 # Configure esbuild (the version is required)
 config :esbuild,
   version: "0.17.11",
