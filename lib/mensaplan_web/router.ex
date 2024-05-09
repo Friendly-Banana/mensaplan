@@ -18,6 +18,7 @@ defmodule MensaplanWeb.Router do
     pipe_through :browser
 
     get "/", PageController, :home
+    get "/about", PageController, :about
   end
 
   scope "/auth", MensaplanWeb do
