@@ -3,8 +3,9 @@ defmodule Mensaplan.UserData.Position do
   import Ecto.Changeset
 
   schema "positions" do
-    field :y, :float
+    field :user, :string
     field :x, :float
+    field :y, :float
 
     timestamps(type: :utc_datetime)
   end
@@ -13,6 +14,7 @@ defmodule Mensaplan.UserData.Position do
   def changeset(position, attrs) do
     position
     |> cast(attrs, [:x, :y])
-    |> validate_required([:x, :y])
+    |> validate_required([:user, :x, :y])
+    |> unique_constraint(:user)
   end
 end

@@ -1,5 +1,6 @@
 defmodule MensaplanWeb.Router do
   use MensaplanWeb, :router
+  import Phoenix.LiveView.Router
 
   pipeline :browser do
     plug :accepts, ["html"]
@@ -17,7 +18,7 @@ defmodule MensaplanWeb.Router do
   scope "/", MensaplanWeb do
     pipe_through :browser
 
-    get "/", PageController, :home
+    live "/", PageView
     get "/about", PageController, :about
   end
 
