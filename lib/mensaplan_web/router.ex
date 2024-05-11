@@ -15,11 +15,15 @@ defmodule MensaplanWeb.Router do
     plug :accepts, ["json"]
   end
 
+  pipeline :admin do
+  end
+
   scope "/", MensaplanWeb do
     pipe_through :browser
 
-    live "/", PageView
+    live "/", PositionView
     get "/about", PageController, :about
+    get "/settings", PageController, :settings
   end
 
   scope "/auth", MensaplanWeb do
@@ -36,7 +40,9 @@ defmodule MensaplanWeb.Router do
   scope "/api", MensaplanWeb do
     pipe_through :api
 
-    resources "/positions", PositionController, except: [:update]
+    resources "/users", UserController, except: [:new, :edit]
+    resources "/groups", GroupController, except: [:new, :edit]
+    resources "/positions", PositionController, except: [:edit, :update]
   end
 
   # Enable LiveDashboard and Swoosh mailbox preview in development
@@ -49,7 +55,7 @@ defmodule MensaplanWeb.Router do
     import Phoenix.LiveDashboard.Router
 
     scope "/dev" do
-      pipe_through :browser
+      pipe_through [:browser, :admin]
 
       live_dashboard "/dashboard", metrics: MensaplanWeb.Telemetry
       forward "/mailbox", Plug.Swoosh.MailboxPreview

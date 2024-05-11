@@ -1,0 +1,42 @@
+<div class="flex flex-col sm:flex-row font-semibold ml-4 justify-evenly">
+  <a class="p-4 sm:py-2 text-gray-500 hover:bg-blue-50 hover:text-blue-600 rounded" href="/">
+    Home
+  </a>
+  <a
+    class="p-4 sm:py-2 text-gray-500 hover:bg-blue-50 hover:text-blue-600 rounded"
+    href="https://tum-dev.github.io/eat-api/#!/en/mensa-garching"
+  >
+    Menu <.icon name="hero-arrow-top-right-on-square" class="h-4" />
+  </a>
+  <a class="p-4 sm:py-2 text-gray-500 hover:bg-blue-50 hover:text-blue-600 rounded" href="/docs">
+    API Docs
+  </a>
+  <a class="p-4 sm:py-2 text-gray-500 hover:bg-blue-50 hover:text-blue-600 rounded" href="/about">
+    About
+  </a>
+</div>
+
+<%= if @user do %>
+  <a href="/settings" class="inline-block m-3 sm:ml-auto mt-auto sm:mb-auto" title="Settings">
+    <img src={@user.avatar} class="rounded-full max-h-9" alt="User Avatar" />
+  </a>
+  <a
+    href="/auth/logout"
+    class="inline-block m-2 py-2 px-6 text-sm font-bold rounded-xl transition duration-200 bg-red-500 hover:bg-red-600 text-white"
+  >
+    Log out
+  </a>
+<% else %>
+  <a
+    class="inline-block m-2 mt-auto sm:m-3 sm:ml-auto py-3 sm:py-2 px-6 text-sm font-bold rounded-xl transition duration-200 bg-gray-200/75 hover:bg-gray-300/80 text-gray-900"
+    href="/auth/auth0"
+  >
+    Sign In
+  </a>
+  <a
+    class="inline-block m-2 py-3 sm:py-2 px-6 text-sm font-bold rounded-xl transition duration-200 bg-blue-500 hover:bg-blue-600 text-white focus:outline-offset-2"
+    href="/auth/auth0?screen_hint=signup"
+  >
+    Sign up
+  </a>
+<% end %>

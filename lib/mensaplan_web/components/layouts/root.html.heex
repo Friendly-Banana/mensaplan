@@ -11,12 +11,13 @@
     <script defer phx-track-static type="text/javascript" src={~p"/assets/app.js"}>
     </script>
   </head>
-  <body class="bg-white antialiased">
+  <body class="bg-white antialiased flex flex-col min-h-screen">
     <.flash_group flash={@flash} />
-    <.navbar user={Plug.Conn.get_session(@conn, :current_user)} />
+    <.navbar user={Plug.Conn.get_session(@conn, :user)} />
 
     <%= @inner_content %>
 
+    <div class="flex-grow"></div>
     <footer>
       <div class="flex flex-col sm:flex-row items-center justify-evenly p-2 text-sm">
         <img class="h-4" src={~p"/images/logo.svg"} alt="Logo" />

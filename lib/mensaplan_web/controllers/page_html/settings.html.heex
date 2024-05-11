@@ -1,0 +1,11 @@
+<h1 class="text-3xl font-bold m-8 text-center">Settings</h1>
+
+// TODO make one big form
+<div class="mx-auto text-lg flex flex-col gap-4">
+  <span>Name: <%= @user.name %></span>
+  <span>E-Mail: <%= if @user.email, do: @user.email, else: "-" %></span>
+  <span>
+    Make positions public by default:
+    <input type="checkbox" value={@user.default_public}/>
+  </span>
+</div>

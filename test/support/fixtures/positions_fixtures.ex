@@ -1,7 +1,7 @@
-defmodule Mensaplan.UserDataFixtures do
+defmodule Mensaplan.PositionsFixtures do
   @moduledoc """
   This module defines test helpers for creating
-  entities via the `Mensaplan.UserData` context.
+  entities via the `Mensaplan.Positions` context.
   """
 
   @doc """
@@ -14,7 +14,7 @@ defmodule Mensaplan.UserDataFixtures do
         x: 120.5,
         y: 120.5
       })
-      |> Mensaplan.UserData.create_position()
+      |> Mensaplan.Positions.create_position()
 
     position
   end

@@ -1,9 +1,9 @@
 defmodule MensaplanWeb.PositionControllerTest do
   use MensaplanWeb.ConnCase
 
-  import Mensaplan.UserDataFixtures
+  import Mensaplan.PositionsFixtures
 
-  alias Mensaplan.UserData.Position
+  alias Mensaplan.Positions.Position
 
   @create_attrs %{
     y: 120.5,

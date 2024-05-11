@@ -10,6 +10,7 @@ defmodule Mensaplan.Application do
     children = [
       MensaplanWeb.Telemetry,
       Mensaplan.Repo,
+      Mensaplan.Periodically,
       {DNSCluster, query: Application.get_env(:mensaplan, :dns_cluster_query) || :ignore},
       {Phoenix.PubSub, name: Mensaplan.PubSub},
       # Start the Finch HTTP client for sending emails

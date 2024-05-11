@@ -1,0 +1,57 @@
+<div id="navbar-menu" class="relative z-50 hidden">
+  <div id="navbar-backdrop" class="fixed inset-0 bg-gray-800 opacity-75"></div>
+  <nav class="fixed top-0 left-0 bottom-0 flex flex-col w-5/6 max-w-sm py-6 px-6 bg-white border-r overflow-y-auto">
+    <div class="flex justify-between mb-8">
+      <a href="/">
+        <img class="h-12" src={~p"/images/logo.svg"} alt="Logo" />
+      </a>
+      <button id="navbar-close"><.icon name="hero-x-mark-solid" /></button>
+    </div>
+    <.navbar_links user={@user} />
+  </nav>
+</div>
+
+<div class="flex justify-between items-center sm:hidden">
+  <a class="px-3" href="/">
+    <img class="h-8" src={~p"/images/logo.svg"} alt="Logo" />
+  </a>
+  <span class="font-semibold text-gray-500"> Mensaplan </span>
+  <button id="navbar-burger" class="flex items-center text-blue-600 p-3">
+    <.icon name="hero-bars-3" />
+  </button>
+</div>
+
+<nav class="hidden sm:flex flex-col sm:flex-row justify-between items-center px-4 py-2 whitespace-nowrap">
+  <a href="/">
+    <img class="h-8" src={~p"/images/logo.svg"} alt="Logo" />
+  </a>
+  <.navbar_links user={@user} />
+</nav>
+
+<script>
+  // https://tailwindcomponents.com/component/navbar-hamburger-menu/
+  // Burger menu
+  document.addEventListener('DOMContentLoaded', function() {
+      const burger = document.querySelector('#navbar-burger');
+      const menu = document.querySelector('#navbar-menu');
+      const close = document.querySelector('#navbar-close');
+      const backdrop = document.querySelector('#navbar-backdrop');
+
+      if (!burger || !menu || !close || !backdrop) {
+          alert('Missing burger, menu, close or backdrop');
+          return;
+      }
+
+      burger.addEventListener('click', function() {
+          menu.classList.toggle('hidden');
+      });
+
+      close.addEventListener('click', function() {
+          menu.classList.toggle('hidden');
+      });
+
+      backdrop.addEventListener('click', function() {
+          menu.classList.toggle('hidden');
+      });
+  });
+</script>

@@ -1,0 +1,38 @@
+<div class="flex flex-col h-full">
+  <div class="flex justify-center flex-1 gap-2 md:gap-4">
+    <div class="relative h-full">
+      <img
+        src={~p"/images/mensa-plan.png"}
+        alt="Top down view of the mensa overlayed by a grid"
+        class="h-full"
+      />
+      <%= for {_, position} <- @streams.positions do %>
+        <% pos = "top: #{position.x}%; left: #{position.y}%" %>
+        <div class="absolute bg-blue-500 p-4" style={pos}>
+          <img src={position.avatar} />
+        </div>
+      <% end %>
+      <%= if @form.data do %>
+        <% pos = "top: #{@form[:x].value}%; left: #{@form[:y].value}%" %>
+        <div class="absolute bg-blue-500 p-4" style={pos}></div>
+      <% end %>
+    </div>
+
+    <%= if @user do %>
+      <.simple_form for={@form} phx-change="validate" phx-submit="save">
+        <.input type="number" field={@form[:x]} label="X Position" />
+        <.input type="number" field={@form[:y]} label="Y Position" />
+        <.input type="number" field={@form[:expires_in]} label="Expires in minutes" />
+        <.input
+          type="checkbox"
+          checked={@user.default_public}
+          field={@form[:public]}
+          label="Public"
+        />
+        <:actions>
+          <.button>Set Position</.button>
+        </:actions>
+      </.simple_form>
+    <% end %>
+  </div>
+</div>
