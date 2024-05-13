@@ -45,24 +45,11 @@ defmodule MensaplanWeb.PositionView do
 
   def handle_event("clear", _, socket) do
     Positions.expire_all_positions(socket.assigns.user)
-
-    Phoenix.PubSub.broadcast(
-      Mensaplan.PubSub,
-      "positions",
-      {:position_expired, "position-#{socket.assigns.user.id}"}
-    )
-
     {:noreply, socket |> put_flash(:info, "Position cleared")}
   end
 
   def handle_event("save", %{"position" => user_params}, socket) do
     Positions.expire_all_positions(socket.assigns.user)
-
-     Phoenix.PubSub.broadcast(
-      Mensaplan.PubSub,
-      "positions",
-      {:position_expired, "position-#{socket.assigns.user.id}"}
-     )
 
     m = Map.put(user_params, "owner_id", socket.assigns.user.id)
 

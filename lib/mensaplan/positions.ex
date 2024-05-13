@@ -121,6 +121,12 @@ defmodule Mensaplan.Positions do
   def expire_all_positions(user) do
     from(p in Position, where: not p.expired and p.owner_id == ^user.id)
     |> Repo.update_all(set: [expired: true])
+
+    Phoenix.PubSub.broadcast(
+      Mensaplan.PubSub,
+      "positions",
+      {:position_expired, "position-#{user.id}"}
+    )
   end
 
   @doc """

@@ -9,3 +9,27 @@
     <input type="checkbox" value={@user.default_public}/>
   </span>
 </div>
+
+<.simple_form for={@form} phx-change="validate" phx-submit="save" id="pos-form">
+      <.input
+        type="number"
+        field={@form[:x]}
+        label="X Position"
+        phx-change="validate"
+        id="x-pos-input"
+      />
+      <.input type="number" field={@form[:y]} label="Y Position" id="y-pos-input" />
+      <.input type="number" field={@form[:expires_in]} label="Expires in minutes" />
+      <.input
+        type="checkbox"
+        checked={@user.default_public}
+        field={@form[:public]}
+        label="Public"
+      />
+      <:actions>
+        <.button>Set Position</.button>
+        <.button type="button" phx-click="clear" class="bg-red-500 hover:bg-red-600">
+          Clear Position
+        </.button>
+      </:actions>
+    </.simple_form>
