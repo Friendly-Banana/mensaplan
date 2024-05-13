@@ -1,27 +1,56 @@
 <div class="flex flex-col h-full">
   <div class="flex justify-center flex-1 gap-2 md:gap-4">
-    <div class="relative h-full">
+    <div class="relative h-full" id="drop-target">
       <img
         src={~p"/images/mensa-plan.png"}
         alt="Top down view of the mensa overlayed by a grid"
-        class="h-full"
+        class="h-full border-blue-500 border-solid border-2"
+        draggable="false"
       />
-      <%= for {_, position} <- @streams.positions do %>
-        <% pos = "top: #{position.x}%; left: #{position.y}%" %>
-        <div class="absolute bg-blue-500 p-4" style={pos}>
-          <img src={position.avatar} />
-        </div>
-      <% end %>
-      <%= if @form.data do %>
-        <% pos = "top: #{@form[:x].value}%; left: #{@form[:y].value}%" %>
-        <div class="absolute bg-blue-500 p-4" style={pos}></div>
+      <div id="position-map" phx-update="replace">
+        <%= for {_, position} <- @streams.positions do %>
+          <% pos = "top: #{position.y}%; left: #{position.x}%" %>
+          <div id={"position-#{position.id}"} title={position.name} class="absolute" style={pos}>
+            <img src={position.avatar} class="h-12" draggable="false" />
+          </div>
+        <% end %>
+      </div>
+
+      <%= if @user && @form.data do %>
+        <% pos = "top: #{@form[:y].value}%; left: #{@form[:x].value}%" %>
+        <img
+          src={@user.avatar}
+          class="absolute h-12 ring-4 ring-blue-600 rounded-full"
+          style={pos}
+        />
       <% end %>
     </div>
 
+    <script>
+      const dropElement = document.getElementById("drop-target");
+
+      dropElement.addEventListener("drop", (event) => {
+          // prevent default action (open as a link for some elements)
+          event.preventDefault();
+          const xInput = document.getElementById("x-pos-input");
+          const yInput = document.getElementById("y-pos-input");
+          xInput.value = (event.layerX / event.target.width * 100).toFixed(2);
+          yInput.value = (event.layerY / event.target.height * 100).toFixed(2);
+
+          yInput.dispatchEvent(new Event("change", { 'bubbles': true }));
+      });
+    </script>
+
     <%= if @user do %>
-      <.simple_form for={@form} phx-change="validate" phx-submit="save">
-        <.input type="number" field={@form[:x]} label="X Position" />
-        <.input type="number" field={@form[:y]} label="Y Position" />
+      <.simple_form for={@form} phx-change="validate" phx-submit="save" id="pos-form">
+        <.input
+          type="number"
+          field={@form[:x]}
+          label="X Position"
+          phx-change="validate"
+          id="x-pos-input"
+        />
+        <.input type="number" field={@form[:y]} label="Y Position" id="y-pos-input" />
         <.input type="number" field={@form[:expires_in]} label="Expires in minutes" />
         <.input
           type="checkbox"
@@ -31,6 +60,9 @@
         />
         <:actions>
           <.button>Set Position</.button>
+          <.button type="button" phx-click="clear" class="bg-red-500 hover:bg-red-600">
+            Clear Position
+          </.button>
         </:actions>
       </.simple_form>
     <% end %>

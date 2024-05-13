@@ -1,6 +1,13 @@
+defmodule TimeUtils do
+  def local_time do
+    DateTime.now!("Europe/Berlin") 
+  end
+end
+
 defmodule Mensaplan.Positions.Position do
   use Ecto.Schema
   import Ecto.Changeset
+  import TimeUtils
 
   schema "positions" do
     field :x, :float, default: 0.0
@@ -12,7 +19,7 @@ defmodule Mensaplan.Positions.Position do
 
     belongs_to :owner, Mensaplan.Accounts.User
 
-    timestamps(type: :utc_datetime)
+    timestamps(type: :naive_datetime, default: &local_time/0)
   end
 
   @doc false

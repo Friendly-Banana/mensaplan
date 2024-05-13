@@ -7,9 +7,8 @@ defmodule Mensaplan.Accounts.User do
     field :name, :string
     field :email, :string
     field :avatar, :string
-    field :default_public, :boolean, default: false
+    field :default_public, :boolean, default: true
 
-    has_many :positions, Mensaplan.Positions.Position
     many_to_many :groups, Mensaplan.Accounts.Group, join_through: "group_members"
 
     timestamps(type: :utc_datetime)

@@ -44,7 +44,7 @@ defmodule Mensaplan.Positions do
       from p in Position,
         join: owner in assoc(p, :owner),
         where: p.public and not p.expired,
-        select: %{id: p.id, name: "Hidden", avatar: owner.avatar, x: p.x, y: p.y}
+        select: %{id: p.id, name: "Login to see the name", avatar: owner.avatar, x: p.x, y: p.y}
     )
   end
 
@@ -119,7 +119,7 @@ defmodule Mensaplan.Positions do
   end
 
   def expire_all_positions(user) do
-    from(p in Position, where: p.owner_id == ^user.id)
+    from(p in Position, where: not p.expired and p.owner_id == ^user.id)
     |> Repo.update_all(set: [expired: true])
   end
 

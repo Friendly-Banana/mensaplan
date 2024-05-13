@@ -22,7 +22,7 @@ defmodule Mensaplan.Periodically do
 
     from(p in Position,
       where:
-        not p.expired and fragment("? + interval '1 minute' * ? <= now()", p.inserted_at, p.expires_in)
+        not p.expired and fragment("? + interval '1 minute' * ? <= NOW() AT TIME ZONE 'UTC'", p.inserted_at, p.expires_in)
     )
     |> Repo.update_all(set: [expired: true])
 
