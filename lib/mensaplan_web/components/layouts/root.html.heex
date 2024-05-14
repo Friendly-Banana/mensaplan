@@ -12,7 +12,6 @@
     </script>
   </head>
   <body class="bg-white antialiased flex flex-col min-h-screen">
-    <.flash_group flash={@flash} />
     <.navbar user={Plug.Conn.get_session(@conn, :user)} />
 
     <%= @inner_content %>

@@ -15,22 +15,12 @@ defmodule MensaplanWeb.PositionView do
       socket = assign(socket, form: to_form(Ecto.Changeset.change(pos)))
 
       positions = Positions.get_positions_visible_to_user(user)
-      IO.inspect(positions)
       {:ok, stream(socket, :positions, positions)}
     else
       socket = assign(socket, form: to_form(Ecto.Changeset.change(%Position{})))
 
       {:ok, stream(socket, :positions, Positions.get_public_positions())}
     end
-  end
-
-  @impl true
-  def handle_event("drop", %{"x" => x, "y" => y}, socket) do
-    changeset =
-      socket.assigns.form
-      |> Ecto.Changeset.change(%{x: x, y: y})
-
-    {:noreply, assign(socket, form: changeset)}
   end
 
   @impl true
