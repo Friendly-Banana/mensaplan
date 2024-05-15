@@ -1,6 +1,6 @@
 <.flash_group flash={@flash} />
 
-<div class="container mx-auto px-6 py-4 flex flex-col gap-12">
+<div class="mx-auto px-6 py-4 flex flex-col gap-8">
   <h1 class="text-3xl font-bold text-center">Settings</h1>
 
   <div class="flex items-center justify-center">
@@ -22,13 +22,9 @@
       name="default_public"
       checked={@user.default_public}
       label="Make Positions public by default"
-      class="text-xl !bg-red-500"
     />
-    <div class="flex justify-center">
-      <button
-        type="submit"
-        class="py-3 px-4 text-sm font-bold rounded-xl transition duration-200 bg-green-500 hover:bg-green-600 text-white"
-      >
+    <div class="flex justify-center mt-12">
+      <button type="submit" class="text-button bg-blue-500 hover:bg-blue-600 text-white">
         Save Changes
       </button>
     </div>

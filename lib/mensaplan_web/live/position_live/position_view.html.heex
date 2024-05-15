@@ -1,6 +1,6 @@
 <.flash_group flash={@flash} />
 
-<div class="flex flex-wrap justify-center gap-2 md:gap-4 m2">
+<div class="flex flex-wrap justify-center gap-2 md:gap-4 m-2">
   <div class="relative" style="width: min(100%, 85svh); height: 100%" id="drop-target">
     <img
       src={~p"/images/mensaplan.svg"}
@@ -49,17 +49,16 @@
       />
       <.input type="number" field={@form[:y]} label="Y Position" id="y-pos-input" />
       <.input type="number" field={@form[:expires_in]} label="Expires in minutes" />
-      <.input
-        type="checkbox"
-        checked={@user.default_public}
-        field={@form[:public]}
-        label="Public"
-      />
+      <.input type="checkbox" field={@form[:public]} label="Public" />
       <:actions>
-        <.button>Set Position</.button>
-        <.button type="button" phx-click="clear" class="bg-red-500 hover:bg-red-600">
+        <.button
+          type="button"
+          phx-click="clear"
+          class="text-button !bg-gray-200/75 hover:!bg-gray-300/80 !text-gray-900"
+        >
           Clear Position
         </.button>
+        <.button class="text-button !bg-blue-500 hover:!bg-blue-600">Set Position</.button>
       </:actions>
     </.simple_form>
   <% end %>

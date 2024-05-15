@@ -12,6 +12,7 @@ defmodule MensaplanWeb.PositionView do
 
     if user do
       pos = Positions.get_position_of_user(user) || %Position{}
+      pos = Map.put(pos, :public, user.default_public)
       socket = assign(socket, form: to_form(Ecto.Changeset.change(pos)))
 
       positions = Positions.get_positions_visible_to_user(user)
