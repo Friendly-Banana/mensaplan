@@ -1,0 +1,36 @@
+<.flash_group flash={@flash} />
+
+<div class="container mx-auto px-6 py-4 flex flex-col gap-12">
+  <h1 class="text-3xl font-bold text-center">Settings</h1>
+
+  <div class="flex items-center justify-center">
+    <img
+      src={@user.avatar}
+      class="rounded-full h-16 w-16 bg-gray-200 text-center text-gray-800 flex items-center justify-center"
+      alt="User Avatar"
+    />
+    <div class="ml-4">
+      <h2 class="text-xl font-bold"><%= @user.name %></h2>
+      <p class="text-gray-500"><% @user.email %></p>
+    </div>
+  </div>
+
+  <form action="/settings" method="post">
+    <input type="hidden" name="_csrf_token" value={get_csrf_token()} />
+    <.input
+      type="checkbox"
+      name="default_public"
+      checked={@user.default_public}
+      label="Make Positions public by default"
+      class="text-xl !bg-red-500"
+    />
+    <div class="flex justify-center">
+      <button
+        type="submit"
+        class="py-3 px-4 text-sm font-bold rounded-xl transition duration-200 bg-green-500 hover:bg-green-600 text-white"
+      >
+        Save Changes
+      </button>
+    </div>
+  </form>
+</div>

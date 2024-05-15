@@ -1,20 +1,50 @@
 defmodule MensaplanWeb.PageController do
   use MensaplanWeb, :controller
 
-  alias Mensaplan.Accounts
+  require Logger
+  alias Mensaplan.Repo
+  alias Mensaplan.Accounts.User
 
   def about(conn, _params) do
     render(conn, :about)
   end
 
-  def update_user_in_session(conn, _params) do
+  def settings(conn, _params) do
+    if user = get_session(conn, :user) do
+      conn
+      |> assign(:user, user)
+      |> render(:settings)
+    else
+      conn
+      |> put_flash(:error, "Please login to access this page.")
+      |> redirect(to: "/")
+    end
+  end
+
+  def update_settings(conn, params = %{"default_public" => _}) do
     user = get_session(conn, :user)
 
     if user do
-      put_session(conn, :user, Accounts.get_user!(user.id))
-      |> redirect(to: "/settings")
+      case User.change_settings(user, params)
+           |> Repo.update() do
+        {:ok, updated_user} ->
+          put_session(conn, :user, updated_user)
+          |> put_flash(:info, "Settings updated.")
+          |> redirect(to: "/settings")
+
+        {:error, reason} ->
+          Logger.error("Failed to update settings: #{inspect(reason)}")
+
+          conn
+          |> put_status(:bad_request)
+          |> put_flash(:error, "Failed to update settings")
+          |> redirect(to: "/")
+      end
     else
-      redirect(conn, to: "/")
+      conn
+      |> put_status(:unauthorized)
+      |> put_flash(:error, "Please login first.")
+      |> redirect(to: "/")
     end
   end
 end

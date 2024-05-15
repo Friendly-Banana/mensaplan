@@ -22,9 +22,9 @@ defmodule MensaplanWeb.Router do
     pipe_through :browser
 
     live "/", PositionView
-    live "/settings", SettingsView
+    get "/settings", PageController, :settings
+    post "/settings", PageController, :update_settings
     get "/about", PageController, :about
-    get "/update_user_in_session", PageController, :update_user_in_session
   end
 
   scope "/auth", MensaplanWeb do
