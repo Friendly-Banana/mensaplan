@@ -5,6 +5,7 @@ defmodule Mensaplan.Repo.Migrations.CreateGroups do
     create table(:groups) do
       add :name, :string
       add :avatar, :string
+      add :owner_id, references(:users)
 
       timestamps(type: :utc_datetime)
     end

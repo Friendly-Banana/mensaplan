@@ -4,6 +4,7 @@ defmodule Mensaplan.Accounts do
   """
 
   import Ecto.Query, warn: false
+  require Logger
   alias Mensaplan.Repo
 
   alias Mensaplan.Accounts.User
@@ -36,7 +37,6 @@ defmodule Mensaplan.Accounts do
 
   """
   def get_user!(id), do: Repo.get!(User, id)
-
 
   def get_user(auth_id), do: Repo.get_by(User, auth_id: auth_id)
 
@@ -120,6 +120,19 @@ defmodule Mensaplan.Accounts do
     Repo.all(Group)
   end
 
+  def list_groups_for_user(%User{} = user) do
+    Repo.all(
+      from g in Group,
+        where:
+          g.owner_id == ^user.id or
+            fragment(
+              "exists(select * from group_members gm where gm.group_id = ? and gm.user_id = ?)",
+              g.id,
+              ^user.id
+            )
+    )
+  end
+
   @doc """
   Gets a single group.
 
@@ -170,6 +183,28 @@ defmodule Mensaplan.Accounts do
     group
     |> Group.changeset(attrs)
     |> Repo.update()
+  end
+
+  def remove_user_from_group(%User{} = user, %Group{} = group) do
+    current_members = Repo.preload(group, :members).members
+    new_members = Enum.filter(current_members, fn member -> member.id != user.id end)
+
+    new_group =
+      group
+      |> Ecto.Changeset.change()
+      |> Ecto.Changeset.put_assoc(:members, new_members)
+
+    if group.owner == user do
+      if not Enum.empty?(new_members) do
+        Logger.info("Transferring ownership of group #{group.name} to #{hd(new_members).name}.")
+        new_group |> Ecto.Changeset.put_assoc(:owner, hd(new_members)) |> Repo.update()
+      else
+        Logger.info("Deleting group #{group.name} because it has no members left.")
+        Repo.delete!(group)
+      end
+    else
+      Repo.update(new_group)
+    end
   end
 
   @doc """

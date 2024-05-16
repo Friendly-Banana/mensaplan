@@ -61,5 +61,7 @@
         <.button class="text-button !bg-blue-500 hover:!bg-blue-600">Set Position</.button>
       </:actions>
     </.simple_form>
+
+    <.live_component id="group-list" module={MensaplanWeb.GroupLive.Index} user={@user} />
   <% end %>
 </div>

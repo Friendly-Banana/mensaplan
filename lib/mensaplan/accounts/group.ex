@@ -6,6 +6,7 @@ defmodule Mensaplan.Accounts.Group do
     field :name, :string
     field :avatar, :string
 
+    belongs_to :owner, Mensaplan.Accounts.User
     many_to_many :members, Mensaplan.Accounts.User, join_through: "group_members"
 
     timestamps(type: :utc_datetime)
@@ -15,11 +16,9 @@ defmodule Mensaplan.Accounts.Group do
   def changeset(group, attrs) do
     group
     |> cast(attrs, [:name, :avatar])
-    |> validate_required([:name])
+    |> cast_assoc(attrs, [:owner, :members])
+    |> validate_required([:name, :owner])
+    # todo ensure owner is in members
     |> validate_length(:name, min: 3, max: 50)
-  end
-
-  def owner(group) do
-    group.members[0]
   end
 end

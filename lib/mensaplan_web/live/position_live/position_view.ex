@@ -18,8 +18,6 @@ defmodule MensaplanWeb.PositionView do
       positions = Positions.get_positions_visible_to_user(user)
       {:ok, stream(socket, :positions, positions)}
     else
-      socket = assign(socket, form: to_form(Ecto.Changeset.change(%Position{})))
-
       {:ok, stream(socket, :positions, Positions.get_public_positions())}
     end
   end
@@ -39,10 +37,10 @@ defmodule MensaplanWeb.PositionView do
     {:noreply, socket |> put_flash(:info, "Position cleared")}
   end
 
-  def handle_event("save", %{"position" => user_params}, socket) do
+  def handle_event("save", %{"position" => position_params}, socket) do
     Positions.expire_all_positions(socket.assigns.user)
 
-    m = Map.put(user_params, "owner_id", socket.assigns.user.id)
+    m = Map.put(position_params, "owner_id", socket.assigns.user.id)
 
     case Positions.create_position(m) do
       {:ok, position} ->

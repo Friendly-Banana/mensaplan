@@ -6,7 +6,6 @@ defmodule Mensaplan.Positions do
   import Ecto.Query, warn: false
   alias Mensaplan.Repo
 
-  alias Mensaplan.Accounts.Group
   alias Mensaplan.Accounts.User
   alias Mensaplan.Positions.Position
 
@@ -20,7 +19,7 @@ defmodule Mensaplan.Positions do
 
   """
   def list_positions do
-    Repo.all(Position)
+    Repo.all(from p in Position, where: not p.expired)
   end
 
   @doc """
@@ -43,15 +42,15 @@ defmodule Mensaplan.Positions do
     Repo.all(
       from p in Position,
         join: owner in assoc(p, :owner),
-        where: p.public and not p.expired,
-        select: %{id: p.id, name: "Login to see the name", avatar: owner.avatar, x: p.x, y: p.y}
+        where: not p.expired and p.public,
+        select: %{id: p.id, name: nil, avatar: owner.avatar, x: p.x, y: p.y}
     )
   end
 
   def get_position_of_user(%User{} = user) do
     Repo.one(
       from p in Position,
-        where: p.owner_id == ^user.id and not p.expired,
+        where: not p.expired and p.owner_id == ^user.id,
         limit: 1,
         order_by: [desc: :inserted_at]
     )
@@ -64,20 +63,18 @@ defmodule Mensaplan.Positions do
   3. Positions of other users from common groups
   """
   def get_positions_visible_to_user(%User{} = user) do
-    common_groups =
-      from(g in Group,
-        join: user_group in assoc(g, :members),
-        where: user_group.id == ^user.id,
-        select: g.id
-      )
-
     Repo.all(
       from(p in Position,
         join: owner in assoc(p, :owner),
-        join: owner_group in assoc(owner, :groups),
+        # TODO: benchmark this fragment, maybe use cleaner version with groups table
         where:
           not p.expired and
-            (p.public or p.owner_id == ^user.id or owner_group.id in subquery(common_groups)),
+            (p.public or p.owner_id == ^user.id or
+               fragment(
+                 "exists(select * from group_members a join group_members b on a.group_id = b.group_id where a.user_id = ? and b.user_id = ?)",
+                 p.owner_id,
+                 ^user.id
+               )),
         select: %{id: owner.id, name: owner.name, avatar: owner.avatar, x: p.x, y: p.y}
       )
     )
