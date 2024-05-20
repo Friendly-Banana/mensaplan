@@ -56,6 +56,24 @@ defmodule MensaplanWeb.PositionView do
     end
   end
 
+  def handle_event("toggle_group", %{"id" => id}, socket) do
+    IO.puts("Toggling group #{id}")
+    # TODO
+    {:noreply, socket}
+  end
+
+  @impl true
+  def handle_info({MensaplanWeb.GroupLive.FormComponent, {:saved, group}}, socket) do
+    # todo handle form message
+    IO.puts("Group saved")
+    {:noreply, stream_insert(socket, :groups, group)}
+  end
+
+  @impl true
+  def handle_params(:new_group, uri, socket) do
+    {:noreply, socket}
+  end
+
   @impl true
   def handle_info({:position_saved, position}, socket) do
     if position.public or

@@ -8,7 +8,6 @@ defmodule MensaplanWeb.GroupLive.FormComponent do
     <div>
       <.header>
         <%= @title %>
-        <:subtitle>Manage your group</:subtitle>
       </.header>
 
       <.simple_form
@@ -18,11 +17,10 @@ defmodule MensaplanWeb.GroupLive.FormComponent do
         phx-change="validate"
         phx-submit="save"
       >
-        <.input field={@form[:title]} type="text" label="Title" />
-        <.input field={@form[:body]} type="text" label="Body" />
+        <.input field={@form[:name]} type="text" label="Name" />
+        <.input field={@form[:avatar]} type="text" label="URL to Avatar" />
         <:actions>
           <.button phx-disable-with="Saving...">Save Group</.button>
-          <.button phx-disable-with="Deleting...">Delete Group</.button>
         </:actions>
       </.simple_form>
     </div>
@@ -69,8 +67,9 @@ defmodule MensaplanWeb.GroupLive.FormComponent do
   end
 
   defp save_group(socket, :new, group_params) do
-    case Accounts.create_group(group_params) do
+    case Accounts.create_group(socket.assigns.user, group_params) do
       {:ok, group} ->
+        send_update(MensaplanWeb.GroupLive.List, {:saved, group})
         notify_parent({:saved, group})
 
         {:noreply,
@@ -79,6 +78,7 @@ defmodule MensaplanWeb.GroupLive.FormComponent do
          |> push_patch(to: socket.assigns.patch)}
 
       {:error, %Ecto.Changeset{} = changeset} ->
+        IO.inspect(changeset)
         {:noreply, assign_form(socket, changeset)}
     end
   end

@@ -1,19 +1,12 @@
 <div>
   <.header>
     Your Groups
-    <:actions>
-      <.link patch={~p"/groups/new"}>
-        <.button>
-          New Group<.icon name="hero-plus" class="inline-block" />
-        </.button>
-      </.link>
-    </:actions>
   </.header>
 
   <.table
     id="groups"
     rows={@streams.groups}
-    row_click={fn {_id, group} -> JS.log("TODO filter visible positions") end}
+    row_click={fn {_id, group} -> JS.push("toggle_group", value: %{id: group.id}) end}
   >
     <:col :let={{_id, group}} label="Picture"><%= group.avatar %></:col>
     <:col :let={{_id, group}} label="Name"><%= group.name %></:col>
@@ -21,7 +14,7 @@
       <div class="sr-only">
         <.link navigate={~p"/groups/#{group}"}>Show</.link>
       </div>
-      <.link patch={~p"/groups/#{group}/edit"}>Edit</.link>
+      <.link phx-click={JS.push("edit", value: %{id: group.id})} phx-target={@myself}>Edit</.link>
     </:action>
     <:action :let={{id, group}}>
       <.link
@@ -33,19 +26,17 @@
     </:action>
   </.table>
 
-  <.modal
-    :if={@live_action in [:new, :edit]}
-    id="group-modal"
-    show
-    on_cancel={JS.patch(~p"/groups")}
-  >
+  <.button phx-patch="/groups/new" >Create new Group</.button>
+  <.button phx-click="join" phx-target={@myself}>Join with Code</.button>
+
+  <.modal :if={@live_action in [:new, :edit]} id="group-modal" show on_cancel={JS.patch("/")}>
     <.live_component
       module={MensaplanWeb.GroupLive.FormComponent}
       id={@group.id || :new}
       title={@page_title}
       action={@live_action}
       group={@group}
-      patch={~p"/groups"}
+      user={@user}
     />
   </.modal>
 </div>

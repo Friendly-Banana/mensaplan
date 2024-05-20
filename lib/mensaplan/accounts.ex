@@ -123,13 +123,15 @@ defmodule Mensaplan.Accounts do
   def list_groups_for_user(%User{} = user) do
     Repo.all(
       from g in Group,
+        join: owner in assoc(g, :owner),
         where:
           g.owner_id == ^user.id or
             fragment(
               "exists(select * from group_members gm where gm.group_id = ? and gm.user_id = ?)",
               g.id,
               ^user.id
-            )
+            ),
+        select: %{id: g.id, name: g.name, avatar: g.avatar, owner_name: owner.name}
     )
   end
 
@@ -161,10 +163,12 @@ defmodule Mensaplan.Accounts do
       {:error, %Ecto.Changeset{}}
 
   """
-  def create_group(attrs \\ %{}) do
+  def create_group(owner, attrs \\ %{}) do
     %Group{}
     |> Group.changeset(attrs)
-    |> Repo.insert()
+    |> Ecto.Changeset.put_assoc(:owner, owner)
+    |> Ecto.Changeset.put_assoc(:members, [owner])
+    |> Repo.insert!()
   end
 
   @doc """

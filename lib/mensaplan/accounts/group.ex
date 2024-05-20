@@ -16,9 +16,10 @@ defmodule Mensaplan.Accounts.Group do
   def changeset(group, attrs) do
     group
     |> cast(attrs, [:name, :avatar])
-    |> cast_assoc(attrs, [:owner, :members])
-    |> validate_required([:name, :owner])
-    # todo ensure owner is in members
+    |> cast_assoc(:owner)
+    |> cast_assoc(:members)
+    |> validate_required([:name, :owner_id, :members])
+    |> validate_inclusion(:owner, in: attrs[:members])
     |> validate_length(:name, min: 3, max: 50)
   end
 end
