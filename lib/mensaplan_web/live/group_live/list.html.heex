@@ -26,7 +26,7 @@
     </:action>
   </.table>
 
-  <.button phx-patch="/groups/new" >Create new Group</.button>
+  <.button  phx-click={JS.patch("/groups/new")} phx-target={@myself}>Create new Group</.button>
   <.button phx-click="join" phx-target={@myself}>Join with Code</.button>
 
   <.modal :if={@live_action in [:new, :edit]} id="group-modal" show on_cancel={JS.patch("/")}>

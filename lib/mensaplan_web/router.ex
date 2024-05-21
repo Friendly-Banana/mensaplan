@@ -21,12 +21,12 @@ defmodule MensaplanWeb.Router do
   scope "/", MensaplanWeb do
     pipe_through :browser
 
-    live "/", PositionView
+    live "/", PositionLive
     get "/settings", PageController, :settings
     post "/settings", PageController, :update_settings
     get "/about", PageController, :about
-    live "/groups/new", PositionView, :new_group, as:  :new_group
-    live "/groups/:id", GroupLive.Show, :show
+    live "/groups/new/", PositionLive, :new_group
+    live "/groups/:id", PositionLive.Show, :edit
   end
 
   scope "/auth", MensaplanWeb do

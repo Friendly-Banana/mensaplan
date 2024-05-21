@@ -1,4 +1,4 @@
-defmodule MensaplanWeb.PositionView do
+defmodule MensaplanWeb.PositionLive do
   use MensaplanWeb, :live_view
 
   alias Mensaplan.Positions
@@ -63,14 +63,15 @@ defmodule MensaplanWeb.PositionView do
   end
 
   @impl true
-  def handle_info({MensaplanWeb.GroupLive.FormComponent, {:saved, group}}, socket) do
+  def handle_info({:saved, group}, socket) do
     # todo handle form message
     IO.puts("Group saved")
     {:noreply, stream_insert(socket, :groups, group)}
   end
 
   @impl true
-  def handle_params(:new_group, uri, socket) do
+  def handle_params(a, uri, socket) do
+    IO.inspect(socket.assigns.live_action)
     {:noreply, socket}
   end
 
