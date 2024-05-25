@@ -122,7 +122,7 @@ defmodule Mensaplan.Positions do
     Phoenix.PubSub.broadcast(
       Mensaplan.PubSub,
       "positions",
-      {:position_expired, "position-#{user.id}"}
+      {:position_deleted, "position-#{user.id}"}
     )
   end
 

@@ -1,31 +1,6 @@
-defmodule MensaplanWeb.GroupLive.FormComponent do
+defmodule MensaplanWeb.GroupLive.EditFormComponent do
   alias Mensaplan.Accounts
   use MensaplanWeb, :live_component
-
-  @impl true
-  def render(assigns) do
-    ~H"""
-    <div>
-      <.header>
-        Create new group
-      </.header>
-
-      <.simple_form
-        for={@form}
-        id="group-form"
-        phx-target={@myself}
-        phx-change="validate"
-        phx-submit="save"
-      >
-        <.input field={@form[:name]} type="text" label="Name" />
-        <.input field={@form[:avatar]} type="text" label="Avatar URL" />
-        <:actions>
-          <.button phx-disable-with="Creating...">Create Group</.button>
-        </:actions>
-      </.simple_form>
-    </div>
-    """
-  end
 
   @impl true
   def update(%{group: group} = assigns, socket) do
@@ -48,17 +23,18 @@ defmodule MensaplanWeb.GroupLive.FormComponent do
   end
 
   def handle_event("save", %{"group" => group_params}, socket) do
-    case Accounts.create_group(socket.assigns.user, group_params) do
+    group_params = Map.put(group_params, "owner_id", socket.assigns.user.id)
+
+    case Accounts.update_group(socket.assigns.group, group_params) do
       {:ok, group} ->
         Phoenix.PubSub.broadcast(Mensaplan.PubSub, "groups", {:group_saved, group})
 
         {:noreply,
          socket
-         |> put_flash(:info, "Group created successfully")
+         |> put_flash(:info, "Group updated successfully")
          |> push_patch(to: "/")}
 
       {:error, %Ecto.Changeset{} = changeset} ->
-        IO.inspect(changeset)
         {:noreply, assign_form(socket, changeset)}
     end
   end

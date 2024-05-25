@@ -25,8 +25,10 @@ defmodule MensaplanWeb.Router do
     get "/settings", PageController, :settings
     post "/settings", PageController, :update_settings
     get "/about", PageController, :about
-    live "/groups/new/", PositionLive, :new_group
-    live "/groups/:id", PositionLive.Show, :edit
+    live "/groups/new/", PositionLive, :group_new
+    live "/groups/:id", PositionLive, :group_edit
+    live "/groups/:id/invite/", PositionLive, :group_invite
+    live "/groups/join/:token", PositionLive, :group_join
   end
 
   scope "/auth", MensaplanWeb do

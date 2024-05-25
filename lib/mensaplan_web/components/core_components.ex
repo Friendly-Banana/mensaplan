@@ -20,6 +20,39 @@ defmodule MensaplanWeb.CoreComponents do
   import MensaplanWeb.Gettext
 
   @doc """
+  Renders a user avatar.
+
+  ## Examples
+
+      <.avatar user={@user} style="top: 0"/>
+
+  """
+  attr :user, :map, required: true
+  attr :rest, :global, doc: "arbitrary HTML attributes to add to the container"
+
+  def avatar(assigns) do
+    avatar =
+      if assigns.user.avatar == nil || String.length(String.trim(assigns.user.avatar)) == 0 do
+        "https://ui-avatars.com/api/?name=" <> String.first(assigns.user.name)
+      else
+        assigns.user.avatar
+      end
+
+    assigns = assign(assigns, :avatar, avatar)
+
+    ~H"""
+    <div title={@user.name} {@rest}>
+      <img
+        src={@avatar}
+        alt={"Avatar of User " <> (@user.name || "")}
+        class="w-12 h-12 rounded-full"
+        draggable="false"
+      />
+    </div>
+    """
+  end
+
+  @doc """
   Renders a modal.
 
   ## Examples

@@ -11,40 +11,55 @@
     <div id="position-map" phx-update="replace">
       <%= for {_, position} <- @streams.positions do %>
         <% pos = "top: min(100% - 3rem, #{position.y}%); left: min(100% - 3rem, #{position.x}%)" %>
-        <div id={"position-#{position.id}"} title={position.name} class="absolute" style={pos}>
-          <img src={position.avatar} class="w-12 h-12" draggable="false" />
-        </div>
+        <.avatar user={position} id={"position-#{position.id}"} class="absolute" style={pos} />
       <% end %>
     </div>
 
     <%= if @user && @form.data do %>
       <% pos = "top: #{@form[:y].value}%; left: #{@form[:x].value}%" %>
-      <img src={@user.avatar} class="absolute h-12 ring-4 ring-blue-600 rounded-full" style={pos} />
+      <img
+        src={@user.avatar}
+        id="new-position-indicator"
+        class="absolute h-12 ring-4 ring-blue-600 rounded-full"
+        style={pos}
+      />
     <% end %>
   </div>
 
   <script>
+    const posMarker = document.getElementById("new-position-indicator");
     const dropElement = document.getElementById("drop-target");
 
-    dropElement.addEventListener("drop", (event) => {
-        // prevent default action (open as a link for some elements)
-        event.preventDefault();
+    function setPosition(event) {
+      if (event.detail === 1) {
         const xInput = document.getElementById("x-pos-input");
         const yInput = document.getElementById("y-pos-input");
-        xInput.value = (event.layerX / event.target.width * 100).toFixed(2);
-        yInput.value = (event.layerY / event.target.height * 100).toFixed(2);
+        xInput.value = ((event.layerX - posMarker.width / 2) / event.target.width * 100).toFixed(2);
+        yInput.value = ((event.layerY - posMarker.height / 2) / event.target.height * 100).toFixed(2);
 
-        yInput.dispatchEvent(new Event("change", { 'bubbles': true }));
-    });
+        yInput.dispatchEvent(new Event("input", { 'bubbles': true }));
+      }
+      else {
+        const submitButton = document.getElementById("set-position");
+        submitButton.click();
+      }
+    }
+
+    dropElement.addEventListener("click", setPosition);
   </script>
 
   <%= if @user do %>
-    <.simple_form for={@form} phx-change="validate" phx-submit="save" id="pos-form">
+    <.simple_form
+      for={@form}
+      phx-change="position_validate"
+      phx-submit="position_save"
+      id="pos-form"
+    >
       <.input
         type="number"
         field={@form[:x]}
         label="X Position"
-        phx-change="validate"
+        phx-change="position_validate"
         id="x-pos-input"
       />
       <.input type="number" field={@form[:y]} label="Y Position" id="y-pos-input" />
@@ -53,16 +68,72 @@
       <:actions>
         <.button
           type="button"
-          phx-click="clear"
+          phx-click="position_clear"
           class="text-button !bg-gray-200/75 hover:!bg-gray-300/80 !text-gray-900"
         >
           Clear Position
         </.button>
-        <.button>Set Position</.button>
+        <.button id="set-position">Set Position</.button>
       </:actions>
     </.simple_form>
 
-    <.live_component id="group-list" module={MensaplanWeb.GroupLive.List} user={@user} />
+    <div>
+      <div>
+        <.header>
+          Your Groups
+          <:actions>
+            <.button phx-click={JS.patch("/groups/new")}>
+              Create New
+            </.button>
+          </:actions>
+        </.header>
+
+        <.table
+          id="groups"
+          rows={@streams.groups}
+          row_click={fn {_id, group} -> JS.push("group_toggle", value: %{id: group.id}) end}
+        >
+          <:col :let={{_id, group}} label="Picture"><.avatar user={group} /></:col>
+          <:col :let={{_id, group}} label="Name"><%= group.name %></:col>
+          <:action :let={{_id, group}}>
+            <.link phx-click={JS.patch("/groups/" <> Integer.to_string(group.id))}>
+              Edit
+            </.link>
+          </:action>
+          <:action :let={{id, group}}>
+            <.link
+              phx-click={JS.push("group_leave", value: %{id: group.id}) |> hide(id)}
+              data-confirm="Are you sure you want to leave this group?"
+            >
+              Leave
+            </.link>
+          </:action>
+        </.table>
+      </div>
+
+      <.modal
+        :if={@live_action in [:group_new, :group_edit]}
+        id="group-modal"
+        show
+        on_cancel={JS.patch(~p"/")}
+      >
+        <.live_component
+          :if={@live_action == :group_new}
+          module={MensaplanWeb.GroupLive.FormComponent}
+          id={:new}
+          group={@group}
+          user={@user}
+        />
+        <.live_component
+          :if={@live_action == :group_edit}
+          module={MensaplanWeb.GroupLive.EditFormComponent}
+          id={@group.id || :new}
+          title={@page_title}
+          action={@live_action}
+          group={@group}
+          user={@user}
+        />
+      </.modal>
+    </div>
   <% end %>
-  A <%= @live_action %>A
 </div>
