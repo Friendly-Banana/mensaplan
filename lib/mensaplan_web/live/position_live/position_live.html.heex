@@ -1,6 +1,6 @@
 <.flash_group flash={@flash} />
 
-<div class="flex flex-wrap justify-center gap-2 md:gap-4 m-2">
+<div class="flex flex-wrap justify-center gap-8 m-2">
   <div class="relative" style="width: min(100%, 85svh); height: 100%" id="drop-target">
     <img
       src={~p"/images/mensaplan.svg"}
@@ -49,36 +49,30 @@
   </script>
 
   <%= if @user do %>
-    <.simple_form
-      for={@form}
-      phx-change="position_validate"
-      phx-submit="position_save"
-      id="pos-form"
-    >
-      <.input
-        type="number"
-        field={@form[:x]}
-        label="X Position"
+    <div class="flex flex-wrap lg:flex-col justify-evenly ">
+      <.simple_form
+        for={@form}
         phx-change="position_validate"
-        id="x-pos-input"
-      />
-      <.input type="number" field={@form[:y]} label="Y Position" id="y-pos-input" />
-      <.input type="number" field={@form[:expires_in]} label="Expires in minutes" />
-      <.input type="checkbox" field={@form[:public]} label="Public" />
-      <:actions>
-        <.button
-          type="button"
-          phx-click="position_clear"
-          class="text-button !bg-gray-200/75 hover:!bg-gray-300/80 !text-gray-900"
-        >
-          Clear Position
-        </.button>
-        <.button id="set-position">Set Position</.button>
-      </:actions>
-    </.simple_form>
+        phx-submit="position_save"
+        id="pos-form"
+      >
+        <.input type="hidden" field={@form[:x]} id="x-pos-input" />
+        <.input type="hidden" field={@form[:y]} id="y-pos-input" />
+        <.input type="number" field={@form[:expires_in]} label="Expires in minutes" />
+        <.input type="checkbox" field={@form[:public]} label="Public" />
+        <:actions>
+          <.button
+            type="button"
+            phx-click="position_clear"
+            class="text-button !bg-gray-200/75 hover:!bg-gray-300/80 !text-gray-900"
+          >
+            Clear Position
+          </.button>
+          <.button id="set-position">Set Position</.button>
+        </:actions>
+      </.simple_form>
 
-    <div>
-      <div>
+      <div class="mx-6 lg:m-0 lg:mt-4">
         <.header>
           Your Groups
           <:actions>
@@ -96,7 +90,7 @@
           <:col :let={{_id, group}} label="Picture"><.avatar user={group} /></:col>
           <:col :let={{_id, group}} label="Name"><%= group.name %></:col>
           <:action :let={{_id, group}}>
-            <.link phx-click={JS.patch("/groups/" <> Integer.to_string(group.id))}>
+            <.link phx-click={JS.patch("/groups/#{group.id}")}>
               Edit
             </.link>
           </:action>
@@ -110,30 +104,30 @@
           </:action>
         </.table>
       </div>
-
-      <.modal
-        :if={@live_action in [:group_new, :group_edit]}
-        id="group-modal"
-        show
-        on_cancel={JS.patch(~p"/")}
-      >
-        <.live_component
-          :if={@live_action == :group_new}
-          module={MensaplanWeb.GroupLive.FormComponent}
-          id={:new}
-          group={@group}
-          user={@user}
-        />
-        <.live_component
-          :if={@live_action == :group_edit}
-          module={MensaplanWeb.GroupLive.EditFormComponent}
-          id={@group.id || :new}
-          title={@page_title}
-          action={@live_action}
-          group={@group}
-          user={@user}
-        />
-      </.modal>
     </div>
+
+    <.modal
+      :if={@live_action in [:group_new, :group_edit]}
+      id="group-modal"
+      show
+      on_cancel={JS.patch(~p"/")}
+    >
+      <.live_component
+        :if={@live_action == :group_new}
+        module={MensaplanWeb.GroupLive.FormComponent}
+        id={:new}
+        group={@group}
+        user={@user}
+      />
+      <.live_component
+        :if={@live_action == :group_edit}
+        module={MensaplanWeb.GroupLive.EditFormComponent}
+        id={@group.id || :new}
+        title={@page_title}
+        action={@live_action}
+        group={@group}
+        user={@user}
+      />
+    </.modal>
   <% end %>
 </div>

@@ -2,6 +2,7 @@ defmodule MensaplanWeb.PageController do
   use MensaplanWeb, :controller
 
   require Logger
+  alias Mensaplan.Accounts
   alias Mensaplan.Repo
   alias Mensaplan.Accounts.User
 
@@ -45,6 +46,31 @@ defmodule MensaplanWeb.PageController do
       |> put_status(:unauthorized)
       |> put_flash(:error, "Please login first.")
       |> redirect(to: "/")
+    end
+  end
+
+  def join(conn, %{"invite" => uuid}) do
+    case Accounts.fetch_invite(uuid) do
+      nil ->
+        conn
+        |> put_flash(:error, "Invalid invitation link. Please ask for a new one.")
+        |> redirect(to: "/")
+
+      invite ->
+        conn
+        |> assign(:invite, invite)
+        |> render(:join)
+    end
+  end
+
+  def join_confirm(conn, %{"invite" => uuid}) do
+    case Accounts.accept_invite(get_session(conn, :user), uuid) do
+      {:ok, _} ->
+        put_flash(conn, :info, "You have joined the group") |> redirect(to: "/")
+
+      {:error, reason} ->
+        Logger.error("Invite invalid: #{reason}")
+        put_flash(conn, :error, "No valid Invite") |> redirect(to: "/")
     end
   end
 end

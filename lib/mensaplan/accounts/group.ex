@@ -7,7 +7,10 @@ defmodule Mensaplan.Accounts.Group do
     field :avatar, :string
 
     belongs_to :owner, Mensaplan.Accounts.User
-    many_to_many :members, Mensaplan.Accounts.User, join_through: "group_members", on_replace: :delete
+
+    many_to_many :members, Mensaplan.Accounts.User,
+      join_through: "group_members",
+      on_replace: :delete
 
     timestamps(type: :utc_datetime)
   end

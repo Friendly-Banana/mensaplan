@@ -1,0 +1,27 @@
+<div class="mx-auto px-6 py-4 flex flex-col gap-8 items-center text-xl">
+  <h1 class="text-3xl font-bold">Group Invitation</h1>
+  <small class="text-center text-sm">
+    <div class="flex items-center justify-center gap-2">
+      <.avatar user={@invite.inviter} img_class="h-6 w-6" />
+      <%= @invite.inviter.name %>
+    </div>
+  </small>
+  has invited you to their group
+  <div class="flex items-center justify-center font-bold">
+    <.avatar user={@invite.group} class="mr-4" />
+    <%= @invite.group.name %>
+  </div>
+  Do you want to join?
+  <form action="/groups/join" method="post">
+    <input type="hidden" name="_csrf_token" value={get_csrf_token()} />
+    <input type="hidden" name="invite" value={@invite.uuid} />
+    <.button class="">Join Group</.button>
+  </form>
+
+  <small class="text-sm">
+    If you don't want to join, you can ignore this and
+    <.link navigate={~p"/"} class="text-blue-700  hover:text-zinc-700">
+      go home.
+    </.link>
+  </small>
+</div>

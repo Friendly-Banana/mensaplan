@@ -58,7 +58,6 @@ defmodule MensaplanWeb.GroupLive.FormComponent do
          |> push_patch(to: "/")}
 
       {:error, %Ecto.Changeset{} = changeset} ->
-        IO.inspect(changeset)
         {:noreply, assign_form(socket, changeset)}
     end
   end

@@ -28,7 +28,8 @@ defmodule MensaplanWeb.Router do
     live "/groups/new/", PositionLive, :group_new
     live "/groups/:id", PositionLive, :group_edit
     live "/groups/:id/invite/", PositionLive, :group_invite
-    live "/groups/join/:token", PositionLive, :group_join
+    get "/groups/join/:invite", PageController, :join
+    post "/groups/join/", PageController, :join_confirm
   end
 
   scope "/auth", MensaplanWeb do

@@ -9,6 +9,7 @@ defmodule MensaplanWeb.GroupLive.EditFormComponent do
     {:ok,
      socket
      |> assign(assigns)
+     |> assign(:invite, nil)
      |> assign_form(changeset)}
   end
 
@@ -36,6 +37,18 @@ defmodule MensaplanWeb.GroupLive.EditFormComponent do
 
       {:error, %Ecto.Changeset{} = changeset} ->
         {:noreply, assign_form(socket, changeset)}
+    end
+  end
+
+  @impl true
+  def handle_event("invite", _, socket) do
+    group = socket.assigns.group
+
+    if group.owner_id == socket.assigns.user.id do
+      {:ok, invite} = Accounts.create_invite(socket.assigns.user, group)
+      {:noreply, assign(socket, :invite, invite)}
+    else
+      {:noreply, put_flash(socket, :error, "You are not the owner of this group")}
     end
   end
 

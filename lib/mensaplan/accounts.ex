@@ -5,9 +5,35 @@ defmodule Mensaplan.Accounts do
 
   import Ecto.Query, warn: false
   require Logger
+  alias Mensaplan.Accounts.Invite
   alias Mensaplan.Repo
 
   alias Mensaplan.Accounts.User
+
+  def fetch_invite(uuid) do
+    Repo.one(from i in Invite, where: i.uuid == ^uuid, preload: [:group, :inviter])
+  end
+
+  def create_invite(creator, group) do
+    %Invite{}
+    |> Ecto.Changeset.change()
+    |> Ecto.Changeset.put_assoc(:inviter, creator)
+    |> Ecto.Changeset.put_assoc(:group, group)
+    |> Repo.insert()
+  end
+
+  def accept_invite(user, uuid) do
+    Repo.transaction(fn ->
+      invite = Repo.one!(from i in Invite, where: i.uuid == ^uuid, preload: [:group])
+      user = Repo.get!(User, user.id) |> Repo.preload(:groups)
+
+      Ecto.Changeset.change(user)
+      |> Ecto.Changeset.put_assoc(:groups, [invite.group | user.groups])
+      |> Repo.update!()
+
+      invite |> Repo.delete!()
+    end)
+  end
 
   @doc """
   Returns the list of users.

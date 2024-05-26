@@ -17,8 +17,11 @@
       <.header>
         Members
         <:actions>
-          <.button type="button" phx-click={JS.patch(~p"/groups/#{@form.data.id}/invite")}>
-            Invite user
+          <span :if={@invite} class="text-blue-500">
+            <a href={~p"/groups/join/#{@invite.uuid}"}><%= @invite.uuid %></a>
+          </span>
+          <.button type="button" phx-target={@myself} phx-click={JS.push("invite")}>
+            New Invite
           </.button>
         </:actions>
       </.header>

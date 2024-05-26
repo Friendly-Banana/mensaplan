@@ -4,12 +4,8 @@
   <h1 class="text-3xl font-bold text-center">Settings</h1>
 
   <div class="flex items-center justify-center">
-    <img
-      src={@user.avatar}
-      class="rounded-full h-16 w-16 bg-gray-200 text-center text-gray-800 flex items-center justify-center"
-      alt="User Avatar"
-    />
-    <div class="ml-4">
+    <.avatar user={@user} class="mr-4" />
+    <div>
       <h2 class="text-xl font-bold"><%= @user.name %></h2>
       <p class="text-gray-500"><%= @user.email %></p>
     </div>

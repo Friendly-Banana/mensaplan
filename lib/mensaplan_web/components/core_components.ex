@@ -28,6 +28,7 @@ defmodule MensaplanWeb.CoreComponents do
 
   """
   attr :user, :map, required: true
+  attr :img_class, :string, default: ""
   attr :rest, :global, doc: "arbitrary HTML attributes to add to the container"
 
   def avatar(assigns) do
@@ -45,7 +46,7 @@ defmodule MensaplanWeb.CoreComponents do
       <img
         src={@avatar}
         alt={"Avatar of User " <> (@user.name || "")}
-        class="w-12 h-12 rounded-full"
+        class={["w-12 h-12 rounded-full", @img_class]}
         draggable="false"
       />
     </div>
@@ -235,7 +236,7 @@ defmodule MensaplanWeb.CoreComponents do
   def simple_form(assigns) do
     ~H"""
     <.form :let={f} for={@for} as={@as} {@rest}>
-      <div class="mt-10 space-y-8 bg-white">
+      <div class="flex flex-col gap-4 bg-white">
         <%= render_slot(@inner_block, f) %>
         <div :for={action <- @actions} class="mt-2 flex items-center justify-between gap-6">
           <%= render_slot(action, f) %>
