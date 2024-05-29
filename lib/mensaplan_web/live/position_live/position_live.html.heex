@@ -1,7 +1,7 @@
 <.flash_group flash={@flash} />
 
 <div class="flex flex-wrap justify-center gap-8 m-2">
-  <div class="relative" style="width: min(100%, 85svh); height: 100%" id="drop-target">
+  <div class="relative h-full" style="width: min(100%, 85svh)" id="drop-target">
     <img
       src={~p"/images/mensaplan.svg"}
       alt="Top down view of the mensa"
@@ -48,6 +48,28 @@
     dropElement.addEventListener("click", setPosition);
   </script>
 
+  <style>
+    /* TODO use nicer tooltip library, also for user names
+       https://stackoverflow.com/a/60660207/12846952 */
+    @media (pointer: coarse), (hover: none) {
+        .title-tooltip {
+            position: relative;
+            display: inline-flex;
+            justify-content: center;
+        }
+        .title-tooltip:focus::after {
+            content: attr(title);
+            position: absolute;
+            top: 90%;
+            color: #000;
+            background-color: #fff;
+            border: 1px solid;
+            width: fit-content;
+            padding: 3px;
+        }
+    }
+  </style>
+
   <%= if @user do %>
     <div class="flex flex-wrap lg:flex-col justify-evenly ">
       <.simple_form
@@ -56,8 +78,10 @@
         phx-submit="position_save"
         id="pos-form"
       >
-        <.input type="hidden" field={@form[:x]} id="x-pos-input" />
-        <.input type="hidden" field={@form[:y]} id="y-pos-input" />
+        <div class="hidden">
+          <.input type="number" field={@form[:x]} id="x-pos-input" />
+          <.input type="number" field={@form[:y]} id="y-pos-input" />
+        </div>
         <.input type="number" field={@form[:expires_in]} label="Expires in minutes" />
         <.input type="checkbox" field={@form[:public]} label="Public" />
         <:actions>
@@ -68,7 +92,13 @@
           >
             Clear Position
           </.button>
-          <.button id="set-position">Set Position</.button>
+          <.button
+            id="set-position"
+            class="title-tooltip"
+            title="Tip: Double click on the map to set your position."
+          >
+            Set Position
+          </.button>
         </:actions>
       </.simple_form>
 
@@ -85,7 +115,7 @@
         <.table
           id="groups"
           rows={@streams.groups}
-          row_click={fn {_id, group} -> JS.push("group_toggle", value: %{id: group.id}) end}
+          row_click={fn {_id, group} -> JS.patch("/groups/#{group.id}") end}
         >
           <:col :let={{_id, group}} label="Picture"><.avatar user={group} /></:col>
           <:col :let={{_id, group}} label="Name"><%= group.name %></:col>

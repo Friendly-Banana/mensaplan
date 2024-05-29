@@ -45,7 +45,7 @@ defmodule MensaplanWeb.CoreComponents do
     <div title={@user.name} {@rest}>
       <img
         src={@avatar}
-        alt={"Avatar of User " <> (@user.name || "")}
+        alt={"Avatar of " <> (@user.name || "User")}
         class={["w-12 h-12 rounded-full", @img_class]}
         draggable="false"
       />
@@ -265,7 +265,7 @@ defmodule MensaplanWeb.CoreComponents do
     <button
       type={@type}
       class={[
-        "phx-submit-loading:opacity-75 rounded-lg bg-blue-500 hover:!g-blue-600",
+        "phx-submit-loading:opacity-75 rounded-lg bg-blue-500 hover:bg-blue-600",
         "text-button text-white active:text-white/80",
         @class
       ]}
@@ -463,7 +463,7 @@ defmodule MensaplanWeb.CoreComponents do
 
   def header(assigns) do
     ~H"""
-    <header class={[@actions != [] && "flex items-center justify-between gap-6", @class]}>
+    <header class={["mt-3",@actions != [] && "flex items-center justify-between gap-6", @class]}>
       <div>
         <h1 class="text-lg font-semibold leading-8 text-zinc-800">
           <%= render_slot(@inner_block) %>
@@ -509,8 +509,8 @@ defmodule MensaplanWeb.CoreComponents do
       end
 
     ~H"""
-    <div class="overflow-y-auto px-4 sm:overflow-visible sm:px-0">
-      <table class="w-[40rem] mt-11 sm:w-full">
+    <div class="overflow-y-auto sm:overflow-visible sm:px-0">
+      <table class="my-5" style="width: min(40rem, 100%)">
         <thead class="text-sm text-left leading-6 text-zinc-500">
           <tr>
             <th :for={col <- @col} class="p-0 pb-4 pr-6 font-normal"><%= col[:label] %></th>

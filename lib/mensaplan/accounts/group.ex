@@ -23,7 +23,7 @@ defmodule Mensaplan.Accounts.Group do
     |> cast_assoc(:members)
     |> validate_required([:name, :owner, :members])
     |> ensure_owner_in_members()
-    |> validate_length(:name, min: 3, max: 50)
+    |> validate_length(:name, min: 3, max: 30)
   end
 
   def ensure_owner_in_members(%Ecto.Changeset{} = changeset) do

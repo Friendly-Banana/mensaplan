@@ -8,7 +8,7 @@ defmodule MensaplanWeb.PositionLive do
   alias Mensaplan.Positions.Position
 
   @impl true
-  def mount(_params, session, socket) do
+  def mount(params, session, socket) do
     Phoenix.PubSub.subscribe(Mensaplan.PubSub, "positions")
     user = session["user"]
     socket = assign(socket, user: user)
@@ -65,19 +65,16 @@ defmodule MensaplanWeb.PositionLive do
   end
 
   @impl true
-  def handle_event("group_toggle", %{"id" => id}, socket) do
-    IO.puts("Toggling group #{id}")
-    # TODO
-    {:noreply, socket}
-  end
-
-  @impl true
   def handle_event("group_transfer_owner", %{"user_id" => user_id}, socket) do
     group = socket.assigns.group
 
     if group.owner_id == socket.assigns.user.id do
       {:ok, updated_group} = Accounts.update_group(group, %{owner_id: user_id})
-      {:noreply, stream_insert(socket, :groups, updated_group)}
+
+      {:noreply,
+       stream_insert(socket, :groups, updated_group)
+       |> put_flash(:info, "Owner transferred")
+       |> redirect(to: "/")}
     else
       {:noreply, put_flash(socket, :error, "You are not the owner of this group")}
     end

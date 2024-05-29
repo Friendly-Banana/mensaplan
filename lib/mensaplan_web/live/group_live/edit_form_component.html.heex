@@ -13,53 +13,60 @@
     <.input field={@form[:name]} type="text" label="Name" />
     <.input field={@form[:avatar]} type="text" label="URL to Avatar" />
 
-    <div>
-      <.header>
-        Members
-        <:actions>
-          <span :if={@invite} class="text-blue-500">
-            <a href={~p"/groups/join/#{@invite.uuid}"}><%= @invite.uuid %></a>
-          </span>
-          <.button type="button" phx-target={@myself} phx-click={JS.push("invite")}>
-            New Invite
-          </.button>
-        </:actions>
-      </.header>
-
-      <.table id="members" rows={@form.data.members} row_id={fn m -> "member-#{m.id}" end}>
-        <:col :let={member} label="Picture"><.avatar user={member} /></:col>
-        <:col :let={member} label="Name"><%= member.name %></:col>
-        <:action :let={member}>
-          <.link
-            data-confirm="Are you sure you want to kick this user?"
-            phx-click={
-              JS.push("group_kick", value: %{user_id: member.id}) |> hide("#member-#{member.id}")
-            }
-          >
-            Kick
-          </.link>
-        </:action>
-        <:action :let={member}>
-          <.link
-            data-confirm="Are you sure you want to transfer ownership?"
-            phx-click={JS.push("group_transfer_owner", value: %{user_id: member.id})}
-          >
-            Make Owner
-          </.link>
-        </:action>
-      </.table>
-    </div>
-
     <:actions>
       <.button phx-disable-with="Saving...">Save Changes</.button>
-      <.button
-        type="button"
-        class="bg-red-600 hover:bg-red-700"
-        data-confirm="Are you sure you want to delete this group?"
-        phx-click={JS.push("group_delete") |> JS.patch("/")}
-      >
-        Delete Group
-      </.button>
     </:actions>
   </.simple_form>
+
+  <div>
+    <.header>
+      Members
+      <:actions>
+        <span
+          class="text-blue-500 inline-block max-w-20 text-nowrap overflow-scroll select-all"
+          onclick="navigator.clipboard.writeText(this.innerText);"
+        >
+          <%= @invite %>
+        </span>
+        <.button
+          phx-target={@myself}
+          phx-click={JS.push("invite")}
+          phx-disable-with="Generating..."
+        >
+          New Invite
+        </.button>
+      </:actions>
+    </.header>
+
+    <.table id="members" rows={@form.data.members} row_id={fn m -> "member-#{m.id}" end}>
+      <:col :let={member} label="Picture"><.avatar user={member} /></:col>
+      <:col :let={member} label="Name"><%= member.name %></:col>
+      <:action :let={member}>
+        <.link
+          data-confirm="Are you sure you want to kick this user?"
+          phx-click={
+            JS.push("group_kick", value: %{user_id: member.id}) |> hide("#member-#{member.id}")
+          }
+        >
+          Kick
+        </.link>
+      </:action>
+      <:action :let={member}>
+        <.link
+          data-confirm="Are you sure you want to transfer ownership?"
+          phx-click={JS.push("group_transfer_owner", value: %{user_id: member.id})}
+        >
+          Make Owner
+        </.link>
+      </:action>
+    </.table>
+  </div>
+
+  <.button
+    class="bg-red-600 hover:bg-red-700 mt-4"
+    data-confirm="Are you sure you want to delete this group?"
+    phx-click={JS.push("group_delete") |> JS.patch("/")}
+  >
+    Delete Group
+  </.button>
 </div>
