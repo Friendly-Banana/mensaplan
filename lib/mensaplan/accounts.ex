@@ -239,7 +239,7 @@ defmodule Mensaplan.Accounts do
       else
         Repo.update(new_group)
         Logger.info("Deleting group #{group.name} because it has no members left.")
-        Repo.delete!(group)
+        Repo.delete(group)
       end
     else
       Repo.update(new_group)

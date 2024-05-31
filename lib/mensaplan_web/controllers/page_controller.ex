@@ -17,6 +17,7 @@ defmodule MensaplanWeb.PageController do
       |> render(:settings)
     else
       conn
+      |> put_status(:unauthorized)
       |> put_flash(:error, "Please login to access this page.")
       |> redirect(to: "/")
     end
@@ -38,13 +39,13 @@ defmodule MensaplanWeb.PageController do
 
           conn
           |> put_status(:bad_request)
-          |> put_flash(:error, "Failed to update settings")
+          |> put_flash(:error, "Failed to update settings.")
           |> redirect(to: "/")
       end
     else
       conn
       |> put_status(:unauthorized)
-      |> put_flash(:error, "Please login first.")
+      |> put_flash(:error, "Please login to access this page.")
       |> redirect(to: "/")
     end
   end
@@ -66,11 +67,11 @@ defmodule MensaplanWeb.PageController do
   def join_confirm(conn, %{"invite" => uuid}) do
     case Accounts.accept_invite(get_session(conn, :user), uuid) do
       {:ok, _} ->
-        put_flash(conn, :info, "You have joined the group") |> redirect(to: "/")
+        put_flash(conn, :info, "You have joined the group.") |> redirect(to: "/")
 
       {:error, reason} ->
         Logger.error("Invite invalid: #{reason}")
-        put_flash(conn, :error, "No valid Invite") |> redirect(to: "/")
+        put_flash(conn, :error, "Invalid invitation link. Please ask for a new one.") |> redirect(to: "/")
     end
   end
 end

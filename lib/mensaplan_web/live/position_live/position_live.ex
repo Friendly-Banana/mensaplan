@@ -8,7 +8,7 @@ defmodule MensaplanWeb.PositionLive do
   alias Mensaplan.Positions.Position
 
   @impl true
-  def mount(params, session, socket) do
+  def mount(_params, session, socket) do
     Phoenix.PubSub.subscribe(Mensaplan.PubSub, "positions")
     user = session["user"]
     socket = assign(socket, user: user)
