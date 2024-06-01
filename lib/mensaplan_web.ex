@@ -86,6 +86,7 @@ defmodule MensaplanWeb do
       # Core UI components and translation
       import MensaplanWeb.CoreComponents
       import MensaplanWeb.Gettext
+      import MensaplanWeb.Helpers
 
       # Shortcut for generating JS commands
       alias Phoenix.LiveView.JS
