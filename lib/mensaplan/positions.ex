@@ -22,6 +22,15 @@ defmodule Mensaplan.Positions do
     Repo.all(from p in Position, where: not p.expired)
   end
 
+  def list_positions_for_group(id) do
+    Repo.all(
+      from p in Position,
+        join: owner in assoc(p, :owner),
+        join: group in assoc(owner, :groups),
+        where: not p.expired and group.id == ^id
+    )
+  end
+
   @doc """
   Gets a single position.
 
@@ -115,14 +124,14 @@ defmodule Mensaplan.Positions do
     Repo.delete(position)
   end
 
-  def expire_all_positions(user) do
-    from(p in Position, where: not p.expired and p.owner_id == ^user.id)
+  def expire_all_positions(user_id) do
+    from(p in Position, where: not p.expired and p.owner_id == ^user_id)
     |> Repo.update_all(set: [expired: true])
 
     Phoenix.PubSub.broadcast(
       Mensaplan.PubSub,
       "positions",
-      {:position_deleted, "position-#{user.id}"}
+      {:position_deleted, "position-#{user_id}"}
     )
   end
 

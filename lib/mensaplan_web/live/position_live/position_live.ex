@@ -40,13 +40,13 @@ defmodule MensaplanWeb.PositionLive do
 
   @impl true
   def handle_event("position_clear", _, socket) do
-    Positions.expire_all_positions(socket.assigns.user)
+    Positions.expire_all_positions(socket.assigns.user.id)
     {:noreply, socket |> put_flash(:info, "Position cleared")}
   end
 
   @impl true
   def handle_event("position_save", %{"position" => position_params}, socket) do
-    Positions.expire_all_positions(socket.assigns.user)
+    Positions.expire_all_positions(socket.assigns.user.id)
 
     m = Map.put(position_params, "owner_id", socket.assigns.user.id)
 

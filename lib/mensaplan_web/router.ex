@@ -1,6 +1,7 @@
 defmodule MensaplanWeb.Router do
   use MensaplanWeb, :router
   import Phoenix.LiveView.Router
+  import MensaplanWeb.ApiToken
 
   pipeline :browser do
     plug :accepts, ["html"]
@@ -13,6 +14,7 @@ defmodule MensaplanWeb.Router do
 
   pipeline :api do
     plug :accepts, ["json"]
+    plug :require_api_token
   end
 
   pipeline :admin do
@@ -42,13 +44,20 @@ defmodule MensaplanWeb.Router do
     post "/:provider/callback", AuthController, :callback
   end
 
-  # Other scopes may use custom stacks.
+  # Discord Bot API
+  # create user
+  # create position
+  # delete pos
+  # create group
+  # get pos for group
   scope "/api", MensaplanWeb do
     pipe_through :api
 
-    resources "/users", UserController, except: [:new, :edit]
-    resources "/groups", GroupController, except: [:new, :edit]
-    resources "/positions", PositionController, except: [:edit, :update]
+    resources "/users", UserController, only: [:create]
+    resources "/groups", GroupController, only: [:create, :update]
+    resources "/positions", PositionController, only: [:create]
+    post "/positions/expire/", PositionController, :expire_for_user
+    get "/positions/per_group/:group_id", PositionController, :list_positions
   end
 
   # Enable LiveDashboard and Swoosh mailbox preview in development

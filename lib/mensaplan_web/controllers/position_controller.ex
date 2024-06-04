@@ -32,4 +32,13 @@ defmodule MensaplanWeb.PositionController do
       send_resp(conn, :no_content, "")
     end
   end
+
+  def expire_for_user(conn, %{"user_id" => user_id}) do
+    Positions.expire_all_positions(user_id)
+    send_resp(conn, :no_content, "")
+  end
+
+  def list_positions(conn, %{"group_id" => id}) do
+    render(conn, :index, positions: Positions.list_positions_for_group(id))
+  end
 end
