@@ -1,5 +1,6 @@
 defmodule MensaplanWeb.GroupLive.EditFormComponent do
   use MensaplanWeb, :live_component
+
   alias Mensaplan.Accounts
 
   @impl true
@@ -48,7 +49,7 @@ defmodule MensaplanWeb.GroupLive.EditFormComponent do
       {:ok, invite} = Accounts.create_invite(socket.assigns.user, group)
 
       {:noreply,
-       assign(socket, :invite, MensaplanWeb.Endpoint.url() <> ~p"/groups/join/" <> invite.uuid)}
+       assign(socket, :invite, MensaplanWeb.Endpoint.url() <> ~p"/join/" <> invite.uuid)}
     else
       {:noreply, put_flash(socket, :error, "You are not the owner of this group")}
     end

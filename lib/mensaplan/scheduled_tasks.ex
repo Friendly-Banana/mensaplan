@@ -24,7 +24,7 @@ defmodule Mensaplan.Periodically do
       where:
         not p.expired and fragment("? + interval '1 minute' * ? <= NOW() AT TIME ZONE 'UTC'", p.inserted_at, p.expires_in)
     )
-    |> Repo.update_all(set: [expired: true])
+    |> Repo.update_all(set: [expired: true, updated_at: DateTime.utc_now()])
 
     # Reschedule once more
     schedule_expiration()

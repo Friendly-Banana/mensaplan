@@ -177,6 +177,8 @@ defmodule Mensaplan.Accounts do
   """
   def get_group!(id), do: Repo.get!(Group, id)
 
+  def get_group_by_server_id(server_id), do: Repo.get_by(Group, server_id: server_id)
+
   def get_loaded_group(id) do
     case Repo.get(Group, id) do
       nil -> nil

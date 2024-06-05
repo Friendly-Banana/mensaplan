@@ -92,13 +92,12 @@
           >
             Clear Position
           </.button>
-          <.button
-            id="set-position"
-            class="title-tooltip"
-            title="Tip: Double click on the map to set your position."
-          >
-            Set Position
-          </.button>
+
+          <.tooltip content="Tip: Double click on the map to set your position.">
+            <.button id="set-position">
+              Set Position
+            </.button>
+          </.tooltip>
         </:actions>
       </.simple_form>
 

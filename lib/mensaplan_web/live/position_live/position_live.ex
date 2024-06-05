@@ -6,6 +6,7 @@ defmodule MensaplanWeb.PositionLive do
   alias Mensaplan.Accounts
   alias Mensaplan.Positions
   alias Mensaplan.Positions.Position
+  import MensaplanWeb.Components.Tooltip
 
   @impl true
   def mount(_params, session, socket) do

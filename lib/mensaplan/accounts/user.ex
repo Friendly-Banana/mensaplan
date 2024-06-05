@@ -20,6 +20,8 @@ defmodule Mensaplan.Accounts.User do
     |> cast(attrs, [:auth_id, :name, :email, :avatar, :default_public])
     |> validate_required([:auth_id, :name, :avatar])
     |> validate_length(:name, min: 1, max: 100)
+    |> validate_length(:email, min: 1, max: 100)
+    |> unique_constraint(:auth_id)
   end
 
   @doc """

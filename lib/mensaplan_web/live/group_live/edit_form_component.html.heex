@@ -22,12 +22,13 @@
     <.header>
       Members
       <:actions>
-        <span
-          class="text-blue-500 inline-block max-w-20 text-nowrap overflow-scroll select-all"
-          onclick="navigator.clipboard.writeText(this.innerText);"
-        >
-          <%= @invite %>
-        </span>
+        <input
+          :if={@invite}
+          class="text-blue-500 select-all"
+          value={@invite}
+          onclick={"this.select();navigator.clipboard.writeText('#{@invite}')"}
+          readonly
+        />
         <.button
           phx-target={@myself}
           phx-click={JS.push("invite")}

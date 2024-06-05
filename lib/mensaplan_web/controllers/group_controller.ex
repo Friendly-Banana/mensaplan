@@ -6,11 +6,6 @@ defmodule MensaplanWeb.GroupController do
 
   action_fallback MensaplanWeb.FallbackController
 
-  def index(conn, _params) do
-    groups = Accounts.list_groups()
-    render(conn, :index, groups: groups)
-  end
-
   def create(conn, %{"group" => group_params}) do
     with {:ok, %Group{} = group} <- Accounts.create_group(group_params) do
       conn
@@ -21,8 +16,11 @@ defmodule MensaplanWeb.GroupController do
   end
 
   def show(conn, %{"id" => id}) do
-    group = Accounts.get_group!(id)
-    render(conn, :show, group: group)
+    if group = Accounts.get_group_by_server_id(id) do
+      render(conn, :show, group: group)
+    else
+      {:error, :not_found}
+    end
   end
 
   def update(conn, %{"id" => id, "group" => group_params}) do

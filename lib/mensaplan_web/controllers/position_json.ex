@@ -22,10 +22,7 @@ defmodule MensaplanWeb.PositionJSON do
       x: position.x,
       y: position.y,
       public: position.public,
-      expired: position.expired,
-      expires_in: position.expires_in,
-      inserted_at: position.inserted_at,
-      updated_at: position.updated_at
+      expires_in: position.expires_in
     }
   end
 end

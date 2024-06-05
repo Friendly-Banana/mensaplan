@@ -5,6 +5,7 @@ defmodule Mensaplan.Accounts.Group do
   schema "groups" do
     field :name, :string
     field :avatar, :string
+    field :server_id, :integer
 
     belongs_to :owner, Mensaplan.Accounts.User
 
@@ -18,11 +19,12 @@ defmodule Mensaplan.Accounts.Group do
   @doc false
   def changeset(group, attrs) do
     group
-    |> cast(attrs, [:name, :avatar])
+    |> cast(attrs, [:name, :avatar, :server_id])
     |> cast_assoc(:owner)
     |> cast_assoc(:members)
     |> validate_required([:name, :owner, :members])
     |> ensure_owner_in_members()
+    |> unique_constraint(:server_id)
     |> validate_length(:name, min: 3, max: 30)
   end
 

@@ -12,7 +12,7 @@
     <%= @invite.group.name %>
   </div>
   Do you want to join?
-  <form action="/groups/join" method="post">
+  <form action={~p"/join/"} method="post">
     <input type="hidden" name="_csrf_token" value={get_csrf_token()} />
     <input type="hidden" name="invite" value={@invite.uuid} />
     <.button class="">Join Group</.button>
