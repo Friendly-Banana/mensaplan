@@ -64,7 +64,7 @@ defmodule Mensaplan.Accounts do
   """
   def get_user!(id), do: Repo.get!(User, id)
 
-  def get_user(auth_id), do: Repo.get_by(User, auth_id: auth_id)
+  def get_user_by_auth_id(auth_id), do: Repo.get_by(User, auth_id: auth_id)
 
   @doc """
   Creates a user.

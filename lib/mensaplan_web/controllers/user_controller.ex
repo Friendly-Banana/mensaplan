@@ -21,8 +21,12 @@ defmodule MensaplanWeb.UserController do
   end
 
   def show(conn, %{"id" => id}) do
-    user = Accounts.get_user!(id)
-    render(conn, :show, user: user)
+    user = Accounts.get_user_by_auth_id(id)
+    if user == nil do
+      render(conn, :not_found)
+    else
+      render(conn, :show, user: user)
+    end
   end
 
   def update(conn, %{"id" => id, "user" => user_params}) do

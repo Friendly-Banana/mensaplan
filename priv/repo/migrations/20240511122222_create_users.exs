@@ -11,5 +11,7 @@ defmodule Mensaplan.Repo.Migrations.CreateUsers do
 
       timestamps(type: :utc_datetime)
     end
+
+    unique_index(:users, [:auth_id])
   end
 end

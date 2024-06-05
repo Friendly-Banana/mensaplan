@@ -14,7 +14,7 @@ defmodule MensaplanWeb.AuthController do
   end
 
   defp get_or_create_user(oauth_user) do
-    if user = Accounts.get_user(oauth_user.id) do
+    if user = Accounts.get_user_by_auth_id(oauth_user.id) do
       {:ok, user}
     else
       Accounts.create_user(Map.put(oauth_user, :auth_id, oauth_user[:id]))

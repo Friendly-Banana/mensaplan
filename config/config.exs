@@ -9,7 +9,8 @@ import Config
 
 config :mensaplan,
   ecto_repos: [Mensaplan.Repo],
-  generators: [timestamp_type: :utc_datetime]
+  generators: [timestamp_type: :utc_datetime],
+  api_token: System.get_env("API_TOKEN")
 
 # Configures the endpoint
 config :mensaplan, MensaplanWeb.Endpoint,

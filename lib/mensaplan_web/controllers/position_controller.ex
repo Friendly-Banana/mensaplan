@@ -13,6 +13,8 @@ defmodule MensaplanWeb.PositionController do
 
   def create(conn, %{"position" => position_params}) do
     with {:ok, %Position{} = position} <- Positions.create_position(position_params) do
+      Phoenix.PubSub.broadcast(Mensaplan.PubSub, "positions", {:position_saved, position})
+
       conn
       |> put_status(:created)
       |> put_resp_header("location", ~p"/api/positions/#{position}")

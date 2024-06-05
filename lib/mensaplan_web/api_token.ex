@@ -2,14 +2,14 @@ defmodule MensaplanWeb.ApiToken do
   import Plug.Conn
 
   def require_api_token(conn, _opts) do
-    auth = get_req_header(conn, "authorization")
-
-    if Enum.empty?(auth) || List.first(auth) != System.get_env("API_TOKEN") do
+    with ["Bearer " <> token] <- get_req_header(conn, "authorization"),
+         true <- token == Application.get_env(:mensaplan, :api_token) do
       conn
-      |> put_status(:unauthorized)
-      |> halt()
     else
-      conn
+      _ ->
+        conn
+        |> send_resp(:unauthorized, "Unauthorized")
+        |> halt()
     end
   end
 end
