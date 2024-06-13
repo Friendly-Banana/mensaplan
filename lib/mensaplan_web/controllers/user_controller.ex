@@ -6,20 +6,20 @@ defmodule MensaplanWeb.UserController do
 
   action_fallback MensaplanWeb.FallbackController
 
-  def create(conn, %{"user" => user_params}) do
-    with {:ok, %User{} = user} <- Accounts.create_user(user_params) do
-      conn
-      |> put_status(:created)
-      |> put_resp_header("location", ~p"/api/users/#{user}")
-      |> render(:show, user: user)
-    end
-  end
+  def get_or_create(conn, %{"user" => user_params}) do
+    user_params = Map.new(user_params, fn {k, v} -> {String.to_existing_atom(k), v} end)
 
-  def show(conn, %{"id" => id}) do
-    if user = Accounts.get_user_by_auth_id(id) do
-      render(conn, :show, user: user)
-    else
-      {:error, :not_found}
+    case Accounts.get_user_by_auth_id(user_params.auth_id) do
+      nil ->
+        case Accounts.create_user(user_params) do
+          {:ok, %User{} = user} ->
+            conn
+            |> put_status(:created)
+            |> render(:show, user: user)
+        end
+
+      user ->
+        render(conn, :show, user: user)
     end
   end
 end

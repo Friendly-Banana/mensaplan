@@ -1,25 +1,25 @@
 defmodule MensaplanWeb.GroupJSON do
-  alias Mensaplan.Accounts.Group
-
   @doc """
   Renders a list of groups.
   """
   def index(%{groups: groups}) do
-    %{data: for(group <- groups, do: data(group))}
+    for(group <- groups, do: data(group))
   end
 
   @doc """
   Renders a single group.
   """
   def show(%{group: group}) do
-    %{data: data(group)}
+    data(group)
   end
 
-  defp data(%Group{} = group) do
+  defp data(group) do
     %{
       id: group.id,
       name: group.name,
-      avatar: group.avatar
+      avatar: group.avatar,
+      server_id: group.server_id,
+      owner_id: group.owner_id
     }
   end
 end

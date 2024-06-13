@@ -5,17 +5,13 @@ defmodule MensaplanWeb.PositionJSON do
   Renders a list of positions.
   """
   def index(%{positions: positions}) do
-    for(position <- positions, do: data(position))
+    positions
   end
 
   @doc """
   Renders a single position.
   """
-  def show(%{position: position}) do
-    data(position)
-  end
-
-  defp data(%Position{} = position) do
+  def show(%{position: %Position{} = position}) do
     %{
       id: position.id,
       owner: position.owner_id,

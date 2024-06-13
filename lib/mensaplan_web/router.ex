@@ -49,18 +49,15 @@ defmodule MensaplanWeb.Router do
   end
 
   # Discord Bot API
-  # create or get user
-  # create, delete position
-  # create or get, delete group, add members
-  # get pos for group
   scope "/api", MensaplanWeb do
     pipe_through :api
 
-    resources "/users", UserController, only: [:create, :show]
-    resources "/groups", GroupController, only: [:create, :show, :update, :delete]
-    resources "/positions", PositionController, only: [:create]
-    post "/positions/expire/", PositionController, :expire_for_user
-    get "/positions/per_group/:group_id", PositionController, :list_positions
+    post "/user/", UserController, :get_or_create
+    post "/group/", GroupController, :get_or_create
+    post "/group/join", GroupController, :join_group
+    post "/position/", PositionController, :create_for_user
+    delete "/user/:auth_id/position", PositionController, :expire_for_user
+    get "/group/:server_id/positions", PositionController, :positions_for_server
   end
 
   scope "/admin" do

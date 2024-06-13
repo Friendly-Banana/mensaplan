@@ -20,11 +20,8 @@ defmodule MensaplanWeb.UserJSON do
       id: user.id,
       auth_id: user.auth_id,
       name: user.name,
-      email: user.email,
       avatar: user.avatar,
-      inserted_at: user.inserted_at,
-      default_public: user.default_public,
-      updated_at: user.updated_at
+      default_public: user.default_public
     }
   end
 end

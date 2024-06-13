@@ -22,12 +22,13 @@ defmodule Mensaplan.Positions do
     Repo.all(from p in Position, where: not p.expired)
   end
 
-  def list_positions_for_group(id) do
+  def list_positions_for_server(id) do
     Repo.all(
       from p in Position,
         join: owner in assoc(p, :owner),
         join: group in assoc(owner, :groups),
-        where: not p.expired and group.id == ^id
+        where: not p.expired and group.server_id == ^id,
+        select: %{id: p.id, name: owner.name, avatar: owner.avatar, x: p.x, y: p.y}
     )
   end
 

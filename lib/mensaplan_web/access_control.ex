@@ -1,4 +1,5 @@
 defmodule MensaplanWeb.AccessControl do
+  alias Mensaplan.Accounts
   use MensaplanWeb, :controller
 
   import Plug.Conn
@@ -29,6 +30,7 @@ defmodule MensaplanWeb.AccessControl do
     with ["Bearer " <> token] <- get_req_header(conn, "authorization"),
          true <- token == Application.get_env(:mensaplan, :api_token) do
       conn
+      |> assign(:user, Accounts.get_user!(2))
     else
       _ ->
         conn

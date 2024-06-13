@@ -48,28 +48,6 @@
     dropElement.addEventListener("click", setPosition);
   </script>
 
-  <style>
-    /* TODO use nicer tooltip library, also for user names
-       https://stackoverflow.com/a/60660207/12846952 */
-    @media (pointer: coarse), (hover: none) {
-        .title-tooltip {
-            position: relative;
-            display: inline-flex;
-            justify-content: center;
-        }
-        .title-tooltip:focus::after {
-            content: attr(title);
-            position: absolute;
-            top: 90%;
-            color: #000;
-            background-color: #fff;
-            border: 1px solid;
-            width: fit-content;
-            padding: 3px;
-        }
-    }
-  </style>
-
   <%= if @user do %>
     <div class="flex flex-wrap lg:flex-col justify-evenly ">
       <.simple_form
@@ -114,12 +92,14 @@
         <.table
           id="groups"
           rows={@streams.groups}
-          row_click={fn {_id, group} -> JS.patch("/groups/#{group.id}") end}
+          row_click={
+            fn {_id, group} -> group.owner_id == @user.id && JS.patch("/groups/#{group.id}") end
+          }
         >
           <:col :let={{_id, group}} label="Picture"><.avatar user={group} /></:col>
           <:col :let={{_id, group}} label="Name"><%= group.name %></:col>
           <:action :let={{_id, group}}>
-            <.link phx-click={JS.patch("/groups/#{group.id}")}>
+            <.link :if={group.owner_id == @user.id} phx-click={JS.patch("/groups/#{group.id}")}>
               Edit
             </.link>
           </:action>

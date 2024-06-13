@@ -25,14 +25,21 @@ defmodule Mensaplan.Accounts do
   def accept_invite(user, uuid) do
     Repo.transaction(fn ->
       invite = Repo.one!(from i in Invite, where: i.uuid == ^uuid, preload: [:group])
-      user = Repo.get!(User, user.id) |> Repo.preload(:groups)
 
-      Ecto.Changeset.change(user)
-      |> Ecto.Changeset.put_assoc(:groups, [invite.group | user.groups])
-      |> Repo.update!()
+      add_user_to_group(user, invite.group)
 
       invite |> Repo.delete!()
     end)
+  end
+
+  def add_user_to_group(user, group) do
+    user = Repo.get!(User, user.id) |> Repo.preload(:groups)
+
+    if !Enum.member?(user.groups, group) do
+      Ecto.Changeset.change(user)
+      |> Ecto.Changeset.put_assoc(:groups, [group | user.groups])
+      |> Repo.update!()
+    end
   end
 
   @doc """
@@ -157,7 +164,13 @@ defmodule Mensaplan.Accounts do
               g.id,
               ^user.id
             ),
-        select: %{id: g.id, name: g.name, avatar: g.avatar, owner_name: owner.name}
+        select: %{
+          id: g.id,
+          name: g.name,
+          avatar: g.avatar,
+          owner_id: owner.id,
+          owner_name: owner.name
+        }
     )
   end
 

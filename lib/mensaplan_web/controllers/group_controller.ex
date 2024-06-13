@@ -6,21 +6,31 @@ defmodule MensaplanWeb.GroupController do
 
   action_fallback MensaplanWeb.FallbackController
 
-  def create(conn, %{"group" => group_params}) do
-    with {:ok, %Group{} = group} <- Accounts.create_group(group_params) do
-      conn
-      |> put_status(:created)
-      |> put_resp_header("location", ~p"/api/groups/#{group}")
-      |> render(:show, group: group)
+  def get_or_create(conn, %{"group" => group_params}) do
+    group_params = Map.new(group_params, fn {k, v} -> {String.to_existing_atom(k), v} end)
+
+    case Accounts.get_group_by_server_id(group_params.server_id) do
+      nil ->
+        case Accounts.create_group(conn.assigns.user, group_params) do
+          {:ok, %Group{} = group} ->
+            conn
+            |> put_status(:created)
+            |> render(:show, group: group)
+        end
+
+      group ->
+        render(conn, :show, group: group)
     end
   end
 
-  def show(conn, %{"id" => id}) do
-    if group = Accounts.get_group_by_server_id(id) do
-      render(conn, :show, group: group)
-    else
-      {:error, :not_found}
-    end
+  def join_group(conn, %{"group_id" => group_id, "user_id" => user_id}) do
+    user = Accounts.get_user!(user_id)
+    group = Accounts.get_group!(group_id)
+    group = Accounts.add_user_to_group(user, group)
+
+    conn
+    |> put_status(:created)
+    |> render(:show, group: group)
   end
 
   def update(conn, %{"id" => id, "group" => group_params}) do
