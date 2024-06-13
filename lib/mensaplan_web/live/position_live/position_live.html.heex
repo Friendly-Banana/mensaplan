@@ -3,10 +3,10 @@
 <div class="flex flex-wrap justify-center gap-8 m-2">
   <div class="relative h-full" style="width: min(100%, 85svh)" id="drop-target">
     <img
-      src={~p"/images/mensaplan.svg"}
+      src={~p"/images/mensaplan.min.svg"}
       alt="Top down view of the mensa"
       draggable="false"
-      style="width: 100%; height: 100%"
+      class="w-full h-full border-2 border-gray-500 rounded-md"
     />
     <div id="position-map" phx-update="replace">
       <%= for {_, position} <- @streams.positions do %>

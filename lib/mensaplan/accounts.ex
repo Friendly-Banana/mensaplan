@@ -252,7 +252,6 @@ defmodule Mensaplan.Accounts do
         Logger.info("Transferring ownership of group #{group.name} to #{hd(new_members).name}.")
         new_group |> Ecto.Changeset.put_assoc(:owner, hd(new_members)) |> Repo.update()
       else
-        Repo.update(new_group)
         Logger.info("Deleting group #{group.name} because it has no members left.")
         Repo.delete(group)
       end
