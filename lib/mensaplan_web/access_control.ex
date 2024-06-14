@@ -1,8 +1,8 @@
 defmodule MensaplanWeb.AccessControl do
-  alias Mensaplan.Accounts
   use MensaplanWeb, :controller
 
   import Plug.Conn
+  alias Mensaplan.Accounts
 
   def require_login(conn, _opts) do
     if user = get_session(conn, :user) do

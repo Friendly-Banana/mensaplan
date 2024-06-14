@@ -4,6 +4,7 @@ defmodule MensaplanWeb.Router do
   import Phoenix.LiveView.Router
   import Phoenix.LiveDashboard.Router
   import MensaplanWeb.AccessControl
+  import MensaplanWeb.AuthController, only: [fetch_user_from_cookie: 2]
 
   pipeline :browser do
     plug :accepts, ["html"]
@@ -12,6 +13,7 @@ defmodule MensaplanWeb.Router do
     plug :put_root_layout, html: {MensaplanWeb.Layouts, :root}
     plug :protect_from_forgery
     plug :put_secure_browser_headers
+    plug :fetch_user_from_cookie
   end
 
   pipeline :api do
