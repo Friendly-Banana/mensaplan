@@ -1,6 +1,6 @@
 defmodule TimeUtils do
   def local_time do
-    DateTime.now!("Europe/Berlin") 
+    DateTime.now!("Europe/Berlin")
   end
 end
 

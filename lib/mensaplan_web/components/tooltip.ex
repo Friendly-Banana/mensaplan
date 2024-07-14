@@ -1,7 +1,7 @@
 defmodule MensaplanWeb.Components.Tooltip do
   @moduledoc """
   Provides tooltip component.
-  https://github.com/keatz55/phoenix_ui/blob/main/lib/phoenix/ui/components/tooltip.ex
+  Adapted from https://github.com/keatz55/phoenix_ui/blob/main/lib/phoenix/ui/components/tooltip.ex
   """
   use Phoenix.Component
 
