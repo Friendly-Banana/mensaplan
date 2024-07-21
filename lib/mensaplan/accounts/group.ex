@@ -13,7 +13,7 @@ defmodule Mensaplan.Accounts.Group do
       join_through: "group_members",
       on_replace: :delete
 
-    timestamps(type: :utc_datetime)
+    timestamps()
   end
 
   @doc false

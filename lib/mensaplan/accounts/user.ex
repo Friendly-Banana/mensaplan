@@ -11,7 +11,7 @@ defmodule Mensaplan.Accounts.User do
 
     many_to_many :groups, Mensaplan.Accounts.Group, join_through: "group_members"
 
-    timestamps(type: :utc_datetime)
+    timestamps()
   end
 
   @doc false

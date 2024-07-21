@@ -26,7 +26,7 @@
     <% end %>
   </div>
 
-  <script>
+  <script :if={@user && @form.data}>
     const posMarker = document.getElementById("new-position-indicator");
     const dropElement = document.getElementById("drop-target");
 

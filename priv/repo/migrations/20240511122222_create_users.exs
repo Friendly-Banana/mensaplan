@@ -10,7 +10,7 @@ defmodule Mensaplan.Repo.Migrations.CreateUsers do
       add :avatar, :string
       add :default_public, :boolean, default: false
 
-      timestamps(type: :utc_datetime)
+      timestamps()
     end
 
     unique_index(:users, [:auth_id])
