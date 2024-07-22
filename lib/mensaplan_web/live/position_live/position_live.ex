@@ -14,6 +14,10 @@ defmodule MensaplanWeb.PositionLive do
     user = session["user"]
     socket = assign(socket, user: user)
 
+    socket =
+      assign_new(socket, :dishes, fn -> Mensaplan.Mensa.list_dishes() end)
+      |> assign(:dish_likes, %{})
+
     if user do
       Phoenix.PubSub.subscribe(Mensaplan.PubSub, "groups")
       pos = Positions.get_position_of_user(user) || %Position{}

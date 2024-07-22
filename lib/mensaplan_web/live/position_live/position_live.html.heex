@@ -1,6 +1,27 @@
 <.flash_group flash={@flash} />
 
 <div class="flex flex-wrap justify-center gap-8 m-2">
+  <details open>
+    <summary class="text-lg font-semibold">Today's Menu</summary>
+    <.table id="dishes" rows={Enum.with_index(@dishes, fn element, index -> {index, element} end)}>
+      <:col :let={{_id, dish}} label="Dish"><%= dish.name %></:col>
+      <:col :let={{_id, dish}} label="Price (students)"><%= dish.price %></:col>
+
+      <:action :let={{_id, dish}}>
+        <.link phx-click={JS.push("dish_like", value: %{id: dish.id})}>
+          <.icon name="hero-hand-thumb-up" />
+          <.icon name="hero-hand-thumb-up-solid" />
+        </.link>
+      </:action>
+      <:action :let={{_id, dish}}>
+        <.link title="Dishlike" phx-click={JS.push("dish_dislike", value: %{id: dish.id})}>
+          <.icon name="hero-hand-thumb-down" />
+          <.icon name="hero-hand-thumb-down-solid" />
+        </.link>
+      </:action>
+    </.table>
+  </details>
+
   <div class="relative h-full" style="width: min(100%, 85svh)" id="drop-target">
     <img
       src={~p"/images/mensaplan.min.svg"}

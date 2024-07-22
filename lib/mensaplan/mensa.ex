@@ -36,6 +36,7 @@ defmodule Mensaplan.Mensa do
 
   """
   def get_dish!(id), do: Repo.get!(Dish, id)
+  def get_dish_by_name(name), do: Repo.get_by(Dish, name: name)
 
   @doc """
   Creates a dish.

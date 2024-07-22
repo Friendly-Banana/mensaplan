@@ -3,11 +3,9 @@ defmodule Mensaplan.Mensa.Dish do
   import Ecto.Changeset
 
   schema "dishes" do
-    field :category, :string
     field :name, :string
     field :price, :string
-
-    timestamps(type: :utc_datetime)
+    field :category, :string
   end
 
   @doc false

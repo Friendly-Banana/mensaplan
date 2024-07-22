@@ -2,8 +2,8 @@ defmodule :"Elixir.Mensaplan.Repo.Migrations.Create dishes" do
   use Ecto.Migration
 
   def change do
-    create table(:dishes, primary_key: false) do
-      add :name, :string, primary_key: true
+    create table(:dishes) do
+      add :name, :string, unique: true
       add :price, :string
       add :category, :string
     end
