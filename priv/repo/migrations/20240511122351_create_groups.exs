@@ -8,7 +8,7 @@ defmodule Mensaplan.Repo.Migrations.CreateGroups do
       add :server_id, :bigint
       add :owner_id, references(:users)
 
-      timestamps(type: :utc_datetime)
+      timestamps()
     end
 
     unique_index(:users, [:server_id])

@@ -7,7 +7,7 @@ defmodule Mensaplan.Accounts.Invite do
     belongs_to :inviter, Mensaplan.Accounts.User
     belongs_to :group, Mensaplan.Accounts.Group
 
-    timestamps(type: :utc_datetime)
+    timestamps()
   end
 
   @doc false
