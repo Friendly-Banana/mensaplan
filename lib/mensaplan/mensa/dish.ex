@@ -6,6 +6,9 @@ defmodule Mensaplan.Mensa.Dish do
     field :name, :string
     field :price, :string
     field :category, :string
+    field :date, :date, default: Date.utc_today()
+
+    has_many :likes, Mensaplan.Mensa.Like
   end
 
   @doc false

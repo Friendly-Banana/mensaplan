@@ -7,6 +7,7 @@ defmodule Mensaplan.Mensa do
   alias Mensaplan.Repo
 
   alias Mensaplan.Mensa.Dish
+  alias Mensaplan.Mensa.Like
 
   @doc """
   Returns the list of dishes.
@@ -19,6 +20,35 @@ defmodule Mensaplan.Mensa do
   """
   def list_dishes do
     Repo.all(Dish)
+  end
+
+  def list_todays_dishes(user) do
+    query =
+      from d in Dish,
+        where: d.date == ^Date.utc_today(),
+        left_join: l in assoc(d, :likes),
+        group_by: [d.id, l.like],
+        order_by: [d.category, d.name],
+        select: %{
+          id: d.id,
+          name: d.name,
+          price: d.price,
+          category: d.category,
+          likes: coalesce(sum(l.like), 0),
+        }
+
+    query =
+      if user do
+        from d in query,
+          left_join: l in assoc(d, :likes),
+          on: l.user_id == ^user.id,
+          group_by: [l.like],
+          select_merge: %{user_likes: coalesce(sum(l.like), 0)}
+      else
+        query
+      end
+
+    Repo.all(query)
   end
 
   @doc """
@@ -101,5 +131,19 @@ defmodule Mensaplan.Mensa do
   """
   def change_dish(%Dish{} = dish, attrs \\ %{}) do
     Dish.changeset(dish, attrs)
+  end
+
+  def like_dish(user_id, dish_id, like) do
+    value = if(like, do: 1, else: -1)
+
+    Repo.insert!(%Like{user_id: user_id, dish_id: dish_id, like: value},
+      on_conflict: [set: [like: value]],
+      conflict_target: [:dish_id, :user_id],
+      returning: false
+    )
+  end
+
+  def unlike_dish(user_id, dish_id) do
+    Repo.delete_all(from l in Like, where: l.user_id == ^user_id and l.dish_id == ^dish_id)
   end
 end

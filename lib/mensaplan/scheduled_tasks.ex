@@ -52,12 +52,11 @@ defmodule Mensaplan.Periodically do
     Logger.info("Fetching dishes...")
 
     today = Date.utc_today()
-    today = Date.add(today, -3)
     week_number = div(Date.day_of_year(today) - 1, 7) + 1
 
     with {:ok, response} <-
            Req.get(
-             "https://tum-dev.github.io/eat-api/en/mensa-garching/#{today.year}/#{week_number}.json"
+             "https://tum-dev.github.io/eat-api/mensa-garching/#{today.year}/#{week_number}.json"
            ),
          day <-
            Enum.find(response.body["days"], fn day -> day["date"] == Date.to_iso8601(today) end),

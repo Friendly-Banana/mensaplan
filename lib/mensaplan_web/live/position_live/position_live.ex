@@ -4,6 +4,7 @@ defmodule MensaplanWeb.PositionLive do
   use MensaplanWeb, :live_view
 
   alias Mensaplan.Accounts
+  alias Mensaplan.Mensa
   alias Mensaplan.Positions
   alias Mensaplan.Positions.Position
   import MensaplanWeb.Components.Tooltip
@@ -14,9 +15,8 @@ defmodule MensaplanWeb.PositionLive do
     user = session["user"]
     socket = assign(socket, user: user)
 
-    socket =
-      assign_new(socket, :dishes, fn -> Mensaplan.Mensa.list_dishes() end)
-      |> assign(:dish_likes, %{})
+    Phoenix.PubSub.subscribe(Mensaplan.PubSub, "update_dishes")
+    socket = assign_new(socket, :dishes, fn -> IO.inspect(Mensa.list_todays_dishes(user)) end)
 
     if user do
       Phoenix.PubSub.subscribe(Mensaplan.PubSub, "groups")
@@ -46,6 +46,7 @@ defmodule MensaplanWeb.PositionLive do
   @impl true
   def handle_event("position_clear", _, socket) do
     Positions.expire_all_positions(socket.assigns.user.id)
+    socket = assign(socket, form: to_form(Ecto.Changeset.change(%Position{})))
     {:noreply, socket |> put_flash(:info, "Position cleared")}
   end
 
@@ -118,6 +119,20 @@ defmodule MensaplanWeb.PositionLive do
   end
 
   @impl true
+  def handle_event("dish_like", %{"id" => dish_id, "like" => like}, socket) do
+    Mensa.like_dish(socket.assigns.user.id, dish_id, like)
+    Phoenix.PubSub.broadcast(Mensaplan.PubSub, "update_dishes", {:update_dishes})
+    {:noreply, socket}
+  end
+
+  @impl true
+  def handle_event("dish_unlike", %{"id" => dish_id}, socket) do
+    Mensa.unlike_dish(socket.assigns.user.id, dish_id)
+    Phoenix.PubSub.broadcast(Mensaplan.PubSub, "update_dishes", {:update_dishes})
+    {:noreply, socket}
+  end
+
+  @impl true
   def handle_params(params, _, socket) do
     if socket.assigns.live_action do
       handle_action(socket.assigns.live_action, params, socket)
@@ -127,9 +142,7 @@ defmodule MensaplanWeb.PositionLive do
   end
 
   defp handle_action(:group_new, _, socket) do
-    {:noreply,
-     socket
-     |> assign(:group, %Group{})}
+    {:noreply, socket |> assign(:group, %Group{})}
   end
 
   defp handle_action(:group_edit, %{"id" => id}, socket) do
@@ -146,6 +159,11 @@ defmodule MensaplanWeb.PositionLive do
   end
 
   @impl true
+  def handle_info({:update_dishes}, socket) do
+    {:noreply, assign(socket, :dishes, Mensa.list_todays_dishes(socket.assigns.user))}
+  end
+
+  @impl true
   def handle_info({:group_saved, group}, socket) do
     {:noreply, stream_insert(socket, :groups, group)}
   end
@@ -157,12 +175,7 @@ defmodule MensaplanWeb.PositionLive do
 
   @impl true
   def handle_info({:position_saved, position}, socket) do
-    if position.public or
-         (socket.assigns.user &&
-            (position.owner_id == socket.assigns.user.id or
-               Enum.any?(position.owner.groups, fn group ->
-                 Enum.member?(socket.assigns.user.groups, group)
-               end))) do
+    if position.public or is_position_visible?(position, socket) do
       {:noreply, stream_insert(socket, :positions, position_to_map(position))}
     else
       {:noreply, socket}
@@ -172,6 +185,13 @@ defmodule MensaplanWeb.PositionLive do
   @impl true
   def handle_info({:position_deleted, id}, socket) do
     {:noreply, stream_delete_by_dom_id(socket, :positions, id)}
+  end
+
+  defp is_position_visible?(position, socket) do
+    position.owner_id == socket.assigns.user.id or
+      Enum.any?(position.owner.groups, fn group ->
+        Enum.member?(socket.assigns.user.groups, group)
+      end)
   end
 
   defp position_to_map(%Position{} = position) do
