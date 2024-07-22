@@ -25,7 +25,9 @@ defmodule Mensaplan.Periodically do
 
   def init(state) do
     Process.send_after(self(), :expire_positions, @five_minutes)
-    Process.send_after(self(), :fetch_dishes, 0)
+    # run shortly after midnight
+    till_midnight = Time.diff(~T[00:00:00], Time.utc_now(), :millisecond)
+    Process.send_after(self(), :fetch_dishes, @daily + @five_minutes + till_midnight)
     {:ok, state}
   end
 
