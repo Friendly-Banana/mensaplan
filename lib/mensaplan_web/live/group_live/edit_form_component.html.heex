@@ -22,20 +22,23 @@
     <.header>
       Members
       <:actions>
-        <input
-          :if={@invite}
-          class="text-blue-500 select-all"
-          value={@invite}
-          onclick={"this.select();navigator.clipboard.writeText('#{@invite}')"}
-          readonly
-        />
-        <.button
-          phx-target={@myself}
-          phx-click={JS.push("invite")}
-          phx-disable-with="Generating..."
-        >
-          New Invite
-        </.button>
+        <.tooltip content="Click to copy">
+          <input
+            class="text-blue-500 select-all"
+            value={MensaplanWeb.Endpoint.url() <> ~p"/join/" <> @group.invite}
+            onclick="this.select();navigator.clipboard.writeText(this.value)"
+            readonly
+          />
+        </.tooltip>
+        <.tooltip content="This will invalidate all previous invites">
+          <.button
+            phx-target={@myself}
+            phx-click={JS.push("invite")}
+            phx-disable-with="Generating..."
+          >
+            Reset Invite
+          </.button>
+        </.tooltip>
       </:actions>
     </.header>
 

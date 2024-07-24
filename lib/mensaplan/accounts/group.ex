@@ -6,6 +6,7 @@ defmodule Mensaplan.Accounts.Group do
     field :name, :string
     field :avatar, :string
     field :server_id, :integer
+    field :invite, :binary_id, default: Ecto.UUID.generate()
 
     belongs_to :owner, Mensaplan.Accounts.User
 
