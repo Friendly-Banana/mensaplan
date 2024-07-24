@@ -10,6 +10,7 @@ defmodule Mensaplan.Periodically do
 
   @five_minutes 5 * 60 * 1000
   @daily 24 * 60 * 60 * 1000
+  @timezone "Europe/Berlin"
 
   def format(num) when is_integer(num) do
     :erlang.integer_to_binary(num) <> ".00"
@@ -26,7 +27,8 @@ defmodule Mensaplan.Periodically do
   def init(state) do
     Process.send_after(self(), :expire_positions, @five_minutes)
     # run shortly after midnight
-    till_midnight = Time.diff(~T[00:00:00], Time.utc_now(), :millisecond)
+    {:ok, now} = DateTime.now(@timezone)
+    till_midnight = Time.diff(~T[00:00:00], now, :millisecond)
     Process.send_after(self(), :fetch_dishes, @daily + @five_minutes + till_midnight)
     {:ok, state}
   end
@@ -53,7 +55,7 @@ defmodule Mensaplan.Periodically do
   def handle_info(:fetch_dishes, state) do
     Logger.info("Fetching dishes...")
 
-    today = Date.utc_today()
+    {:ok, today} = DateTime.now(@timezone)
     week_number = div(Date.day_of_year(today) - 1, 7) + 1
 
     with {:ok, response} <-
@@ -78,7 +80,7 @@ defmodule Mensaplan.Periodically do
       |> Enum.filter(fn dish -> dish.category != "Beilagen" end)
       |> Enum.each(fn dish ->
         (Mensa.get_dish_by_name(dish.name) || dish)
-        |> Dish.changeset(%{})
+        |> Dish.changeset(%{date: today})
         |> Repo.insert_or_update()
       end)
     else

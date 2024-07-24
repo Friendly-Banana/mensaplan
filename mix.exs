@@ -59,7 +59,8 @@ defmodule Mensaplan.MixProject do
       {:dns_cluster, "~> 0.1.1"},
       {:bandit, "~> 1.2"},
       {:ueberauth_auth0, "~> 2.0"},
-      {:req, "~> 0.5.0"}
+      {:req, "~> 0.5.0"},
+      {:tzdata, "~> 1.1"}
     ]
   end
 

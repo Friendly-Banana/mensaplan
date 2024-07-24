@@ -16,7 +16,7 @@ defmodule MensaplanWeb.PositionLive do
     socket = assign(socket, user: user)
 
     Phoenix.PubSub.subscribe(Mensaplan.PubSub, "update_dishes")
-    socket = assign_new(socket, :dishes, fn -> IO.inspect(Mensa.list_todays_dishes(user)) end)
+    socket = assign_new(socket, :dishes, fn -> Mensa.list_todays_dishes(user) end)
 
     if user do
       Phoenix.PubSub.subscribe(Mensaplan.PubSub, "groups")
