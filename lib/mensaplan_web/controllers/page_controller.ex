@@ -7,10 +7,12 @@ defmodule MensaplanWeb.PageController do
   alias Mensaplan.Accounts.User
 
   def about(conn, _params) do
+    conn = assign(conn, :page_title, "About")
     render(conn, :about)
   end
 
   def settings(conn, _params) do
+    conn = assign(conn, :page_title, "Settings")
     render(conn, :settings)
   end
 
@@ -43,6 +45,7 @@ defmodule MensaplanWeb.PageController do
 
       invite ->
         conn
+        |> assign(:page_title, "Join Group " <> invite.group.name)
         |> assign(:invite, invite)
         |> render(:join)
     end

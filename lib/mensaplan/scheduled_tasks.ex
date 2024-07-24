@@ -34,7 +34,7 @@ defmodule Mensaplan.Periodically do
   end
 
   def handle_info(:expire_positions, state) do
-    Logger.info("Expiring positions...")
+    Logger.debug("Expiring positions...")
 
     from(p in Position,
       where:

@@ -6,49 +6,70 @@
   />
   <div class="absolute inset-0 flex flex-col items-center justify-center text-white drop-shadow-md">
     <h1 class="text-3xl font-bold mb-1">About Mensaplan</h1>
-    <h2 class="text-2xl">Helping Students find their peers for lunch</h2>
+    <h2 class="text-2xl">Never eat alone again!</h2>
   </div>
 </div>
 
-<main class="container mx-auto px-6 py-4 text-lg">
-  <p class="mb-2">
-    Mensaplan allows you to easily meet up with others. With a battleship like grid, both finding and sharing a position is easier than ever.
-  </p>
-  <p class="mb-2">
-    The problem: You want to eat lunch, but not alone. So you wonder: Are any of my friends already in the Mensa? If so, where?
-    That's where Mensaplan comes into play, look up where your friends are. If you're the first to seat, share your position on the grid.
-  </p>
+<style>
+  main a, small a {
+      color: rgb(59 130 246);
+      text-decoration: none;
+  }
 
-  <h2 class="text-xl my-3 font-medium">Origin Story</h2>
-  <p class="mb-2">
-    Mensaplan was first integrated into a Discord Bot after the developer stumbled upon an image of the Mensa plan. The bot was a great success with surprisingly many people asking to use it too. So the developer, me :), decided to create a web application to make it easier for everyone to use.
+  main a:hover, small a:hover {
+      color: rgb(37 99 235);
+      text-decoration: underline;
+  }
+</style>
+
+<main class="container mx-auto px-6 py-4 text-lg space-y-4 leading-6">
+  <p>
+    Experience the buzz of Garching with our unique platform, designed to connect you with fellow
+    <a href="https://www.studierendenwerk-muenchen-oberbayern.de/mensa/"> TUM Mensa </a>
+    enthusiasts. With an <a href="https://en.wikipedia.org/wiki/IEEE_754">almost</a>
+    infinitely-precise grid, both finding and sharing a position is easier than ever.
   </p>
   <p>
-    My friends and I have been using this for a while now and it has been a great success. We hope you enjoy it as much as we do.
+    Looking for a lunch companion at TUM Mensa? Mensaplan is your go-to solution. Discover if your friends are already dining, and where they're seated. Be the first to arrive? Share your location on our interactive grid. Vote on your favorite dishes to help others make the best choice. Connect, dine, and enjoy with Mensaplan.
   </p>
 
-  <h2 id="how-to-use" class="text-xl my-3 font-medium">How to use</h2>
-  <p class="mb-2">
-    Your position will be visible to other users for the specified time. After that, it's automatically deleted.
+  <h2 class="text-xl my-3 font-medium">Helping Students find lunch peers since 2023</h2>
+  <p>
+    Mensaplan originated as a feature of <a href="https://github.com/Friendly-Banana/wobot">WoBot</a>, a Discord Bot, when the developer came across the floor plan of the TUM Mensa.
+    Due to its popularity, the bot was then expanded into a web application to provide easier access for a wider audience.
     <br />
-    Public means visible to all logged-in users, anonymous visitors can only see avatars, no names. If you keep it private, only members that share at least one group with you will be able to see it.
-    <br /> You can simply double tap or click anywhere on the map to set your position.
+    My friends and I have been using this for over a year and it has been a great success. We hope you enjoy it as much as we do.
+  </p>
+
+  <h2 class="text-xl my-3 font-medium">Frequently Asked Questions</h2>
+
+  <h3 class="text-lg font-medium">How can I set my position?</h3>
+  <p>
+    To set your position on the map, double click on the place where you are.
+    You can also first click the position to move the avatar and then use the "Set Position" button.
+  </p>
+
+  <h3 class="text-lg font-medium">What are public positions?</h3>
+  <p>
+    By default, positions on Mensaplan are only visible to users you share a group with. Public positions, on the other hand, are visible to all users, including non-logged-in visitors. However, anonymous visitors will only see your avatar and not your name.<br />
+    Public positions allow you to connect with new people and potentially make new friends. You can discover other users who are also dining at TUM Mensa and reach out to them for a meal together. It's a great way to expand your social circle.
+  </p>
+
+  <h3 class="text-lg font-medium">Can I change my username?</h3>
+  <p>
+    Mensaplan uses the name associated with your login method. If you log in via Discord, Mensaplan will use your Discord username.
+    After you changed your username, please log out and log in again to update your name in Mensaplan.
+  </p>
+
+  <h3 class="text-lg font-medium">How can I report a bug or issue?</h3>
+  <p>
+    If you encounter any bugs or issues while using Mensaplan, please report them on <a href="https://github.com/Friendly-Banana/mensaplan/issues">GitHub</a>.
+    Please provide detailed information about the problem you are facing, including any error messages or screenshots if possible.
   </p>
 </main>
 
 <small class="text-gray-500 text-center">
-  Icons from
-  <a
-    href="https://github.com/free-icons/free-icons"
-    class="text-blue-500 hover:text-blue-600 hover:underline"
-  >
-    https://github.com/free-icons/free-icons
-  </a>
-  used under
-  <a
-    href="https://creativecommons.org/licenses/by/4.0/"
-    class="text-blue-500 hover:text-blue-600 hover:underline"
-  >
-    CC BY 4.0
-  </a>
+  All icons in the mensa map are
+  <a href="https://github.com/free-icons/free-icons"> Free Icons </a>
+  used under <a href="https://creativecommons.org/licenses/by/4.0/"> CC BY 4.0 </a>
 </small>

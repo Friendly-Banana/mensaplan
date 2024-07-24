@@ -6,7 +6,7 @@
       <%= @invite.inviter.name %>
     </div>
   </small>
-  has invited you to their group
+  has invited you to the group
   <div class="flex items-center justify-center font-bold">
     <.avatar user={@invite.group} class="mr-4" />
     <%= @invite.group.name %>
@@ -19,9 +19,6 @@
   </form>
 
   <small class="text-sm">
-    If you don't want to join, you can ignore this and
-    <.link navigate={~p"/"} class="text-blue-700  hover:text-zinc-700">
-      go home.
-    </.link>
+    If you don't want to join, you can simply ignore this.
   </small>
 </div>

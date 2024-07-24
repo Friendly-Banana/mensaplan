@@ -151,7 +151,7 @@ defmodule MensaplanWeb.PositionLive do
     if group && group.owner_id == socket.assigns.user.id do
       {:noreply,
        socket
-       |> assign(:page_title, "Edit Group")
+       |> assign(:page_title, "Edit Group " <> group.name)
        |> assign(:group, group)}
     else
       {:noreply, socket |> put_flash(:error, "Group not found") |> redirect(to: "/")}

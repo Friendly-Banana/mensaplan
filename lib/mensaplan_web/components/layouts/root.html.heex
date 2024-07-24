@@ -4,8 +4,10 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="csrf-token" content={get_csrf_token()} />
-    <.live_title suffix=" · Phoenix Framework">
-      <%= assigns[:page_title] || "Mensaplan" %>
+    <meta name="keywords" content="mensa, mensaplan, tum, garching, friends, menu, lunch, food, canteen, university, students, social" />
+    <meta name="description" content="The hottest tool in Garching to find friends in the TUM Mensa. Checkout today's menu complete with ratings to guide your culinary journey." />
+    <.live_title suffix=" · Mensaplan">
+      <%= assigns[:page_title] || "Homepage" %>
     </.live_title>
     <link phx-track-static rel="stylesheet" href={~p"/assets/app.css"} />
     <script defer phx-track-static type="text/javascript" src={~p"/assets/app.js"}>

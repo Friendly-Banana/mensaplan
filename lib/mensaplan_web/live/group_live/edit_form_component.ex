@@ -2,6 +2,7 @@ defmodule MensaplanWeb.GroupLive.EditFormComponent do
   use MensaplanWeb, :live_component
 
   alias Mensaplan.Accounts
+  import MensaplanWeb.Components.Tooltip
 
   @impl true
   def update(%{group: group} = assigns, socket) do
