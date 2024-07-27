@@ -19,7 +19,7 @@ defmodule Mensaplan.MixProject do
   def application do
     [
       mod: {Mensaplan.Application, []},
-      extra_applications: [:ueberauth_auth0, :logger, :runtime_tools]
+      extra_applications: [:logger, :runtime_tools]
     ]
   end
 
@@ -58,7 +58,7 @@ defmodule Mensaplan.MixProject do
       {:jason, "~> 1.2"},
       {:dns_cluster, "~> 0.1.1"},
       {:bandit, "~> 1.2"},
-      {:ueberauth_auth0, "~> 2.0"},
+      {:ueberauth_discord, "~> 0.6"},
       {:req, "~> 0.5.0"},
       {:tzdata, "~> 1.1"}
     ]

@@ -12,14 +12,6 @@ defmodule Mensaplan.Periodically do
   @daily 24 * 60 * 60 * 1000
   @timezone "Europe/Berlin"
 
-  def format(num) when is_integer(num) do
-    :erlang.integer_to_binary(num) <> ".00"
-  end
-
-  def format(num) when is_float(num) do
-    :erlang.float_to_binary(num, decimals: 2)
-  end
-
   def start_link(_opts) do
     GenServer.start_link(__MODULE__, %{})
   end
@@ -53,42 +45,57 @@ defmodule Mensaplan.Periodically do
   end
 
   def handle_info(:fetch_dishes, state) do
-    Logger.info("Fetching dishes...")
-
     {:ok, today} = DateTime.now(@timezone)
     week_number = div(Date.day_of_year(today) - 1, 7) + 1
+    Logger.info("Fetching dishes for #{today}...")
 
     with {:ok, response} <-
            Req.get(
              "https://tum-dev.github.io/eat-api/mensa-garching/#{today.year}/#{week_number}.json"
            ),
-         day <-
+         day when day != nil <-
            Enum.find(response.body["days"], fn day -> day["date"] == Date.to_iso8601(today) end),
-         dishes <- day["dishes"] do
-      Enum.map(dishes, fn dish ->
-        price = dish["prices"]["students"]
-        per_unit = format(price["price_per_unit"]) <> "€/" <> price["unit"]
+         dishes when dishes != nil <- day["dishes"] do
+      dishes = Enum.filter(dishes, fn dish -> dish["dish_type"] != "Beilagen" end)
 
-        %Dish{
-          name: String.trim(dish["name"]),
-          price:
-            ((price["base_price"] > 0 && format(price["base_price"]) <> "€ + ") || "") <>
-              per_unit,
-          category: dish["dish_type"]
-        }
-      end)
-      |> Enum.filter(fn dish -> dish.category != "Beilagen" end)
+      Enum.map(dishes, &dish_from_json/1)
       |> Enum.each(fn dish ->
         (Mensa.get_dish_by_name(dish.name) || dish)
         |> Dish.changeset(%{date: today})
         |> Repo.insert_or_update()
       end)
+
+      Logger.info("Fetched #{Enum.count(dishes)} dishes.")
     else
+      nil ->
+        Logger.info("Couldn't find data, mensa is probably closed today.")
+
       {:error, reason} ->
         Logger.error("Fetching dishes failed: #{reason}")
     end
 
     Process.send_after(self(), :fetch_dishes, @daily)
     {:noreply, state}
+  end
+
+  def format(num) when is_integer(num) do
+    :erlang.integer_to_binary(num) <> ".00"
+  end
+
+  def format(num) when is_float(num) do
+    :erlang.float_to_binary(num, decimals: 2)
+  end
+
+  def dish_from_json(dish) do
+    price = dish["prices"]["students"]
+    per_unit = format(price["price_per_unit"]) <> "€/" <> price["unit"]
+
+    %Dish{
+      name: String.trim(dish["name"]),
+      price:
+        ((price["base_price"] > 0 && format(price["base_price"]) <> "€ + ") || "") <>
+          per_unit,
+      category: dish["dish_type"]
+    }
   end
 end
