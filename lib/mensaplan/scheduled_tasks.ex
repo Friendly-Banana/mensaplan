@@ -19,7 +19,7 @@ defmodule Mensaplan.Periodically do
   def init(state) do
     Process.send_after(self(), :expire_positions, @five_minutes)
     # run shortly after midnight
-    {:ok, now} = DateTime.now(@timezone)
+    now = DateTime.now!(@timezone)
     till_midnight = Time.diff(~T[00:00:00], now, :millisecond)
     Process.send_after(self(), :fetch_dishes, @daily + @five_minutes + till_midnight)
     {:ok, state}
@@ -45,7 +45,7 @@ defmodule Mensaplan.Periodically do
   end
 
   def handle_info(:fetch_dishes, state) do
-    {:ok, today} = DateTime.now(@timezone)
+    today = DateTime.now!(@timezone)
     week_number = div(Date.day_of_year(today) - 1, 7) + 1
     Logger.info("Fetching dishes for #{today}...")
 

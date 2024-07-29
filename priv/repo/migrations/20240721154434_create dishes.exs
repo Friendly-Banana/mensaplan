@@ -3,11 +3,13 @@ defmodule :"Elixir.Mensaplan.Repo.Migrations.Create dishes" do
 
   def change do
     create table(:dishes) do
-      add :name, :string, unique: true
+      add :name, :string
       add :price, :string
       add :category, :string
       add :date, :date, default: fragment("CURRENT_DATE")
     end
+
+    create unique_index(:dishes, [:name])
 
     create table(:likes, primary_key: false) do
       add :like, :integer

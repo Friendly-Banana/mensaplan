@@ -5,7 +5,6 @@ defmodule Mensaplan.Accounts.User do
   schema "users" do
     field :auth_id, :string
     field :name, :string
-    field :email, :string
     field :avatar, :string
     field :default_public, :boolean, default: true
 
@@ -17,10 +16,9 @@ defmodule Mensaplan.Accounts.User do
   @doc false
   def changeset(user, attrs) do
     user
-    |> cast(attrs, [:auth_id, :name, :email, :avatar, :default_public])
+    |> cast(attrs, [:auth_id, :name, :avatar, :default_public])
     |> validate_required([:auth_id, :name, :avatar])
     |> validate_length(:name, min: 1, max: 100)
-    |> validate_length(:email, min: 1, max: 100)
     |> unique_constraint(:auth_id)
   end
 
