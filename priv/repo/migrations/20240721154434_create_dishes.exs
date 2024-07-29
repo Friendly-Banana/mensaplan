@@ -1,4 +1,4 @@
-defmodule :"Elixir.Mensaplan.Repo.Migrations.Create dishes" do
+defmodule Mensaplan.Repo.Migrations.CreateDishes do
   use Ecto.Migration
 
   def change do

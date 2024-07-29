@@ -2,6 +2,7 @@ defmodule Mensaplan.Periodically do
   use GenServer
 
   import Ecto.Query, warn: false
+  import TimeUtils
   alias Mensaplan.Mensa
   alias Mensaplan.Mensa.Dish
   alias Mensaplan.Positions.Position
@@ -10,7 +11,6 @@ defmodule Mensaplan.Periodically do
 
   @five_minutes 5 * 60 * 1000
   @daily 24 * 60 * 60 * 1000
-  @timezone "Europe/Berlin"
 
   def start_link(_opts) do
     GenServer.start_link(__MODULE__, %{})
@@ -19,7 +19,7 @@ defmodule Mensaplan.Periodically do
   def init(state) do
     Process.send_after(self(), :expire_positions, @five_minutes)
     # run shortly after midnight
-    now = DateTime.now!(@timezone)
+    now = local_now()
     till_midnight = Time.diff(~T[00:00:00], now, :millisecond)
     Process.send_after(self(), :fetch_dishes, @daily + @five_minutes + till_midnight)
     {:ok, state}
@@ -45,7 +45,7 @@ defmodule Mensaplan.Periodically do
   end
 
   def handle_info(:fetch_dishes, state) do
-    today = DateTime.now!(@timezone)
+    today = local_now()
     week_number = div(Date.day_of_year(today) - 1, 7) + 1
     Logger.info("Fetching dishes for #{today}...")
 

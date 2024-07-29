@@ -1,4 +1,4 @@
-defmodule :"Elixir.Mensaplan.Repo.Migrations.Add group invites" do
+defmodule Mensaplan.Repo.Migrations.CreateInvites do
   use Ecto.Migration
 
   def change do

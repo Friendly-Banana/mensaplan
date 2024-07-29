@@ -4,8 +4,9 @@ defmodule Mensaplan.Mensa do
   """
 
   import Ecto.Query, warn: false
-  alias Mensaplan.Repo
+  import TimeUtils
 
+  alias Mensaplan.Repo
   alias Mensaplan.Mensa.Dish
   alias Mensaplan.Mensa.Like
 
@@ -25,7 +26,7 @@ defmodule Mensaplan.Mensa do
   def list_todays_dishes(user) do
     query =
       from d in Dish,
-        where: d.date == ^Date.utc_today(),
+        where: d.date == ^local_now(),
         left_join: l in assoc(d, :likes),
         group_by: [d.id, l.like],
         order_by: [d.category, d.name],
@@ -34,7 +35,7 @@ defmodule Mensaplan.Mensa do
           name: d.name,
           price: d.price,
           category: d.category,
-          likes: coalesce(sum(l.like), 0),
+          likes: coalesce(sum(l.like), 0)
         }
 
     query =
@@ -133,7 +134,10 @@ defmodule Mensaplan.Mensa do
     Dish.changeset(dish, attrs)
   end
 
-  def like_dish(user_id, dish_id, like) do
+  @doc """
+  Likes a dish. Use false to dislike a dish.
+  """
+  def like_dish(user_id, dish_id, like \\ true) do
     value = if(like, do: 1, else: -1)
 
     Repo.insert!(%Like{user_id: user_id, dish_id: dish_id, like: value},
@@ -143,6 +147,9 @@ defmodule Mensaplan.Mensa do
     )
   end
 
+  @doc """
+  Removes all votes on a dish.
+  """
   def unlike_dish(user_id, dish_id) do
     Repo.delete_all(from l in Like, where: l.user_id == ^user_id and l.dish_id == ^dish_id)
   end

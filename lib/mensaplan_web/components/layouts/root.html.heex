@@ -23,7 +23,7 @@
       <div class="flex flex-col sm:flex-row items-center justify-evenly p-2 text-sm">
         <img class="h-4 w-4" src={~p"/images/logo.svg"} alt="Logo" />
         <span>
-          ©<%= DateTime.utc_now().year %> Gabriel
+          ©<%= TimeUtils.local_now().year %> Gabriel
         </span>
         <span>
           Version <%= Application.spec(:mensaplan, :vsn) %>

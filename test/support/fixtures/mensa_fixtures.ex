@@ -12,7 +12,7 @@ defmodule Mensaplan.MensaFixtures do
       attrs
       |> Enum.into(%{
         category: "some category",
-        name: "some name",
+        name: "some unique name #{System.unique_integer()}",
         price: "some price"
       })
       |> Mensaplan.Mensa.create_dish()

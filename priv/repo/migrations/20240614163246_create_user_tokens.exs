@@ -1,4 +1,4 @@
-defmodule Mensaplan.Repo.Migrations.CreateUsersTokenss do
+defmodule Mensaplan.Repo.Migrations.CreateUserTokens do
   use Ecto.Migration
 
   def change do
@@ -10,6 +10,6 @@ defmodule Mensaplan.Repo.Migrations.CreateUsersTokenss do
     end
 
     create index(:user_tokens, [:user_id])
-    create unique_index(:user_tokens, :token)
+    create unique_index(:user_tokens, [:token])
   end
 end

@@ -36,7 +36,7 @@ defmodule Mensaplan.Accounts do
     user = Repo.get!(User, user.id) |> Repo.preload(:groups)
 
     if !Enum.member?(user.groups, group) do
-      Ecto.Changeset.change(user)
+      change_user(user)
       |> Ecto.Changeset.put_assoc(:groups, [group | user.groups])
       |> Repo.update!()
     end
@@ -109,6 +109,12 @@ defmodule Mensaplan.Accounts do
     |> Repo.update()
   end
 
+  def update_user_settings(%User{} = user, attrs) do
+    user
+    |> User.change_settings(attrs)
+    |> Repo.update()
+  end
+
   @doc """
   Deletes a user.
 
@@ -151,27 +157,6 @@ defmodule Mensaplan.Accounts do
   """
   def list_groups do
     Repo.all(Group)
-  end
-
-  def list_groups_for_user(%User{} = user) do
-    Repo.all(
-      from g in Group,
-        join: owner in assoc(g, :owner),
-        where:
-          g.owner_id == ^user.id or
-            fragment(
-              "exists(select * from group_members gm where gm.group_id = ? and gm.user_id = ?)",
-              g.id,
-              ^user.id
-            ),
-        select: %{
-          id: g.id,
-          name: g.name,
-          avatar: g.avatar,
-          owner_id: owner.id,
-          owner_name: owner.name
-        }
-    )
   end
 
   @doc """

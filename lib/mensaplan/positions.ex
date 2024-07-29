@@ -4,6 +4,7 @@ defmodule Mensaplan.Positions do
   """
 
   import Ecto.Query, warn: false
+  alias Mensaplan.Accounts.Group
   alias Mensaplan.Repo
 
   alias Mensaplan.Accounts.User
@@ -22,13 +23,17 @@ defmodule Mensaplan.Positions do
     Repo.all(from p in Position, where: not p.expired)
   end
 
+  @doc """
+  Returns all positions of users in a server group.
+  """
   def list_positions_for_server(id) do
     Repo.all(
-      from p in Position,
-        join: owner in assoc(p, :owner),
-        join: group in assoc(owner, :groups),
-        where: not p.expired and group.server_id == ^id,
-        select: %{id: p.id, name: owner.name, avatar: owner.avatar, x: p.x, y: p.y}
+      from group in Group,
+        where: group.server_id == ^id,
+        join: user in assoc(group, :members),
+        join: p in assoc(user, :positions),
+        where: not p.expired,
+        select: %{id: p.id, name: user.name, avatar: user.avatar, x: p.x, y: p.y}
     )
   end
 
@@ -73,19 +78,22 @@ defmodule Mensaplan.Positions do
   3. Positions of other users from common groups
   """
   def get_positions_visible_to_user(%User{} = user) do
+    query =
+      from(u in User,
+        where: u.id == ^user.id,
+        join: group in assoc(u, :groups),
+        join: member in assoc(group, :members),
+        join: pos in assoc(member, :positions),
+        where: not pos.expired,
+        select: %{id: pos.id, name: member.name, avatar: member.avatar, x: pos.x, y: pos.y}
+      )
+
     Repo.all(
-      from(p in Position,
-        join: owner in assoc(p, :owner),
-        # TODO: benchmark this fragment, maybe use cleaner version with groups table
-        where:
-          not p.expired and
-            (p.public or p.owner_id == ^user.id or
-               fragment(
-                 "exists(select * from group_members a join group_members b on a.group_id = b.group_id where a.user_id = ? and b.user_id = ?)",
-                 p.owner_id,
-                 ^user.id
-               )),
-        select: %{id: owner.id, name: owner.name, avatar: owner.avatar, x: p.x, y: p.y}
+      from(pos in Position,
+        where: not pos.expired and (pos.public or pos.owner_id == ^user.id),
+        join: owner in assoc(pos, :owner),
+        select: %{id: pos.id, name: owner.name, avatar: owner.avatar, x: pos.x, y: pos.y},
+        union_all: ^query
       )
     )
   end

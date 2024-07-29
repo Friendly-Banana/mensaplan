@@ -10,6 +10,8 @@ defmodule Mensaplan.Accounts.User do
 
     many_to_many :groups, Mensaplan.Accounts.Group, join_through: "group_members"
 
+    has_many :positions, Mensaplan.Positions.Position, foreign_key: :owner_id
+
     timestamps()
   end
 

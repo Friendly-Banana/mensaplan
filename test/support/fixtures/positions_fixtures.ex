@@ -11,8 +11,8 @@ defmodule Mensaplan.PositionsFixtures do
     {:ok, position} =
       attrs
       |> Enum.into(%{
-        x: 120.5,
-        y: 120.5
+        x: 20.5,
+        y: 75.0
       })
       |> Mensaplan.Positions.create_position()
 

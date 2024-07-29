@@ -1,4 +1,4 @@
-defmodule :"Elixir.Mensaplan.Repo.Migrations.Create positions" do
+defmodule Mensaplan.Repo.Migrations.CreatePositions do
   use Ecto.Migration
 
   def change do

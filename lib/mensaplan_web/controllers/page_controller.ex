@@ -3,8 +3,6 @@ defmodule MensaplanWeb.PageController do
 
   require Logger
   alias Mensaplan.Accounts
-  alias Mensaplan.Repo
-  alias Mensaplan.Accounts.User
 
   def about(conn, _params) do
     conn = assign(conn, :page_title, "About")
@@ -19,8 +17,7 @@ defmodule MensaplanWeb.PageController do
   def update_settings(conn, params = %{"default_public" => _}) do
     user = get_session(conn, :user)
 
-    case User.change_settings(user, params)
-         |> Repo.update() do
+    case Accounts.update_user_settings(user, params) do
       {:ok, updated_user} ->
         put_session(conn, :user, updated_user)
         |> put_flash(:info, "Settings updated.")

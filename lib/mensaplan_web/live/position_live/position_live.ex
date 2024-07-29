@@ -1,9 +1,9 @@
 defmodule MensaplanWeb.PositionLive do
   require Logger
-  alias Mensaplan.Accounts.Group
   use MensaplanWeb, :live_view
 
   alias Mensaplan.Accounts
+  alias Mensaplan.Accounts.Group
   alias Mensaplan.Mensa
   alias Mensaplan.Positions
   alias Mensaplan.Positions.Position
@@ -25,7 +25,7 @@ defmodule MensaplanWeb.PositionLive do
 
       socket =
         assign(socket, form: to_form(Ecto.Changeset.change(pos)))
-        |> stream(:groups, Accounts.list_groups_for_user(user))
+        |> stream(:groups, Mensaplan.Repo.preload(user, [:groups]).groups)
 
       {:ok, stream(socket, :positions, Positions.get_positions_visible_to_user(user))}
     else

@@ -28,7 +28,7 @@ defmodule Mensaplan.Accounts.Group do
     |> validate_length(:name, min: 3, max: 30)
   end
 
-  def ensure_owner_in_members(%Ecto.Changeset{} = changeset) do
+  defp ensure_owner_in_members(%Ecto.Changeset{} = changeset) do
     with {_, owner} <- fetch_field(changeset, :owner),
          {_, members} <- fetch_field(changeset, :members) do
       if Enum.member?(members, owner) do
