@@ -33,6 +33,18 @@ defmodule MensaplanWeb.ConnCase do
 
   setup tags do
     Mensaplan.DataCase.setup_sandbox(tags)
+
+    # setup API user
+    api_user = Mensaplan.AccountsFixtures.user_fixture()
+    Mensaplan.Repo.update!(Ecto.Changeset.change(api_user, %{id: 2}))
+
     {:ok, conn: Phoenix.ConnTest.build_conn()}
+  end
+
+  def authorize(conn) do
+    System.put_env("API_TOKEN", "secret")
+
+    conn
+    |> Plug.Conn.put_req_header("authorization", "Bearer secret")
   end
 end

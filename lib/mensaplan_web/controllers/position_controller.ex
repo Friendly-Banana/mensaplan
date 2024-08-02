@@ -8,7 +8,9 @@ defmodule MensaplanWeb.PositionController do
   action_fallback MensaplanWeb.FallbackController
 
   def create_for_user(conn, %{"position" => position_params}) do
-    Positions.expire_all_positions(position_params["owner_id"])
+    if position_params["owner_id"] do
+      Positions.expire_all_positions(position_params["owner_id"])
+    end
 
     with {:ok, %Position{} = position} <- Positions.create_position(position_params) do
       Phoenix.PubSub.broadcast(Mensaplan.PubSub, "positions", {:position_saved, position})
@@ -20,10 +22,12 @@ defmodule MensaplanWeb.PositionController do
   end
 
   def expire_for_user(conn, %{"auth_id" => auth_id}) do
-    with user <- Accounts.get_user_by_auth_id(auth_id) do
+    with user when user != nil <- Accounts.get_user_by_auth_id(auth_id) do
       Positions.expire_all_positions(user.id)
 
       send_resp(conn, :no_content, "")
+    else
+      nil -> {:error, :not_found}
     end
   end
 

@@ -10,7 +10,7 @@ defmodule MensaplanWeb.AuthController do
   # Remember to set the same value in the UserToken module
   @max_age 365 * 60 * 24 * 60
   @remember_me_cookie "_mensaplan_web_remember_me"
-  @remember_me_options [sign: true, max_age: @max_age, same_site: "Lax"]
+  @remember_me_options [sign: true, max_age: @max_age, same_site: "Lax", secure: true]
 
   def fetch_user_from_cookie(conn, _opts) do
     if get_session(conn, :user) do

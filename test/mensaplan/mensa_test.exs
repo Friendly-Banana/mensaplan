@@ -9,7 +9,7 @@ defmodule Mensaplan.MensaTest do
     alias Mensaplan.Mensa.Dish
 
     import Mensaplan.MensaFixtures
-    import TImeUtils
+    import TimeUtils
 
     @invalid_attrs %{category: nil, name: nil, price: nil}
 
@@ -19,16 +19,21 @@ defmodule Mensaplan.MensaTest do
     end
 
     test "list_todays_dishes/1 returns all dishes for today" do
-      dish = dish_fixture(date: local_now())
-      dish2 = dish_fixture(date: Date.add(local_now(), -1))
-      dish3 = dish_fixture(date: Date.add(local_now(), 1))
-      assert Mensa.list_todays_dishes(nil) == [dish]
+      dish = dish_fixture()
+      dish_fixture(date: Date.add(local_now(), -1))
+      dish_fixture(date: Date.add(local_now(), 1))
+      d = Mensa.list_todays_dishes(nil)[0]
+      assert d.id == dish.id
+      assert d.category == dish.category
+      assert d.name == dish.name
+      assert d.price == dish.price
     end
 
     test "list_todays_dishes/1 returns the correct amount of likes" do
-      dish = dish_fixture(date: local_now())
-      dish2 = dish_fixture(date: local_now())
-      dish3 = dish_fixture(date: local_now())
+      Repo.delete_all(from _ in Dish)
+      dish = dish_fixture()
+      dish2 = dish_fixture()
+      dish3 = dish_fixture()
 
       user = AccountsFixtures.user_fixture()
       Mensa.like_dish(user.id, dish.id)

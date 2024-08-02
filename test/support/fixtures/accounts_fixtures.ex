@@ -11,7 +11,7 @@ defmodule Mensaplan.AccountsFixtures do
     {:ok, user} =
       attrs
       |> Enum.into(%{
-        auth_id: "some auth_id",
+        auth_id: "some auth_id #{System.unique_integer()}",
         avatar: "some avatar",
         default_public: true,
         name: "some name"
@@ -25,13 +25,16 @@ defmodule Mensaplan.AccountsFixtures do
   Generate a group.
   """
   def group_fixture(attrs \\ %{}) do
+    user = user_fixture()
+
     {:ok, group} =
-      attrs
-      |> Enum.into(%{
-        avatar: "some avatar",
-        name: "some name"
-      })
-      |> Mensaplan.Accounts.create_group()
+      Mensaplan.Accounts.create_group(
+        user,
+        Enum.into(attrs, %{
+          avatar: "some avatar",
+          name: "some name"
+        })
+      )
 
     group
   end

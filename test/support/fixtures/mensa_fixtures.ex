@@ -13,7 +13,8 @@ defmodule Mensaplan.MensaFixtures do
       |> Enum.into(%{
         category: "some category",
         name: "some unique name #{System.unique_integer()}",
-        price: "some price"
+        price: "some price",
+        date: TimeUtils.local_now()
       })
       |> Mensaplan.Mensa.create_dish()
 

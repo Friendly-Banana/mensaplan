@@ -133,7 +133,9 @@ defmodule Mensaplan.Positions do
     Repo.delete(position)
   end
 
-  def expire_all_positions(user_id) do
+  def expire_all_positions(user_id)
+
+  def expire_all_positions(user_id) when user_id != nil do
     from(p in Position, where: not p.expired and p.owner_id == ^user_id)
     |> Repo.update_all(set: [expired: true, updated_at: DateTime.utc_now()])
 

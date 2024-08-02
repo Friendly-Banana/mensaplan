@@ -3,86 +3,63 @@ defmodule MensaplanWeb.PositionControllerTest do
 
   import Mensaplan.PositionsFixtures
 
-  alias Mensaplan.Positions.Position
+  alias Mensaplan.Positions
+  alias Mensaplan.Accounts
+  alias Mensaplan.AccountsFixtures
 
   @create_attrs %{
-    y: 120.5,
-    x: 120.5
-  }
-  @update_attrs %{
-    y: 456.7,
-    x: 456.7
+    y: 20.5,
+    x: 20.5
   }
   @invalid_attrs %{y: nil, x: nil}
 
   setup %{conn: conn} do
-    {:ok, conn: put_req_header(conn, "accept", "application/json")}
+    {:ok, conn: put_req_header(conn, "accept", "application/json") |> authorize()}
   end
 
-  describe "index" do
-    test "lists all positions", %{conn: conn} do
-      conn = get(conn, ~p"/api/positions")
-      assert json_response(conn, 200)["data"] == []
-    end
+  test "create a position", %{conn: conn} do
+    user = AccountsFixtures.user_fixture()
+    position = position_fixture(%{owner_id: user.id})
+
+    conn = post(conn, ~p"/api/positions/", position: Map.put(@create_attrs, "owner_id", user.id))
+
+    resp = json_response(conn, 201)
+
+    assert user.id == resp["owner"]
+    assert Positions.get_position!(position.id).expired
   end
 
-  describe "create position" do
-    test "renders position when data is valid", %{conn: conn} do
-      conn = post(conn, ~p"/api/positions", position: @create_attrs)
-      assert %{"id" => id} = json_response(conn, 201)["data"]
-
-      conn = get(conn, ~p"/api/positions/#{id}")
-
-      assert %{
-               "id" => ^id,
-               "x" => 120.5,
-               "y" => 120.5
-             } = json_response(conn, 200)["data"]
-    end
-
-    test "renders errors when data is invalid", %{conn: conn} do
-      conn = post(conn, ~p"/api/positions", position: @invalid_attrs)
-      assert json_response(conn, 422)["errors"] != %{}
-    end
+  test "renders errors when data is invalid", %{conn: conn} do
+    conn = post(conn, ~p"/api/positions/", position: @invalid_attrs)
+    assert json_response(conn, 422)["errors"] != %{}
   end
 
-  describe "update position" do
-    setup [:create_position]
+  test "expire all positions for a user", %{conn: conn} do
+    user = AccountsFixtures.user_fixture()
+    position = position_fixture(%{owner_id: user.id})
 
-    test "renders position when data is valid", %{conn: conn, position: %Position{id: id} = position} do
-      conn = put(conn, ~p"/api/positions/#{position}", position: @update_attrs)
-      assert %{"id" => ^id} = json_response(conn, 200)["data"]
-
-      conn = get(conn, ~p"/api/positions/#{id}")
-
-      assert %{
-               "id" => ^id,
-               "x" => 456.7,
-               "y" => 456.7
-             } = json_response(conn, 200)["data"]
-    end
-
-    test "renders errors when data is invalid", %{conn: conn, position: position} do
-      conn = put(conn, ~p"/api/positions/#{position}", position: @invalid_attrs)
-      assert json_response(conn, 422)["errors"] != %{}
-    end
+    conn = delete(conn, ~p"/api/positions/user/#{user.auth_id}")
+    assert response(conn, 204)
+    assert Positions.get_position!(position.id).expired
   end
 
-  describe "delete position" do
-    setup [:create_position]
+  test "list all positions for a server", %{conn: conn} do
+    server = "123"
+    group = AccountsFixtures.group_fixture(%{server_id: server})
+    user = AccountsFixtures.user_fixture()
+    Accounts.add_user_to_group(user, group)
+    position = position_fixture(%{owner_id: user.id})
 
-    test "deletes chosen position", %{conn: conn, position: position} do
-      conn = delete(conn, ~p"/api/positions/#{position}")
-      assert response(conn, 204)
+    conn = get(conn, ~p"/api/positions/server/#{server}")
 
-      assert_error_sent 404, fn ->
-        get(conn, ~p"/api/positions/#{position}")
-      end
-    end
-  end
-
-  defp create_position(_) do
-    position = position_fixture()
-    %{position: position}
+    assert json_response(conn, 200) == [
+             %{
+               "id" => position.id,
+               "name" => user.name,
+               "avatar" => user.avatar,
+               "x" => position.x,
+               "y" => position.y
+             }
+           ]
   end
 end

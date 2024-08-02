@@ -100,9 +100,14 @@ defmodule Mensaplan.AccountsTest do
 
     @invalid_attrs %{avatar: nil, name: nil}
 
+    def compare_group(group) do
+      Map.filter(group, fn {k, _} -> k != :members and k != :owner end)
+    end
+
     test "list_groups/0 returns all groups" do
       group = group_fixture()
-      assert Accounts.list_groups() == [group]
+
+      assert compare_group(Accounts.list_groups()[0]) == compare_group(group)
     end
 
     test "get_group!/1 returns the group with given id" do
@@ -111,15 +116,17 @@ defmodule Mensaplan.AccountsTest do
     end
 
     test "create_group/1 with valid data creates a group" do
+      user = user_fixture()
       valid_attrs = %{avatar: "some avatar", name: "some name"}
 
-      assert {:ok, %Group{} = group} = Accounts.create_group(valid_attrs)
+      assert {:ok, %Group{} = group} = Accounts.create_group(user, valid_attrs)
       assert group.avatar == "some avatar"
       assert group.name == "some name"
     end
 
     test "create_group/1 with invalid data returns error changeset" do
-      assert {:error, %Ecto.Changeset{}} = Accounts.create_group(@invalid_attrs)
+      user = user_fixture()
+      assert {:error, %Ecto.Changeset{}} = Accounts.create_group(user, @invalid_attrs)
     end
 
     test "update_group/2 with valid data updates the group" do
@@ -166,7 +173,7 @@ defmodule Mensaplan.AccountsTest do
     test "add_user_to_group/2 adds user into members" do
       user = user_fixture()
       group = group_fixture()
-      assert {:ok, %Group{} = group} = Accounts.add_user_to_group(group, user)
+      assert {:ok, %Group{} = group} = Accounts.add_user_to_group(user, group)
       assert group.members == [user]
     end
 
@@ -194,7 +201,7 @@ defmodule Mensaplan.AccountsTest do
     test "create_invite/2 with valid data creates an invite" do
       user = user_fixture()
       group = group_fixture()
-      assert {:ok, %Accounts.Invite{} = invite} = Accounts.create_invite(user, group)
+      assert {:ok, %Invite{} = invite} = Accounts.create_invite(user, group)
       assert invite.inviter == user
       assert invite.group == group
     end
@@ -214,9 +221,9 @@ defmodule Mensaplan.AccountsTest do
       user = user_fixture()
       group = group_fixture()
       invite = Accounts.create_invite(user, group)
-      assert {:ok, %Accounts.Invite{}} = Accounts.accept_invite(invite)
+      assert {:ok, %Invite{}} = Accounts.accept_invite(user, invite.uuid)
       assert group.members == [user]
-      assert_raise Ecto.NoResultsError, fn -> Accounts.get_invite!(invite.id) end
+      assert nil == Accounts.fetch_invite(invite.uuid)
     end
   end
 end
