@@ -5,6 +5,7 @@ defmodule Mensaplan.Accounts do
 
   import Ecto.Query, warn: false
   require Logger
+  alias Mensaplan.Accounts.Group
   alias Mensaplan.Accounts.Invite
   alias Mensaplan.Repo
 
@@ -14,7 +15,7 @@ defmodule Mensaplan.Accounts do
     Repo.one(from i in Invite, where: i.uuid == ^uuid, preload: [:group, :inviter])
   end
 
-  def create_invite(creator, group) do
+  def create_invite(%User{} = creator, %Group{} = group) do
     %Invite{}
     |> Ecto.Changeset.change()
     |> Ecto.Changeset.put_assoc(:inviter, creator)
@@ -22,7 +23,7 @@ defmodule Mensaplan.Accounts do
     |> Repo.insert()
   end
 
-  def accept_invite(user, uuid) do
+  def accept_invite(%User{} = user, uuid) do
     Repo.transaction(fn ->
       invite = Repo.one!(from i in Invite, where: i.uuid == ^uuid, preload: [:group])
 
@@ -32,7 +33,7 @@ defmodule Mensaplan.Accounts do
     end)
   end
 
-  def add_user_to_group(user, group) do
+  def add_user_to_group(%User{} = user, %Group{} = group) do
     user = Repo.get!(User, user.id) |> Repo.preload(:groups)
 
     if !Enum.member?(user.groups, group) do
@@ -196,7 +197,7 @@ defmodule Mensaplan.Accounts do
       {:error, %Ecto.Changeset{}}
 
   """
-  def create_group(owner, attrs \\ %{}) do
+  def create_group(%User{} = owner, attrs \\ %{}) do
     Ecto.Changeset.change(%Group{})
     |> Ecto.Changeset.put_assoc(:owner, owner)
     |> Ecto.Changeset.put_assoc(:members, [owner])
@@ -222,7 +223,7 @@ defmodule Mensaplan.Accounts do
     |> Repo.update()
   end
 
-  def remove_user_from_group(user_id, group) do
+  def remove_user_from_group(user_id, %Group{} = group) do
     current_members = Repo.preload(group, :members).members
     new_members = Enum.filter(current_members, fn member -> member.id != user_id end)
 

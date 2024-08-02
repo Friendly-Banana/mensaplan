@@ -28,7 +28,7 @@ defmodule MensaplanWeb.AccessControl do
 
   def require_api_token(conn, _opts) do
     with ["Bearer " <> token] <- get_req_header(conn, "authorization"),
-         secret <- Application.get_env(:mensaplan, :api_token),
+         secret <- System.get_env("API_TOKEN"),
          true <- byte_size(token) == byte_size(secret) && :crypto.hash_equals(token, secret) do
       conn
       |> assign(:user, Accounts.get_user!(2))

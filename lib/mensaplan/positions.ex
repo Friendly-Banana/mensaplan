@@ -111,7 +111,7 @@ defmodule Mensaplan.Positions do
 
   """
   def create_position(attrs \\ %{}) do
-    %Position{owner_id: attrs["owner_id"]}
+    %Position{owner_id: attrs[:owner_id] || attrs["owner_id"]}
     |> Repo.preload(:owner)
     |> Position.changeset(attrs)
     |> Repo.insert()
