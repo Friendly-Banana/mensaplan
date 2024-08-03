@@ -3,7 +3,7 @@ defmodule Mensaplan.Repo.Migrations.CreatePositions do
 
   def change do
     create table(:positions) do
-      add :owner_id, references(:users)
+      add :owner_id, references(:users, on_delete: :delete_all)
       add :x, :float
       add :y, :float
       add :public, :boolean, default: true

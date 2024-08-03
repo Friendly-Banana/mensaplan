@@ -26,7 +26,7 @@ defmodule UserFromAuth do
 
   defp basic_info(auth) do
     %{
-      id: auth.uid,
+      id: "oauth2|#{auth.provider}|#{auth.uid}",
       name: name_from_auth(auth),
       email: auth.info.email,
       avatar: avatar_from_auth(auth)
