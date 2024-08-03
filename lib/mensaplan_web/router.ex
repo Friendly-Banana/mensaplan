@@ -54,8 +54,10 @@ defmodule MensaplanWeb.Router do
   scope "/api", MensaplanWeb do
     pipe_through :api
 
-    post "/users/", UserController, :get_or_create
-    post "/groups/", GroupController, :get_or_create
+    post "/users/auth/:auth_id", UserController, :get_or_create
+    post "/groups/server/:server_id", GroupController, :get_or_create
+    put "/groups/:id", GroupController, :update
+    delete "/groups/:id", GroupController, :delete
     post "/groups/join", GroupController, :join_group
     post "/positions/", PositionController, :create_for_user
     delete "/positions/user/:auth_id", PositionController, :expire_for_user

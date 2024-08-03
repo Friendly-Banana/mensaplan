@@ -20,7 +20,7 @@ defmodule Mensaplan.Positions.Position do
     position
     |> cast(attrs, [:x, :y, :public, :expires_in])
     |> validate_required([:x, :y, :owner_id])
-    |> cast_assoc(:owner)
+    |> cast_assoc(:owner, required: true)
     |> validate_number(:x, greater_than_or_equal_to: 0.0, less_than: 100.0)
     |> validate_number(:y, greater_than_or_equal_to: 0.0, less_than: 100.0)
     |> validate_number(:expires_in, greater_than_or_equal_to: 1, less_than_or_equal_to: 60 * 24)

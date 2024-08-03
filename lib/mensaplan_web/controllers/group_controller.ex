@@ -6,16 +6,23 @@ defmodule MensaplanWeb.GroupController do
 
   action_fallback MensaplanWeb.FallbackController
 
-  def get_or_create(conn, %{"group" => group_params}) do
+  def get_or_create(conn, %{"server_id" => server_id, "group" => group_params}) do
     group_params = Map.new(group_params, fn {k, v} -> {String.to_existing_atom(k), v} end)
 
-    case Accounts.get_group_by_server_id(group_params.server_id) do
+    case Accounts.get_group_by_server_id(server_id) do
       nil ->
+        group_params = Map.put(group_params, :server_id, server_id)
+
         case Accounts.create_group(conn.assigns.user, group_params) do
           {:ok, %Group{} = group} ->
             conn
             |> put_status(:created)
             |> render(:show, group: group)
+
+          {:error, changeset} ->
+            conn
+            |> put_status(:unprocessable_entity)
+            |> json(MensaplanWeb.ChangesetJSON.error(%{changeset: changeset}))
         end
 
       group ->

@@ -34,11 +34,11 @@ defmodule Mensaplan.Accounts do
   end
 
   def add_user_to_group(%User{} = user, %Group{} = group) do
-    user = Repo.get!(User, user.id) |> Repo.preload(:groups)
+    group = Repo.preload(group, [:owner, :members])
 
-    if !Enum.member?(user.groups, group) do
-      change_user(user)
-      |> Ecto.Changeset.put_assoc(:groups, [group | user.groups])
+    if !Enum.member?(group.members, user) do
+      change_group(group)
+      |> Ecto.Changeset.put_assoc(:members, [user | group.members])
       |> Repo.update!()
     end
   end
@@ -174,16 +174,9 @@ defmodule Mensaplan.Accounts do
       ** (Ecto.NoResultsError)
 
   """
-  def get_group!(id), do: Repo.get!(Group, id)
+  def get_group!(id), do: Repo.get!(Group, id) |> Repo.preload([:owner, :members])
 
   def get_group_by_server_id(server_id), do: Repo.get_by(Group, server_id: server_id)
-
-  def get_loaded_group(id) do
-    case Repo.get(Group, id) do
-      nil -> nil
-      group -> Repo.preload(group, :owner) |> Repo.preload(:members)
-    end
-  end
 
   @doc """
   Creates a group.

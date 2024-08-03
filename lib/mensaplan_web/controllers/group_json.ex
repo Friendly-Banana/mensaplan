@@ -18,7 +18,7 @@ defmodule MensaplanWeb.GroupJSON do
       id: group.id,
       name: group.name,
       avatar: group.avatar,
-      server_id: group.server_id,
+      server_id: Map.get(group, :server_id),
       owner_id: group.owner_id
     }
   end

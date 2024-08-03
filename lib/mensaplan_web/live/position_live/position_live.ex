@@ -145,8 +145,8 @@ defmodule MensaplanWeb.PositionLive do
     {:noreply, socket |> assign(:group, %Group{})}
   end
 
-  defp handle_action(:group_edit, %{"id" => id}, socket) do
-    group = Accounts.get_loaded_group(id)
+  defp handle_action(:group_edit, %{"id" => id}, socket)do
+    group = Accounts.get_group!(id)
 
     if group && group.owner_id == socket.assigns.user.id do
       {:noreply,

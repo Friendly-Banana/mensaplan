@@ -13,8 +13,7 @@ defmodule Mensaplan.Accounts.Invite do
   @doc false
   def changeset(invite, _attrs) do
     invite
-    |> cast_assoc(:inviter)
-    |> cast_assoc(:group)
-    |> validate_required([:inviter, :group])
+    |> cast_assoc(:inviter, required: true)
+    |> cast_assoc(:group, required: true)
   end
 end

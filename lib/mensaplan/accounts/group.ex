@@ -20,9 +20,9 @@ defmodule Mensaplan.Accounts.Group do
   def changeset(group, attrs) do
     group
     |> cast(attrs, [:name, :avatar, :server_id])
-    |> cast_assoc(:owner)
-    |> cast_assoc(:members)
-    |> validate_required([:name, :owner, :members])
+    |> cast_assoc(:owner, required: true)
+    |> cast_assoc(:members, required: true)
+    |> validate_required([:name])
     |> ensure_owner_in_members()
     |> unique_constraint(:server_id)
     |> validate_length(:name, min: 3, max: 30)
