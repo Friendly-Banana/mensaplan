@@ -18,6 +18,11 @@ defmodule MensaplanWeb.UserController do
             conn
             |> put_status(:created)
             |> render(:show, user: user)
+
+          {:error, changeset} ->
+            conn
+            |> put_status(:unprocessable_entity)
+            |> json(MensaplanWeb.ChangesetJSON.error(%{changeset: changeset}))
         end
 
       user ->

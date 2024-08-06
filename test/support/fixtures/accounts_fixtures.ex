@@ -3,6 +3,7 @@ defmodule Mensaplan.AccountsFixtures do
   This module defines test helpers for creating
   entities via the `Mensaplan.Accounts` context.
   """
+  alias Mensaplan.Accounts.Group
 
   @doc """
   Generate a user.
@@ -24,18 +25,19 @@ defmodule Mensaplan.AccountsFixtures do
   @doc """
   Generate a group.
   """
-  def group_fixture(attrs \\ %{}) do
-    user = user_fixture()
+  def group_fixture(attrs \\ %{}, opts \\ []) do
+    owner = Keyword.get(opts, :owner, user_fixture())
+    members = Keyword.get(opts, :members, [owner])
 
-    {:ok, group} =
-      Mensaplan.Accounts.create_group(
-        user,
-        Enum.into(attrs, %{
-          avatar: "some avatar",
-          name: "some name"
-        })
-      )
-
-    group
+    Ecto.Changeset.change(%Group{})
+    |> Ecto.Changeset.put_assoc(:owner, owner)
+    |> Ecto.Changeset.put_assoc(:members, members)
+    |> Group.changeset(
+      Enum.into(attrs, %{
+        avatar: "some avatar",
+        name: "some name"
+      })
+    )
+    |> Mensaplan.Repo.insert!()
   end
 end

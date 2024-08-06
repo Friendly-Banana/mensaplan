@@ -7,7 +7,7 @@ defmodule Mensaplan.Accounts.Group do
     field :avatar, :string
     field :server_id, :integer
 
-    belongs_to :owner, Mensaplan.Accounts.User
+    belongs_to :owner, Mensaplan.Accounts.User, on_replace: :nilify
 
     many_to_many :members, Mensaplan.Accounts.User,
       join_through: "group_members",

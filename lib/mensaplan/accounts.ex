@@ -216,26 +216,27 @@ defmodule Mensaplan.Accounts do
     |> Repo.update()
   end
 
-  def remove_user_from_group(user_id, %Group{} = group) do
-    current_members = Repo.preload(group, :members).members
-    new_members = Enum.filter(current_members, fn member -> member.id != user_id end)
-
-    new_group =
-      group
-      |> Repo.preload(:members)
-      |> Ecto.Changeset.change()
-      |> Ecto.Changeset.put_assoc(:members, new_members)
+  def remove_user_from_group!(%Group{} = group, user_id) do
+    group = Repo.preload(group, [:owner, :members])
+    new_members = Enum.filter(group.members, fn member -> member.id != user_id end)
 
     if group.owner_id == user_id do
       if not Enum.empty?(new_members) do
-        Logger.info("Transferring ownership of group #{group.name} to #{hd(new_members).name}.")
-        new_group |> Ecto.Changeset.put_assoc(:owner, hd(new_members)) |> Repo.update()
+        new_owner = hd(new_members)
+        Logger.info("Transferring ownership of group #{group.name} to #{new_owner.name}.")
+
+        change_group(group)
+        |> Ecto.Changeset.put_assoc(:owner, new_owner)
+        |> Ecto.Changeset.put_assoc(:members, new_members)
+        |> Repo.update!()
       else
         Logger.info("Deleting group #{group.name} because it has no members left.")
-        Repo.delete(group)
+        Repo.delete!(group)
       end
     else
-      Repo.update(new_group)
+      change_group(group)
+      |> Ecto.Changeset.put_assoc(:members, new_members)
+      |> Repo.update!()
     end
   end
 

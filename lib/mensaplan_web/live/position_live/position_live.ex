@@ -89,7 +89,7 @@ defmodule MensaplanWeb.PositionLive do
   @impl true
   def handle_event("group_leave", %{"id" => id}, socket) do
     group = Accounts.get_group!(id)
-    Accounts.remove_user_from_group(socket.assigns.user.id, group)
+    Accounts.remove_user_from_group!(group, socket.assigns.user.id)
 
     {:noreply, stream_delete(socket, :groups, group)}
   end
@@ -99,7 +99,7 @@ defmodule MensaplanWeb.PositionLive do
     group = socket.assigns.group
 
     if group.owner_id == socket.assigns.user.id do
-      {:ok, updated_group} = Accounts.remove_user_from_group(user_id, group)
+      updated_group = Accounts.remove_user_from_group!(group, user_id)
       {:noreply, stream_insert(socket, :groups, updated_group)}
     else
       {:noreply, put_flash(socket, :error, "You are not the owner of this group")}
@@ -145,7 +145,7 @@ defmodule MensaplanWeb.PositionLive do
     {:noreply, socket |> assign(:group, %Group{})}
   end
 
-  defp handle_action(:group_edit, %{"id" => id}, socket)do
+  defp handle_action(:group_edit, %{"id" => id}, socket) do
     group = Accounts.get_group!(id)
 
     if group && group.owner_id == socket.assigns.user.id do

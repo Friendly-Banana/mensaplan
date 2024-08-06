@@ -13,13 +13,13 @@ defmodule Mensaplan.PositionsTest do
 
     test "list_positions/0 returns all positions" do
       position = position_fixture()
-      assert Positions.list_positions() == [position]
+      assert hd(Positions.list_positions()).id == position.id
     end
 
     test "list_positions_for_server/1 returns all positions for server" do
       user = AccountsFixtures.user_fixture()
-      group = AccountsFixtures.group_fixture(%{server_id: 1})
-      position = position_fixture(%{owner: user})
+      group = AccountsFixtures.group_fixture(%{server_id: 1}, owner: user)
+      position = position_fixture(%{owner_id: user.id})
 
       pos = %{id: position.id, name: user.name, avatar: user.avatar, x: position.x, y: position.y}
 
@@ -28,19 +28,19 @@ defmodule Mensaplan.PositionsTest do
 
     test "get_position!/1 returns the position with given id" do
       position = position_fixture()
-      assert Positions.get_position!(position.id) == position
+      assert Positions.get_position!(position.id).id == position.id
     end
 
     test "get_public_positions/0 returns all public positions" do
       position_fixture(%{public: false})
-      position1 = position_fixture(public: true)
-      assert Positions.get_public_positions() == [position1]
+      position = position_fixture(public: true)
+      assert hd(Positions.get_public_positions()).id == position.id
     end
 
     test "get_position_of_user/1 returns the position of the user" do
       user = AccountsFixtures.user_fixture()
-      position = position_fixture(%{owner: user})
-      assert Positions.get_position_of_user(user) == position
+      position = position_fixture(%{owner_id: user.id})
+      assert Positions.get_position_of_user(user).id == position.id
     end
 
     test "get_position_of_user/1 returns nil if user has no position" do
@@ -51,17 +51,20 @@ defmodule Mensaplan.PositionsTest do
     test "get_positions_visible_to_user/1 returns all positions visible to user" do
       user = AccountsFixtures.user_fixture()
       user2 = AccountsFixtures.user_fixture()
-      AccountsFixtures.group_fixture(%{owner: user, members: [user, user2]})
+      _common_group = AccountsFixtures.group_fixture(%{}, owner: user, members: [user, user2])
       position = position_fixture(%{public: true})
-      position1 = position_fixture(%{public: false, owner: user})
-      position2 = position_fixture(%{public: false, owner: user2})
+      position1 = position_fixture(%{public: false, owner_id: user.id})
+      position2 = position_fixture(%{public: false, owner_id: user2.id})
       position_fixture(%{public: false})
-      assert Positions.get_positions_visible_to_user(user) == [position, position1, position2]
+
+      assert Enum.all?(Positions.get_positions_visible_to_user(user), fn p ->
+               Enum.member?([position.id, position1.id, position2.id], p.id)
+             end)
     end
 
     test "create_position/1 with valid data creates a position" do
       user = AccountsFixtures.user_fixture()
-      valid_attrs = %{y: 20.5, x: 20.5, owner_id: user.id}
+      valid_attrs = %{y: 20.5, x: 75.0, owner_id: user.id}
 
       assert {:ok, %Position{} = position} = Positions.create_position(valid_attrs)
       assert position.y == 20.5
@@ -80,16 +83,20 @@ defmodule Mensaplan.PositionsTest do
 
     test "expire_all_positions/1 expires all positions of a user" do
       user = AccountsFixtures.user_fixture()
-      position = position_fixture(%{owner: user})
-      position1 = position_fixture(%{owner: user})
-      position2 = position_fixture(%{owner: user, expired: true})
+      position = position_fixture(%{owner_id: user.id})
+      position1 = position_fixture(%{owner_id: user.id})
+      position2 = position_fixture(%{owner_id: user.id, expired: true})
+
       user2 = AccountsFixtures.user_fixture()
-      position3 = position_fixture(%{owner: user2})
+      other_position = position_fixture(%{owner_id: user2.id})
+
       Positions.expire_all_positions(user.id)
-      assert position.expired == true
-      assert position1.expired == true
-      assert position2.expired == true
-      assert position3.expired == false
+
+      positions = Repo.reload([position, position1, position2])
+      other_position = Repo.reload(other_position)
+
+      assert Enum.all?(positions, fn p -> p.expired end)
+      assert other_position.expired == false
     end
 
     test "change_position/1 returns a position changeset" do

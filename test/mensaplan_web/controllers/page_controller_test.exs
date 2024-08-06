@@ -3,6 +3,11 @@ defmodule MensaplanWeb.PageControllerTest do
 
   test "GET /", %{conn: conn} do
     conn = get(conn, ~p"/")
-    assert html_response(conn, 200) =~ "Peace of mind from prototype to production"
+    assert html_response(conn, 200) =~ "Mensaplan"
+  end
+
+  test "GET /nonexistent", %{conn: conn} do
+    conn = get(conn, "/nonexistent")
+    assert html_response(conn, 404) =~ "Not Found"
   end
 end

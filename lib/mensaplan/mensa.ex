@@ -23,13 +23,13 @@ defmodule Mensaplan.Mensa do
     Repo.all(Dish)
   end
 
-  def list_todays_dishes(user) do
+  def list_todays_dishes(user \\ nil) do
     query =
       from d in Dish,
         where: d.date == ^local_now(),
         left_join: l in assoc(d, :likes),
-        group_by: [d.id, l.like],
-        order_by: [d.category, d.name],
+        group_by: [d.id],
+        order_by: [d.category, d.name, d.id],
         select: %{
           id: d.id,
           name: d.name,
@@ -43,7 +43,6 @@ defmodule Mensaplan.Mensa do
         from d in query,
           left_join: l in assoc(d, :likes),
           on: l.user_id == ^user.id,
-          group_by: [l.like],
           select_merge: %{user_likes: coalesce(sum(l.like), 0)}
       else
         query

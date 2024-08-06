@@ -1,96 +1,39 @@
 defmodule MensaplanWeb.UserControllerTest do
   use MensaplanWeb.ConnCase
 
-  import Mensaplan.AccountsFixtures
-
-  alias Mensaplan.Accounts.User
-
   @create_attrs %{
     auth_id: "some auth_id",
     avatar: "some avatar",
     default_public: true,
     name: "some name"
   }
-  @update_attrs %{
-    auth_id: "some updated auth_id",
-    avatar: "some updated avatar",
-    default_public: false,
-    name: "some updated name"
-  }
   @invalid_attrs %{auth_id: nil, avatar: nil, default_public: nil, name: nil}
 
   setup %{conn: conn} do
-    {:ok, conn: put_req_header(conn, "accept", "application/json")}
+    {:ok, conn: put_req_header(conn, "accept", "application/json") |> authorize()}
   end
 
-  describe "index" do
-    test "lists all users", %{conn: conn} do
-      conn = get(conn, ~p"/api/users")
-      assert json_response(conn, 200)["data"] == []
-    end
+  test "get or create creates a user", %{conn: conn} do
+    conn = post(conn, ~p"/api/users/auth/#{@create_attrs.auth_id}", user: @create_attrs)
+
+    resp = json_response(conn, 201)
+
+    assert @create_attrs.auth_id == resp["auth_id"]
+    assert @create_attrs.avatar == resp["avatar"]
   end
 
-  describe "create user" do
-    test "renders user when data is valid", %{conn: conn} do
-      conn = post(conn, ~p"/api/users", user: @create_attrs)
-      assert %{"id" => id} = json_response(conn, 201)["data"]
+  test "get or create gets a user", %{conn: conn} do
+    {:ok, user} = Mensaplan.Accounts.create_user(@create_attrs)
 
-      conn = get(conn, ~p"/api/users/#{id}")
+    conn = post(conn, ~p"/api/users/auth/#{user.auth_id}", user: %{})
 
-      assert %{
-               "id" => ^id,
-               "auth_id" => "some auth_id",
-               "avatar" => "some avatar",
-               "default_public" => true,
-               "name" => "some name"
-             } = json_response(conn, 200)["data"]
-    end
+    resp = json_response(conn, 200)
 
-    test "renders errors when data is invalid", %{conn: conn} do
-      conn = post(conn, ~p"/api/users", user: @invalid_attrs)
-      assert json_response(conn, 422)["errors"] != %{}
-    end
+    assert user.id == resp["id"]
   end
 
-  describe "update user" do
-    setup [:create_user]
-
-    test "renders user when data is valid", %{conn: conn, user: %User{id: id} = user} do
-      conn = put(conn, ~p"/api/users/#{user}", user: @update_attrs)
-      assert %{"id" => ^id} = json_response(conn, 200)["data"]
-
-      conn = get(conn, ~p"/api/users/#{id}")
-
-      assert %{
-               "id" => ^id,
-               "auth_id" => "some updated auth_id",
-               "avatar" => "some updated avatar",
-               "default_public" => false,
-               "name" => "some updated name"
-             } = json_response(conn, 200)["data"]
-    end
-
-    test "renders errors when data is invalid", %{conn: conn, user: user} do
-      conn = put(conn, ~p"/api/users/#{user}", user: @invalid_attrs)
-      assert json_response(conn, 422)["errors"] != %{}
-    end
-  end
-
-  describe "delete user" do
-    setup [:create_user]
-
-    test "deletes chosen user", %{conn: conn, user: user} do
-      conn = delete(conn, ~p"/api/users/#{user}")
-      assert response(conn, 204)
-
-      assert_error_sent 404, fn ->
-        get(conn, ~p"/api/users/#{user}")
-      end
-    end
-  end
-
-  defp create_user(_) do
-    user = user_fixture()
-    %{user: user}
+  test "renders errors when data is invalid", %{conn: conn} do
+    conn = post(conn, ~p"/api/users/auth/99999", user: @invalid_attrs)
+    assert json_response(conn, 422)["errors"] != %{}
   end
 end

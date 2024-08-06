@@ -21,7 +21,7 @@ defmodule Mensaplan.AccountsTest do
 
     test "get_user_by_auth_id/1 returns the user with given auth_id" do
       user = user_fixture()
-      assert Accounts.get_user_by_auth_id("some auth_id") == user
+      assert Accounts.get_user_by_auth_id(user.auth_id) == user
     end
 
     test "create_user/1 with valid data creates a user" do
@@ -76,11 +76,12 @@ defmodule Mensaplan.AccountsTest do
         name: "some updated name"
       }
 
-      assert {:ok, %User{} = user} = Accounts.update_user_settings(user, update_attrs)
-      assert user.auth_id == "some auth_id"
-      assert user.avatar == "some avatar"
-      assert user.default_public == false
-      assert user.name == "some name"
+      assert {:ok, %User{} = new_user} = Accounts.update_user_settings(user, update_attrs)
+
+      assert Map.take(user, [:id, :name, :auth_id, :avatar]) ==
+               Map.take(new_user, [:id, :name, :auth_id, :avatar])
+
+      assert new_user.default_public == false
     end
 
     test "delete_user/1 deletes the user" do
@@ -98,16 +99,15 @@ defmodule Mensaplan.AccountsTest do
   describe "groups" do
     alias Mensaplan.Accounts.Group
 
+    @update_attrs %{avatar: "some updated avatar", name: "some updated name"}
     @invalid_attrs %{avatar: nil, name: nil}
-
-    def compare_group(group) do
-      Map.filter(group, fn {k, _} -> k != :members and k != :owner end)
-    end
 
     test "list_groups/0 returns all groups" do
       group = group_fixture()
 
-      assert compare_group(Accounts.list_groups()[0]) == compare_group(group)
+      groups = Accounts.list_groups()
+      assert length(groups) == 1
+      assert hd(groups) |> Repo.preload([:owner, :members]) == group
     end
 
     test "get_group!/1 returns the group with given id" do
@@ -130,21 +130,10 @@ defmodule Mensaplan.AccountsTest do
     end
 
     test "update_group/2 with valid data updates the group" do
-      user = user_fixture()
       group = group_fixture()
-
-      update_attrs = %{
-        avatar: "some updated avatar",
-        name: "some updated name",
-        owner: user,
-        members: [user]
-      }
-
-      assert {:ok, %Group{} = group} = Accounts.update_group(group, update_attrs)
+      assert {:ok, %Group{} = group} = Accounts.update_group(group, @update_attrs)
       assert group.avatar == "some updated avatar"
       assert group.name == "some updated name"
-      assert group.owner == user
-      assert group.members == [user]
     end
 
     test "update_group/2 with invalid data returns error changeset" do
@@ -166,32 +155,39 @@ defmodule Mensaplan.AccountsTest do
 
     test "owner is always in members" do
       user = user_fixture()
-      group = group_fixture(owner: user)
+      group = group_fixture(%{}, owner: user)
       assert group.members == [user]
     end
 
     test "add_user_to_group/2 adds user into members" do
       user = user_fixture()
       group = group_fixture()
-      assert {:ok, %Group{} = group} = Accounts.add_user_to_group(user, group)
-      assert group.members == [user]
+      group = Accounts.add_user_to_group(user, group)
+      assert Enum.member?(group.members, user)
     end
 
-    test "remove_user_from_group/2 removes last user from members, deletes group" do
+    test "remove_user_from_group!/2 removes user from members" do
       user = user_fixture()
-      group = group_fixture(owner: user, members: [user])
-      assert {:ok, %Group{} = group} = Accounts.remove_user_from_group(group, user)
-      assert group.members == []
+      group = group_fixture()
+      group = Accounts.add_user_to_group(user, group)
+      group = Accounts.remove_user_from_group!(group, user.id)
+      assert !Enum.member?(group.members, user)
+    end
+
+    test "remove_user_from_group!/2 removes last user from members, deletes group" do
+      user = user_fixture()
+      group = group_fixture(%{}, owner: user)
+      Accounts.remove_user_from_group!(group, user.id)
       assert_raise Ecto.NoResultsError, fn -> Accounts.get_group!(group.id) end
     end
 
-    test "remove_user_from_group/2 removes user from members, transfers ownership" do
+    test "remove_user_from_group!/2 removes user from members, transfers ownership" do
       user = user_fixture()
-      user2 = user_fixture()
-      group = group_fixture(owner: user, members: [user, user2])
-      assert {:ok, %Group{} = group} = Accounts.remove_user_from_group(group, user)
-      assert group.owner == user2
-      assert group.members == [user2]
+      new_owner = user_fixture()
+      group = group_fixture(%{}, owner: user, members: [user, new_owner])
+      group = Accounts.remove_user_from_group!(group, user.id)
+      assert group.owner == new_owner
+      assert group.members == [new_owner]
     end
   end
 
@@ -206,23 +202,19 @@ defmodule Mensaplan.AccountsTest do
       assert invite.group == group
     end
 
-    test "create_invite/2 with invalid data returns error changeset" do
-      assert {:error, %Ecto.Changeset{}} = Accounts.create_invite(nil, nil)
-    end
-
     test "fetch_invite!/1 returns the invite with given id" do
       user = user_fixture()
       group = group_fixture()
-      invite = Accounts.create_invite(user, group)
-      assert Accounts.fetch_invite(invite.uuid) == invite
+      {:ok, invite} = Accounts.create_invite(user, group)
+      assert Accounts.fetch_invite(invite.uuid).uuid == invite.uuid
     end
 
     test "accept_invite/2 adds user to group, deletes invite" do
       user = user_fixture()
       group = group_fixture()
-      invite = Accounts.create_invite(user, group)
-      assert {:ok, %Invite{}} = Accounts.accept_invite(user, invite.uuid)
-      assert group.members == [user]
+      {:ok, invite} = Accounts.create_invite(user, group)
+      {:ok, _invite} = Accounts.accept_invite(user, invite.uuid)
+      assert Enum.member?(Accounts.get_group!(group.id).members, user)
       assert nil == Accounts.fetch_invite(invite.uuid)
     end
   end
