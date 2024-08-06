@@ -62,14 +62,6 @@ defmodule MensaplanWeb.Router do
     post "/positions/", PositionController, :create_for_user
     delete "/positions/user/:auth_id", PositionController, :expire_for_user
     get "/positions/server/:server_id", PositionController, :positions_for_server
-
-    # legacy
-    post "/user/", UserController, :get_or_create
-    post "/group/", GroupController, :get_or_create
-    post "/group/join", GroupController, :join_group
-    post "/position/", PositionController, :create_for_user
-    delete "/user/:auth_id/position", PositionController, :expire_for_user
-    get "/group/:server_id/positions", PositionController, :positions_for_server
   end
 
   scope "/admin" do
