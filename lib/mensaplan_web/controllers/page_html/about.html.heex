@@ -5,8 +5,8 @@
     class="hero w-full h-72 object-cover filter brightness-50"
   />
   <div class="absolute inset-0 flex flex-col items-center justify-center text-white drop-shadow-md">
-    <h1 class="text-3xl font-bold mb-1">About Mensaplan</h1>
-    <h2 class="text-2xl">Never eat alone again!</h2>
+    <h1 class="text-3xl font-bold mb-1"><%= gettext("About Mensaplan") %></h1>
+    <h2 class="text-2xl"><%= gettext("Find friends and food!") %></h2>
   </div>
 </div>
 
@@ -24,52 +24,70 @@
 
 <main class="container mx-auto px-6 py-4 text-lg space-y-4 leading-6">
   <p>
-    Experience the buzz of Garching with our unique platform, designed to connect you with fellow
-    <a href="https://www.studierendenwerk-muenchen-oberbayern.de/mensa/"> TUM Mensa </a>
-    enthusiasts. With an <a href="https://en.wikipedia.org/wiki/IEEE_754">almost</a>
-    infinitely-precise grid, both finding and sharing a position is easier than ever.
+    <%= raw gettext(
+      "Experience the buzz of Garching with our unique platform, designed to connect you with fellow %{tumensa} enthusiasts. With an <a href='https://en.wikipedia.org/wiki/IEEE_754'>almost</a> infinitely-precise grid, both finding and sharing a position is easier than ever.",
+      tumensa:
+        '<a href="https://www.studierendenwerk-muenchen-oberbayern.de/mensa/"> TUM Mensa </a>'
+    ) %>
   </p>
   <p>
-    Looking for a lunch companion at TUM Mensa? Mensaplan is your go-to solution. Discover if your friends are already dining, and where they're seated. Be the first to arrive? Share your location on our interactive grid. Vote on your favorite dishes to help others make the best choice. Connect, dine, and enjoy with Mensaplan.
+    <%= gettext(
+      "Looking for a lunch companion at TUM Mensa? Mensaplan is your go-to solution. Discover if your friends are already dining, and where they're seated. Be the first to arrive? Share your location on our interactive grid. Vote on your favorite dishes to help others make the best choice. Connect, dine, and enjoy with Mensaplan."
+    ) %>
   </p>
 
-  <h2 class="text-xl my-3 font-medium">Helping Students find lunch peers since 2023</h2>
+  <h2 class="text-xl my-3 font-medium">
+    <%= gettext("Helping Students find lunch peers since 2023") %>
+  </h2>
   <p>
-    Mensaplan originated as a feature of <a href="https://github.com/Friendly-Banana/wobot">WoBot</a>, a Discord Bot, when the developer came across the floor plan of the TUM Mensa.
-    Due to its popularity, the bot was then expanded into a web application to provide easier access for a wider audience.
+    <%= raw gettext(
+      "Mensaplan started as a feature of %{wobot}, a Discord bot, when I, the developer, came across the floor plan of the TUM Mensa. Due to the popularity of this feature, I decided to expand it into a web application in order to make it more accessible to a wider audience.",
+      wobot: '<a href="https://github.com/Friendly-Banana/wobot">WoBot</a>'
+    ) %>
     <br />
-    My friends and I have been using this for over a year and it has been a great success. We hope you enjoy it as much as we do.
+    <%= gettext(
+      "My friends and I have been using this for over a year and it's been a great success. We hope you enjoy it as much as we do."
+    ) %>
   </p>
 
-  <h2 class="text-xl my-3 font-medium">Frequently Asked Questions</h2>
+  <h2 class="text-xl my-3 font-medium"><%= gettext("Frequently Asked Questions") %></h2>
 
-  <h3 class="text-lg font-medium">How can I set my position?</h3>
+  <h3 class="text-lg font-medium"><%= gettext("How can I set my position?") %></h3>
   <p>
-    To set your position on the map, double click on the place where you are.
-    You can also first click the position to move the avatar and then use the "Set Position" button.
+    <%= gettext(
+      "To set your position on the map, double click on the place where you are. You can also first click the position to move the avatar and then use the \"Set Position\" button."
+    ) %>
   </p>
 
-  <h3 class="text-lg font-medium">What are public positions?</h3>
+  <h3 class="text-lg font-medium"><%= gettext("What are public positions?") %></h3>
   <p>
-    By default, positions on Mensaplan are only visible to users you share a group with. Public positions, on the other hand, are visible to all users, including non-logged-in visitors. However, anonymous visitors will only see your avatar and not your name.<br />
-    Public positions allow you to connect with new people and potentially make new friends. You can discover other users who are also dining at TUM Mensa and reach out to them for a meal together. It's a great way to expand your social circle.
+    <%= gettext(
+      "By default, positions on Mensaplan are only visible to users you share a group with. Public positions, on the other hand, are visible to all users, including non-logged-in visitors. However, anonymous visitors will only see your avatar and not your name."
+    ) %><br />
+    <%= gettext(
+      "Public positions allow you to connect with new people and potentially make new friends. You can discover other users who are also dining at TUM Mensa and reach out to them for a meal together. It's a great way to expand your social circle."
+    ) %>
   </p>
 
-  <h3 class="text-lg font-medium">Can I change my username?</h3>
+  <h3 class="text-lg font-medium"><%= gettext("Can I change my username?") %></h3>
   <p>
-    Mensaplan uses the name associated with your login method. If you log in via Discord, Mensaplan will use your Discord username.
-    After you changed your username, please log out and log in again to update your name in Mensaplan.
+    <%= gettext(
+      "Mensaplan uses the name associated with your login method. If you log in via Discord, Mensaplan will use your Discord username. After you changed your username, please log out and log in again to update your name in Mensaplan."
+    ) %>
   </p>
 
-  <h3 class="text-lg font-medium">How can I report a bug or issue?</h3>
+  <h3 class="text-lg font-medium"><%= gettext("How can I report a bug or issue?") %></h3>
   <p>
-    If you encounter any bugs or issues while using Mensaplan, please report them on <a href="https://github.com/Friendly-Banana/mensaplan/issues">GitHub</a>.
-    Please provide detailed information about the problem you are facing, including any error messages or screenshots if possible.
+    <%= raw gettext(
+      "If you encounter any bugs or issues while using Mensaplan, please report them on %{link}. Please provide detailed information about the problem you are facing, including any error messages or screenshots if possible.",
+      link: '<a href="https://github.com/Friendly-Banana/mensaplan/issues">GitHub</a>'
+    ) %>
   </p>
 </main>
 
 <small class="text-gray-500 text-center">
-  All icons in the mensa map are
-  <a href="https://github.com/free-icons/free-icons"> Free Icons </a>
-  used under <a href="https://creativecommons.org/licenses/by/4.0/"> CC BY 4.0 </a>
+  <%= raw gettext("All icons in the mensa map are %{free_icons} used under %{license}",
+    free_icons: '<a href="https://github.com/free-icons/free-icons"> Free Icons </a>',
+    license: '<a href="https://creativecommons.org/licenses/by/4.0/"> CC BY 4.0 </a>'
+  ) %>
 </small>

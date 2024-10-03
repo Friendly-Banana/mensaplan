@@ -110,3 +110,30 @@ msgstr ""
 
 msgid "must be equal to %{number}"
 msgstr ""
+
+#: lib/mensaplan_web/controllers/auth_controller.ex:57
+#, elixir-autogen, elixir-format
+msgid "Failed to authenticate."
+msgstr ""
+
+#: lib/mensaplan_web/controllers/page_controller.ex:31
+#, elixir-autogen, elixir-format
+msgid "Failed to update settings."
+msgstr ""
+
+#: lib/mensaplan_web/live/position_live/position_live.ex:159
+#, elixir-autogen, elixir-format
+msgid "Group not found"
+msgstr ""
+
+#: lib/mensaplan_web/controllers/page_controller.ex:42
+#: lib/mensaplan_web/controllers/page_controller.ex:66
+#, elixir-autogen, elixir-format
+msgid "Invalid invitation link. Please ask for a new one."
+msgstr ""
+
+#: lib/mensaplan_web/access_control.ex:12
+#: lib/mensaplan_web/access_control.ex:23
+#, elixir-autogen, elixir-format
+msgid "Please login to access this page."
+msgstr ""

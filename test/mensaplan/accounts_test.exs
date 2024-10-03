@@ -181,7 +181,7 @@ defmodule Mensaplan.AccountsTest do
       assert_raise Ecto.NoResultsError, fn -> Accounts.get_group!(group.id) end
     end
 
-    test "remove_user_from_group!/2 removes user from members, transfers ownership" do
+    test "remove_user_from_group!/2 removes user from members, changes owner" do
       user = user_fixture()
       new_owner = user_fixture()
       group = group_fixture(%{}, owner: user, members: [user, new_owner])

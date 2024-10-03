@@ -10,17 +10,17 @@
     phx-change="validate"
     phx-submit="save"
   >
-    <.input field={@form[:name]} type="text" label="Name" />
-    <.input field={@form[:avatar]} type="text" label="URL to Avatar" />
+    <.input field={@form[:name]} type="text" label={gettext("Name")} />
+    <.input field={@form[:avatar]} type="text" label={gettext("URL to Group Avatar")} />
 
     <:actions>
-      <.button phx-disable-with="Saving...">Save Changes</.button>
+      <.button phx-disable-with={gettext("Saving...")}><%= gettext("Save Changes") %></.button>
     </:actions>
   </.simple_form>
 
   <div>
     <.header>
-      Members
+      <%= gettext("Members") %>
       <:actions>
         <input
           :if={@invite}
@@ -29,37 +29,37 @@
           onclick={"this.select();navigator.clipboard.writeText('#{@invite}')"}
           readonly
         />
-        <.tooltip content="Each invite link can be used once">
+        <.tooltip content={gettext("Each invite link can be used only once")}>
           <.button
             phx-target={@myself}
             phx-click={JS.push("invite")}
-            phx-disable-with="Generating..."
+            phx-disable-with={gettext("Generating...")}
           >
-            New Invite
+            <%= gettext("New Invite") %>
           </.button>
         </.tooltip>
       </:actions>
     </.header>
 
     <.table id="members" rows={@form.data.members} row_id={fn m -> "member-#{m.id}" end}>
-      <:col :let={member} label="Picture"><.avatar user={member} /></:col>
-      <:col :let={member} label="Name"><%= member.name %></:col>
+      <:col :let={member} label={gettext("Avatar")}><.avatar user={member} /></:col>
+      <:col :let={member} label={gettext("Name")}><%= member.name %></:col>
       <:action :let={member}>
         <.link
-          data-confirm="Are you sure you want to kick this user?"
+          data-confirm={gettext("Are you sure you want to kick this user?")}
           phx-click={
             JS.push("group_kick", value: %{user_id: member.id}) |> hide("#member-#{member.id}")
           }
         >
-          Kick
+          <%= gettext("Kick") %>
         </.link>
       </:action>
       <:action :let={member}>
         <.link
-          data-confirm="Are you sure you want to transfer ownership?"
-          phx-click={JS.push("group_transfer_owner", value: %{user_id: member.id})}
+          data-confirm={gettext("Are you sure you want to change the owner?")}
+          phx-click={JS.push("group_change_owner", value: %{user_id: member.id})}
         >
-          Make Owner
+          <%= gettext("Make Owner") %>
         </.link>
       </:action>
     </.table>
@@ -67,9 +67,9 @@
 
   <.button
     class="bg-red-600 hover:bg-red-700 mt-4"
-    data-confirm="Are you sure you want to delete this group?"
+    data-confirm={gettext("Are you sure you want to delete this group?")}
     phx-click={JS.push("group_delete") |> JS.patch("/")}
   >
-    Delete Group
+    <%= gettext("Delete Group") %>
   </.button>
 </div>

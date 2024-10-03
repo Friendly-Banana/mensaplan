@@ -8,9 +8,11 @@ defmodule MensaplanWeb.PositionLive do
   alias Mensaplan.Positions
   alias Mensaplan.Positions.Position
   import MensaplanWeb.Components.Tooltip
+  import MensaplanWeb.Gettext
 
   @impl true
   def mount(_params, session, socket) do
+    # TODO Gettext.put_locale("de")
     Phoenix.PubSub.subscribe(Mensaplan.PubSub, "positions")
     user = session["user"]
     socket = assign(socket, user: user)
@@ -47,7 +49,7 @@ defmodule MensaplanWeb.PositionLive do
   def handle_event("position_clear", _, socket) do
     Positions.expire_all_positions(socket.assigns.user.id)
     socket = assign(socket, form: to_form(Ecto.Changeset.change(%Position{})))
-    {:noreply, socket |> put_flash(:info, "Position cleared")}
+    {:noreply, socket |> put_flash(:info, dgettext("messages", "Position cleared"))}
   end
 
   @impl true
@@ -63,7 +65,7 @@ defmodule MensaplanWeb.PositionLive do
         {:noreply,
          socket
          |> stream_insert(:positions, position_to_map(position))
-         |> put_flash(:info, "Position set")}
+         |> put_flash(:info, dgettext("messages", "Position set"))}
 
       {:error, %Ecto.Changeset{} = changeset} ->
         {:noreply, assign(socket, form: to_form(changeset))}
@@ -71,7 +73,7 @@ defmodule MensaplanWeb.PositionLive do
   end
 
   @impl true
-  def handle_event("group_transfer_owner", %{"user_id" => user_id}, socket) do
+  def handle_event("group_change_owner", %{"user_id" => user_id}, socket) do
     group = socket.assigns.group
 
     if group.owner_id == socket.assigns.user.id do
@@ -79,10 +81,10 @@ defmodule MensaplanWeb.PositionLive do
 
       {:noreply,
        stream_insert(socket, :groups, updated_group)
-       |> put_flash(:info, "Owner transferred")
+       |> put_flash(:info, dgettext("messages", "Owner changed"))
        |> redirect(to: "/")}
     else
-      {:noreply, put_flash(socket, :error, "You are not the owner of this group")}
+      {:noreply, put_flash(socket, :error, gettext("You are not the owner of this group"))}
     end
   end
 
@@ -102,7 +104,7 @@ defmodule MensaplanWeb.PositionLive do
       updated_group = Accounts.remove_user_from_group!(group, user_id)
       {:noreply, stream_insert(socket, :groups, updated_group)}
     else
-      {:noreply, put_flash(socket, :error, "You are not the owner of this group")}
+      {:noreply, put_flash(socket, :error, gettext("You are not the owner of this group"))}
     end
   end
 
@@ -114,7 +116,7 @@ defmodule MensaplanWeb.PositionLive do
       {:ok, updated_group} = Accounts.delete_group(group)
       {:noreply, stream_delete(socket, :groups, updated_group)}
     else
-      {:noreply, put_flash(socket, :error, "You are not the owner of this group")}
+      {:noreply, put_flash(socket, :error, gettext("You are not the owner of this group"))}
     end
   end
 
@@ -151,10 +153,10 @@ defmodule MensaplanWeb.PositionLive do
     if group && group.owner_id == socket.assigns.user.id do
       {:noreply,
        socket
-       |> assign(:page_title, "Edit Group " <> group.name)
+       |> assign(:page_title, gettext("Edit Group %{name}", name: group.name))
        |> assign(:group, group)}
     else
-      {:noreply, socket |> put_flash(:error, "Group not found") |> redirect(to: "/")}
+      {:noreply, socket |> put_flash(:error, dgettext("errors", "Group not found")) |> redirect(to: "/")}
     end
   end
 

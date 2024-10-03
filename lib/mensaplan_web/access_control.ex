@@ -9,7 +9,7 @@ defmodule MensaplanWeb.AccessControl do
       assign(conn, :user, user)
     else
       conn
-      |> put_flash(:error, "Please login to access this page.")
+      |> put_flash(:error, dgettext("errors", "Please login to access this page."))
       |> redirect(to: "/")
       |> halt()
     end
@@ -20,7 +20,7 @@ defmodule MensaplanWeb.AccessControl do
       conn
     else
       conn
-      |> put_flash(:error, "Please login to access this page.")
+      |> put_flash(:error, dgettext("errors", "Please login to access this page."))
       |> redirect(to: "/")
       |> halt()
     end

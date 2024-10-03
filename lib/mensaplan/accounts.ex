@@ -223,7 +223,7 @@ defmodule Mensaplan.Accounts do
     if group.owner_id == user_id do
       if not Enum.empty?(new_members) do
         new_owner = hd(new_members)
-        Logger.info("Transferring ownership of group #{group.name} to #{new_owner.name}.")
+        Logger.info("Changing owner of group #{group.name} to #{new_owner.name}.")
 
         change_group(group)
         |> Ecto.Changeset.put_assoc(:owner, new_owner)

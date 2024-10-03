@@ -38,7 +38,7 @@ defmodule MensaplanWeb.AuthController do
     end
 
     conn
-    |> put_flash(:info, "You have been logged out!")
+    |> put_flash(:info, dgettext("messages", "You have been logged out!"))
     |> delete_resp_cookie(@remember_me_cookie)
     |> clear_session()
     |> redirect(to: "/")
@@ -54,7 +54,7 @@ defmodule MensaplanWeb.AuthController do
 
   def callback(%{assigns: %{ueberauth_failure: _fails}} = conn, _params) do
     conn
-    |> put_flash(:error, "Failed to authenticate.")
+    |> put_flash(:error, dgettext("errors", "Failed to authenticate."))
     |> redirect(to: "/")
   end
 
@@ -64,7 +64,7 @@ defmodule MensaplanWeb.AuthController do
         case get_or_create_user(oauth_user) do
           {:ok, user} ->
             conn
-            |> put_flash(:info, "Successfully authenticated.")
+            |> put_flash(:info, dgettext("messages", "Successfully authenticated."))
             |> put_resp_cookie(
               @remember_me_cookie,
               UserToken.generate_user_token(user),
@@ -79,11 +79,6 @@ defmodule MensaplanWeb.AuthController do
             |> put_flash(:error, reason)
             |> redirect(to: "/")
         end
-
-      {:error, reason} ->
-        conn
-        |> put_flash(:error, reason)
-        |> redirect(to: "/")
     end
   end
 end

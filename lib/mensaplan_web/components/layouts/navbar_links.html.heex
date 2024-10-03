@@ -1,15 +1,15 @@
 <div class="flex flex-col sm:flex-row font-semibold ml-4 justify-evenly">
   <a class="p-4 sm:py-2 text-gray-500 hover:bg-blue-50 hover:text-blue-600 rounded" href="/">
-    Home
+    <%= gettext("Home") %>
   </a>
   <a
     class="p-4 sm:py-2 text-gray-500 hover:bg-blue-50 hover:text-blue-600 rounded"
     href="https://tum-dev.github.io/eat-api/#!/en/mensa-garching"
   >
-    Menu <.icon name="hero-arrow-top-right-on-square" class="h-4" />
+    <%= gettext("Menu") %><.icon name="hero-arrow-top-right-on-square" class="h-4" />
   </a>
   <a class="p-4 sm:py-2 text-gray-500 hover:bg-blue-50 hover:text-blue-600 rounded" href="/about">
-    About
+    <%= gettext("About") %>
   </a>
 </div>
 
@@ -21,13 +21,13 @@
     href="/auth/logout"
     class="inline-block m-2 py-3 sm:py-2 px-6 text-button bg-red-600 hover:bg-red-700 text-white"
   >
-    Log out
+    <%= gettext("Log out") %>
   </a>
 <% else %>
   <a
     class="inline-block m-2 mt-auto sm:m-3 sm:ml-auto py-3 sm:py-2 px-6 text-button bg-blue-500 hover:bg-blue-600 text-white focus:outline-offset-2"
     href="/auth/discord"
   >
-    Sign In
+    <%= gettext("Sign In") %>
   </a>
 <% end %>

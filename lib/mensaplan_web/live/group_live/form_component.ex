@@ -7,7 +7,7 @@ defmodule MensaplanWeb.GroupLive.FormComponent do
     ~H"""
     <div>
       <.header>
-        Create new group
+        <%= gettext("New Group") %>
       </.header>
 
       <.simple_form
@@ -17,10 +17,10 @@ defmodule MensaplanWeb.GroupLive.FormComponent do
         phx-change="validate"
         phx-submit="save"
       >
-        <.input field={@form[:name]} type="text" label="Name" />
-        <.input field={@form[:avatar]} type="text" label="Avatar URL" />
+        <.input field={@form[:name]} type="text" label={gettext("Name")} />
+        <.input field={@form[:avatar]} type="text" label={gettext("URL to Group Avatar")} />
         <:actions>
-          <.button phx-disable-with="Creating...">Create Group</.button>
+          <.button phx-disable-with={gettext("Creating...")}><%= gettext("Create Group") %></.button>
         </:actions>
       </.simple_form>
     </div>
@@ -54,7 +54,7 @@ defmodule MensaplanWeb.GroupLive.FormComponent do
 
         {:noreply,
          socket
-         |> put_flash(:info, "Group created successfully")
+         |> put_flash(:info, dgettext("messages", "Group created successfully"))
          |> push_patch(to: "/")}
 
       {:error, %Ecto.Changeset{} = changeset} ->

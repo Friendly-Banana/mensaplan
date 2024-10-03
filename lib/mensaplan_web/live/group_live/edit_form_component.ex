@@ -34,7 +34,7 @@ defmodule MensaplanWeb.GroupLive.EditFormComponent do
 
         {:noreply,
          socket
-         |> put_flash(:info, "Group updated successfully")
+         |> put_flash(:info, dgettext("messages", "Group updated successfully"))
          |> push_patch(to: "/")}
 
       {:error, %Ecto.Changeset{} = changeset} ->
@@ -52,7 +52,7 @@ defmodule MensaplanWeb.GroupLive.EditFormComponent do
       {:noreply,
        assign(socket, :invite, MensaplanWeb.Endpoint.url() <> ~p"/join/" <> invite.uuid)}
     else
-      {:noreply, put_flash(socket, :error, "You are not the owner of this group")}
+      {:noreply, put_flash(socket, :error, gettext("You are not the owner of this group"))}
     end
   end
 
