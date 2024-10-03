@@ -28,7 +28,7 @@
     </script>
   </head>
   <body class="bg-white antialiased flex flex-col min-h-screen">
-    <.navbar user={Plug.Conn.get_session(@conn, :user)} />
+    <.navbar user={Plug.Conn.get_session(@conn, :user)} locale={Plug.Conn.get_session(@conn, :locale)} />
 
     <%= @inner_content %>
 

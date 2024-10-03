@@ -11,8 +11,6 @@ config :mensaplan,
   ecto_repos: [Mensaplan.Repo],
   generators: [timestamp_type: :utc_datetime]
 
-config :mensaplan, MensaplanWeb.Gettext, locales: ~w(en de), default_locale: "en"
-
 # Configures the endpoint
 config :mensaplan, MensaplanWeb.Endpoint,
   url: [host: "localhost"],

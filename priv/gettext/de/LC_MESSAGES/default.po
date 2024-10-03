@@ -130,11 +130,6 @@ msgstr "Neue Einladung"
 msgid "No dishes available today."
 msgstr "Heute keine Gerichte verfügbar."
 
-#: lib/mensaplan_web/live/position_live/position_live.html.heex:130
-#, elixir-autogen, elixir-format
-msgid "Price (students)"
-msgstr "Preis für Studenten"
-
 #: lib/mensaplan_web/live/position_live/position_live.html.heex:63
 #, elixir-autogen, elixir-format
 msgid "Public"
@@ -273,7 +268,7 @@ msgstr "Wenn du nicht beitreten möchtest, kannst du das einfach ignorieren."
 msgid "Join Group"
 msgstr "Gruppe beitreten"
 
-#: lib/mensaplan_web/components/layouts/navbar_links.html.heex:24
+#: lib/mensaplan_web/components/layouts/navbar_links.html.heex:27
 #, elixir-autogen, elixir-format
 msgid "Log out"
 msgstr "Abmelden"
@@ -294,7 +289,7 @@ msgstr "Menü"
 msgid "Settings"
 msgstr "Einstellungen"
 
-#: lib/mensaplan_web/components/layouts/navbar_links.html.heex:31
+#: lib/mensaplan_web/components/layouts/navbar_links.html.heex:34
 #, elixir-autogen, elixir-format
 msgid "Sign In"
 msgstr "Anmelden"
@@ -398,3 +393,8 @@ msgstr "Meine Freunde und ich benutzen es seit über einem Jahr und es ist ein v
 #, elixir-autogen, elixir-format, fuzzy
 msgid "Mensaplan started as a feature of %{wobot}, a Discord bot, when I, the developer, came across the floor plan of the TUM Mensa. Due to the popularity of this feature, I decided to expand it into a web application in order to make it more accessible to a wider audience."
 msgstr "Mensaplan begann als eine Funktion von %{wobot}, einem Discord-Bot, als ich, der Entwickler, auf den Grundriss der TUM-Mensa stieß. Aufgrund der Beliebtheit dieses Features beschloss ich, es zu einer Webanwendung zu erweitern, um es einem breiteren Publikum zugänglich zu machen."
+
+#: lib/mensaplan_web/live/position_live/position_live.html.heex:130
+#, elixir-autogen, elixir-format, fuzzy
+msgid "Price for students"
+msgstr "Preis für Studierende"

@@ -12,7 +12,7 @@ defmodule MensaplanWeb.PositionLive do
 
   @impl true
   def mount(_params, session, socket) do
-    # TODO Gettext.put_locale("de")
+    Gettext.put_locale(session["locale"])
     Phoenix.PubSub.subscribe(Mensaplan.PubSub, "positions")
     user = session["user"]
     socket = assign(socket, user: user)
@@ -156,7 +156,8 @@ defmodule MensaplanWeb.PositionLive do
        |> assign(:page_title, gettext("Edit Group %{name}", name: group.name))
        |> assign(:group, group)}
     else
-      {:noreply, socket |> put_flash(:error, dgettext("errors", "Group not found")) |> redirect(to: "/")}
+      {:noreply,
+       socket |> put_flash(:error, dgettext("errors", "Group not found")) |> redirect(to: "/")}
     end
   end
 

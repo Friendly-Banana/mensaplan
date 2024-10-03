@@ -111,7 +111,7 @@ msgstr "Authentifizierung fehlgeschlagen."
 msgid "Failed to update settings."
 msgstr "Einstellungen konnten nicht aktualisiert werden."
 
-#: lib/mensaplan_web/live/position_live/position_live.ex:159
+#: lib/mensaplan_web/live/position_live/position_live.ex:160
 #, elixir-autogen, elixir-format
 msgid "Group not found"
 msgstr "Gruppe nicht gefunden"

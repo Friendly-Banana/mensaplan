@@ -14,6 +14,7 @@ defmodule MensaplanWeb.Router do
     plug :protect_from_forgery
     plug :put_secure_browser_headers
     plug :fetch_user_from_cookie
+    plug MensaplanWeb.Plugs.SetLocale
   end
 
   pipeline :api do
@@ -50,7 +51,6 @@ defmodule MensaplanWeb.Router do
     post "/:provider/callback", AuthController, :callback
   end
 
-  # Discord Bot API
   scope "/api", MensaplanWeb do
     pipe_through :api
 

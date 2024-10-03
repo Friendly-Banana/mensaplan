@@ -127,7 +127,7 @@
           <p><%= dish.name %></p>
           <p class="text-sm text-gray-500"><%= dish.category %></p>
         </:col>
-        <:col :let={{_id, dish}} label={gettext("Price (students)")}><%= dish.price %></:col>
+        <:col :let={{_id, dish}} label={gettext("Price for students")}><%= dish.price %></:col>
 
         <:action :let={{_id, dish}} :if={@user}>
           <%= if dish.user_likes > 0 do %>

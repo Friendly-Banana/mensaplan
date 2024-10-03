@@ -130,11 +130,6 @@ msgstr ""
 msgid "No dishes available today."
 msgstr ""
 
-#: lib/mensaplan_web/live/position_live/position_live.html.heex:130
-#, elixir-autogen, elixir-format
-msgid "Price (students)"
-msgstr ""
-
 #: lib/mensaplan_web/live/position_live/position_live.html.heex:63
 #, elixir-autogen, elixir-format
 msgid "Public"
@@ -273,7 +268,7 @@ msgstr ""
 msgid "Join Group"
 msgstr ""
 
-#: lib/mensaplan_web/components/layouts/navbar_links.html.heex:24
+#: lib/mensaplan_web/components/layouts/navbar_links.html.heex:27
 #, elixir-autogen, elixir-format
 msgid "Log out"
 msgstr ""
@@ -294,7 +289,7 @@ msgstr ""
 msgid "Settings"
 msgstr ""
 
-#: lib/mensaplan_web/components/layouts/navbar_links.html.heex:31
+#: lib/mensaplan_web/components/layouts/navbar_links.html.heex:34
 #, elixir-autogen, elixir-format
 msgid "Sign In"
 msgstr ""
@@ -397,4 +392,9 @@ msgstr ""
 #: lib/mensaplan_web/controllers/page_html/about.html.heex:43
 #, elixir-autogen, elixir-format, fuzzy
 msgid "Mensaplan started as a feature of %{wobot}, a Discord bot, when I, the developer, came across the floor plan of the TUM Mensa. Due to the popularity of this feature, I decided to expand it into a web application in order to make it more accessible to a wider audience."
+msgstr ""
+
+#: lib/mensaplan_web/live/position_live/position_live.html.heex:130
+#, elixir-autogen, elixir-format, fuzzy
+msgid "Price for students"
 msgstr ""
