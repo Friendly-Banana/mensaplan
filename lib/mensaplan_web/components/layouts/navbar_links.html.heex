@@ -13,12 +13,30 @@
   </a>
 </div>
 
-<a :if={@locale != "de"} class="inline-block sm:ml-auto mt-auto sm:mb-auto p-4 sm:py-2 rounded hover:bg-blue-100" href="?locale=de" title="German"> 🇩🇪 </a>
-<a :if={@locale == "de"} class="inline-block sm:ml-auto mt-auto sm:mb-auto p-4 sm:py-2 rounded hover:bg-blue-100" href="?locale=en" title="English"> 🇺🇸 </a>
+<% locale = Gettext.get_locale(MensaplanWeb.Gettext) %>
+<a
+  :if={locale != "de"}
+  class="inline-block sm:ml-auto mt-auto sm:mb-auto p-4 sm:py-2 rounded hover:bg-blue-100"
+  href={change_locale(@conn, locale, "de")}
+  onclick="document.cookie = 'locale=de; path=/; expires=' + new Date(Date.now() + 31536000000).toUTCString();"
+  title="German"
+>
+  🇩🇪
+</a>
+<a
+  :if={locale == "de"}
+  class="inline-block sm:ml-auto mt-auto sm:mb-auto p-4 sm:py-2 rounded hover:bg-blue-100"
+  href={change_locale(@conn, locale, "en")}
+  onclick="document.cookie = 'locale=en; path=/; expires=' + new Date(Date.now() + 31536000000).toUTCString();"
+  title="English"
+>
+  🇺🇸
+</a>
 
-<%= if @user do %>
+<% user = Plug.Conn.get_session(@conn, :user) %>
+<%= if user do %>
   <a href="/settings" class="p-4 sm:py-2 rounded hover:bg-blue-100" title="Settings">
-    <img src={@user.avatar} class="rounded-full max-h-9" alt="User Avatar" />
+    <img src={user.avatar} class="rounded-full max-h-9" alt="User Avatar" />
   </a>
   <a
     href="/auth/logout"

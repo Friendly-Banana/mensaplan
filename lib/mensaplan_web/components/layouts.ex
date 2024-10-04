@@ -9,6 +9,7 @@ defmodule MensaplanWeb.Layouts do
   `use MensaplanWeb, :live_view`.
   """
   use MensaplanWeb, :html
+  import Mensaplan.Helpers
 
   embed_templates "layouts/*"
 end

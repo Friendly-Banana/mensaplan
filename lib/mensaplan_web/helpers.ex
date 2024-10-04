@@ -1,4 +1,17 @@
-defmodule MensaplanWeb.Helpers do
+defmodule Mensaplan.Helpers do
+  def local_now do
+    DateTime.now!("Europe/Berlin")
+  end
+
+  def change_locale(conn, old, new_locale) do
+    current_path = Phoenix.Controller.current_path(conn)
+    String.replace_prefix(current_path, "/#{old}", "/#{new_locale}")
+  end
+
+  def locale_patch(url) do
+    Phoenix.LiveView.JS.patch("/" <> Gettext.get_locale() <> url)
+  end
+
   @doc """
   Generates src, srcset and sizes attributes for an image tag.
   Images can be done with the following command:
@@ -19,7 +32,11 @@ defmodule MensaplanWeb.Helpers do
       end) ++ [Integer.to_string(List.last(sizes)) <> "w"]
 
     quote do
-      %{src: unquote(fallback), srcset: unquote(Enum.join(srcset, ", ")), sizes: unquote(Enum.join(sizes, ", "))}
+      %{
+        src: unquote(fallback),
+        srcset: unquote(Enum.join(srcset, ", ")),
+        sizes: unquote(Enum.join(sizes, ", "))
+      }
     end
   end
 end

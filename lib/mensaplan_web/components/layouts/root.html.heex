@@ -28,7 +28,7 @@
     </script>
   </head>
   <body class="bg-white antialiased flex flex-col min-h-screen">
-    <.navbar user={Plug.Conn.get_session(@conn, :user)} locale={Plug.Conn.get_session(@conn, :locale)} />
+    <.navbar conn={@conn} />
 
     <%= @inner_content %>
 
@@ -37,7 +37,7 @@
       <div class="flex flex-col sm:flex-row items-center justify-evenly p-2 text-sm">
         <img class="h-4 w-4" src={~p"/images/logo.svg"} alt="Logo" />
         <span>
-          ©<%= TimeUtils.local_now().year %> Gabriel
+          ©<%= Mensaplan.Helpers.local_now().year %> Gabriel
         </span>
         <span>
           <%= gettext("Version %{version}", version: Application.spec(:mensaplan, :vsn)) %>

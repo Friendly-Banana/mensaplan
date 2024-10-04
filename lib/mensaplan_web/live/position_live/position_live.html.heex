@@ -82,7 +82,7 @@
       <.header>
         <%= gettext("Your Groups") %>
         <:actions>
-          <.button phx-click={JS.patch("/groups/new")}>
+          <.button phx-click={locale_patch("/groups/new")}>
             <%= gettext("New Group") %>
           </.button>
         </:actions>
@@ -92,13 +92,13 @@
         id="groups"
         rows={@streams.groups}
         row_click={
-          fn {_id, group} -> group.owner_id == @user.id && JS.patch("/groups/#{group.id}") end
+          fn {_id, group} -> group.owner_id == @user.id && locale_patch("/groups/#{group.id}") end
         }
       >
         <:col :let={{_id, group}} label={gettext("Avatar")}><.avatar user={group} /></:col>
         <:col :let={{_id, group}} label={gettext("Name")}><%= group.name %></:col>
         <:action :let={{_id, group}}>
-          <.link :if={group.owner_id == @user.id} phx-click={JS.patch("/groups/#{group.id}")}>
+          <.link :if={group.owner_id == @user.id} phx-click={locale_patch("/groups/#{group.id}")}>
             <%= gettext("Edit") %>
           </.link>
         </:action>
@@ -162,7 +162,7 @@
     :if={@user && @live_action in [:group_new, :group_edit]}
     id="group-modal"
     show
-    on_cancel={JS.patch(~p"/")}
+    on_cancel={locale_patch("")}
   >
     <.live_component
       :if={@live_action == :group_new}

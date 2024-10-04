@@ -4,8 +4,8 @@ defmodule Mensaplan.Mensa do
   """
 
   import Ecto.Query, warn: false
-  import TimeUtils
-
+  
+  import Mensaplan.Helpers
   alias Mensaplan.Repo
   alias Mensaplan.Mensa.Dish
   alias Mensaplan.Mensa.Like

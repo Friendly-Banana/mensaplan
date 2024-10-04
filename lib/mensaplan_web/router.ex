@@ -14,7 +14,10 @@ defmodule MensaplanWeb.Router do
     plug :protect_from_forgery
     plug :put_secure_browser_headers
     plug :fetch_user_from_cookie
-    plug MensaplanWeb.Plugs.SetLocale
+  end
+
+  pipeline :translate do
+    plug(SetLocale, gettext: MensaplanWeb.Gettext, default_locale: "en", cookie_key: "locale")
   end
 
   pipeline :api do
@@ -23,14 +26,26 @@ defmodule MensaplanWeb.Router do
   end
 
   scope "/", MensaplanWeb do
-    pipe_through :browser
+    pipe_through [:browser, :translate]
+
+    # none of this is called, but we want the redirects
+    get "/", PageController, :dummy
+    live "/groups/new/", PositionLive, :group_new
+    live "/groups/:id", PositionLive, :group_edit
+    live "/groups/:id/invite/", PositionLive, :group_invite
+    get "/settings", PageController, :settings
+    get "/join/:invite", PageController, :join
+  end
+
+  scope "/:locale", MensaplanWeb do
+    pipe_through [:browser, :translate]
 
     live "/", PositionLive
     get "/about", PageController, :about
   end
 
-  scope "/", MensaplanWeb do
-    pipe_through [:browser, :require_login]
+  scope "/:locale", MensaplanWeb do
+    pipe_through [:browser, :translate, :require_login]
 
     live "/groups/new/", PositionLive, :group_new
     live "/groups/:id", PositionLive, :group_edit

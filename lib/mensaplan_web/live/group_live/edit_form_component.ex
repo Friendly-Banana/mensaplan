@@ -3,6 +3,7 @@ defmodule MensaplanWeb.GroupLive.EditFormComponent do
 
   alias Mensaplan.Accounts
   import MensaplanWeb.Components.Tooltip
+  import Mensaplan.Helpers
 
   @impl true
   def update(%{group: group} = assigns, socket) do
@@ -35,7 +36,7 @@ defmodule MensaplanWeb.GroupLive.EditFormComponent do
         {:noreply,
          socket
          |> put_flash(:info, dgettext("messages", "Group updated successfully"))
-         |> push_patch(to: "/")}
+         |> push_patch(to: "/" <> Gettext.get_locale())}
 
       {:error, %Ecto.Changeset{} = changeset} ->
         {:noreply, assign_form(socket, changeset)}

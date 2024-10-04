@@ -9,7 +9,7 @@ defmodule Mensaplan.MensaTest do
     alias Mensaplan.Mensa.Dish
 
     import Mensaplan.MensaFixtures
-    import TimeUtils
+    import Mensaplan.Helpers
 
     @invalid_attrs %{category: nil, name: nil, price: nil}
 

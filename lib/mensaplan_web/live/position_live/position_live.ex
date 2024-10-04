@@ -9,14 +9,16 @@ defmodule MensaplanWeb.PositionLive do
   alias Mensaplan.Positions.Position
   import MensaplanWeb.Components.Tooltip
   import MensaplanWeb.Gettext
+  import Mensaplan.Helpers
 
   @impl true
-  def mount(_params, session, socket) do
-    Gettext.put_locale(session["locale"])
-    Phoenix.PubSub.subscribe(Mensaplan.PubSub, "positions")
+  def mount(%{"locale" => locale}, session, socket) do
+    Gettext.put_locale(locale)
+
     user = session["user"]
     socket = assign(socket, user: user)
 
+    Phoenix.PubSub.subscribe(Mensaplan.PubSub, "positions")
     Phoenix.PubSub.subscribe(Mensaplan.PubSub, "update_dishes")
     socket = assign_new(socket, :dishes, fn -> Mensa.list_todays_dishes(user) end)
 
@@ -114,7 +116,10 @@ defmodule MensaplanWeb.PositionLive do
 
     if group.owner_id == socket.assigns.user.id do
       {:ok, updated_group} = Accounts.delete_group(group)
-      {:noreply, stream_delete(socket, :groups, updated_group)}
+
+      {:noreply,
+       stream_delete(socket, :groups, updated_group)
+       |> push_patch(to: "/" <> Gettext.get_locale())}
     else
       {:noreply, put_flash(socket, :error, gettext("You are not the owner of this group"))}
     end

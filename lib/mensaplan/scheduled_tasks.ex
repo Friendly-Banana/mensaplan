@@ -2,7 +2,7 @@ defmodule Mensaplan.Periodically do
   use GenServer
 
   import Ecto.Query, warn: false
-  import TimeUtils
+  import Mensaplan.Helpers
   alias Mensaplan.Mensa
   alias Mensaplan.Mensa.Dish
   alias Mensaplan.Positions.Position

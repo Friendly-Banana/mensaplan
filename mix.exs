@@ -60,7 +60,8 @@ defmodule Mensaplan.MixProject do
       {:bandit, "~> 1.2"},
       {:ueberauth_discord, "~> 0.6"},
       {:req, "~> 0.5.0"},
-      {:tzdata, "~> 1.1"}
+      {:tzdata, "~> 1.1.2"},
+      {:set_locale, github: "jackjoe/set_locale"}
     ]
   end
 

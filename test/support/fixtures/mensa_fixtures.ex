@@ -14,7 +14,7 @@ defmodule Mensaplan.MensaFixtures do
         category: "some category",
         name: "some unique name #{System.unique_integer()}",
         price: "some price",
-        date: TimeUtils.local_now()
+        date: Mensaplan.Helpers.local_now()
       })
       |> Mensaplan.Mensa.create_dish()
 
