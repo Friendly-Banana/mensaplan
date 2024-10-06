@@ -1,7 +1,7 @@
 <.flash_group flash={@flash} />
 
-<div class="flex flex-wrap justify-center gap-8 m-2">
-  <div class="relative h-full" style="width: min(100%, 85svh)" id="drop-target">
+<div class="flex flex-wrap justify-center gap-8">
+  <div class="relative h-full" id="drop-target">
     <img
       src={~p"/images/mensaplan.min.svg"}
       alt={gettext("Top down view of the mensa")}
@@ -65,7 +65,7 @@
         <.button
           type="button"
           phx-click="position_clear"
-          class="text-button !bg-gray-200/75 hover:!bg-gray-300/80 !text-gray-900"
+          class="!bg-gray-200/75 hover:!bg-gray-300/80 !text-gray-900"
         >
           <%= gettext("Clear Position") %>
         </.button>
@@ -113,50 +113,20 @@
       </.table>
     </div>
   </div>
-
-  <details open>
-    <summary class="text-lg font-semibold"><%= gettext("Today's Menu") %></summary>
-    <%= if Enum.empty?(@dishes) do %>
-      <p><%= gettext("No dishes available today.") %></p>
-    <% else %>
-      <.table
-        id="dishes"
-        rows={Enum.with_index(@dishes, fn element, index -> {index, element} end)}
-      >
-        <:col :let={{_id, dish}} label={gettext("Dish")}>
-          <p><%= dish.name %></p>
-          <p class="text-sm text-gray-500"><%= dish.category %></p>
-        </:col>
-        <:col :let={{_id, dish}} label={gettext("Price for students")}><%= dish.price %></:col>
-
-        <:action :let={{_id, dish}} :if={@user}>
-          <%= if dish.user_likes > 0 do %>
-            <.link phx-click={JS.push("dish_unlike", value: %{id: dish.id})}>
-              <.icon name="hero-hand-thumb-up-solid" />
-            </.link>
-          <% else %>
-            <.link phx-click={JS.push("dish_like", value: %{id: dish.id, like: true})}>
-              <.icon name="hero-hand-thumb-up" />
-            </.link>
-          <% end %>
-        </:action>
-        <:action :let={{_id, dish}}>
-          <.tooltip content="Dishlikes"><%= dish.likes %></.tooltip>
-        </:action>
-        <:action :let={{_id, dish}} :if={@user}>
-          <%= if dish.user_likes < 0 do %>
-            <.link phx-click={JS.push("dish_unlike", value: %{id: dish.id})}>
-              <.icon name="hero-hand-thumb-down-solid" />
-            </.link>
-          <% else %>
-            <.link phx-click={JS.push("dish_like", value: %{id: dish.id, like: false})}>
-              <.icon name="hero-hand-thumb-down" />
-            </.link>
-          <% end %>
-        </:action>
-      </.table>
-    <% end %>
-  </details>
+  
+  <%= if @any_dishes do %>
+    <details open>
+      <summary class="text-lg font-semibold"><%= gettext("Today's Menu") %></summary>
+      <.live_component
+        id={:dishes}
+        module={MensaplanWeb.DishLive.DishesComponent}
+        user={@user}
+        dishes={@streams.dishes}
+      />
+    </details>
+  <% else %>
+    <p><%= gettext("No dishes available today.") %></p>
+  <% end %>
 
   <.modal
     :if={@user && @live_action in [:group_new, :group_edit]}

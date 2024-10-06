@@ -21,17 +21,17 @@ msgstr "Gruppe erstellt"
 msgid "Group updated successfully"
 msgstr "Gruppe geändert"
 
-#: lib/mensaplan_web/live/position_live/position_live.ex:84
+#: lib/mensaplan_web/live/position_live/position_live.ex:90
 #, elixir-autogen, elixir-format
 msgid "Owner changed"
 msgstr "Eigentumer geändert"
 
-#: lib/mensaplan_web/live/position_live/position_live.ex:52
+#: lib/mensaplan_web/live/position_live/position_live.ex:58
 #, elixir-autogen, elixir-format
 msgid "Position cleared"
 msgstr "Position gelöscht"
 
-#: lib/mensaplan_web/live/position_live/position_live.ex:68
+#: lib/mensaplan_web/live/position_live/position_live.ex:74
 #, elixir-autogen, elixir-format
 msgid "Position set"
 msgstr "Position gesetzt"

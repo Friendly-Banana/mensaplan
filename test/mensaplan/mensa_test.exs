@@ -19,10 +19,11 @@ defmodule Mensaplan.MensaTest do
     end
 
     test "list_todays_dishes/1 returns all dishes for today" do
+      user = AccountsFixtures.user_fixture()
       dish = dish_fixture()
       dish_fixture(date: Date.add(local_now(), -1))
       dish_fixture(date: Date.add(local_now(), 1))
-      d = hd(Mensa.list_todays_dishes())
+      d = hd(Mensa.list_todays_dishes(user))
       assert d.id == dish.id
       assert d.category == dish.category
       assert d.name == dish.name

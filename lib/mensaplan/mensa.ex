@@ -4,7 +4,7 @@ defmodule Mensaplan.Mensa do
   """
 
   import Ecto.Query, warn: false
-  
+
   import Mensaplan.Helpers
   alias Mensaplan.Repo
   alias Mensaplan.Mensa.Dish
@@ -23,20 +23,22 @@ defmodule Mensaplan.Mensa do
     Repo.all(Dish)
   end
 
-  def list_todays_dishes(user \\ nil) do
+  def list_dishes(user, query_fn) do
     query =
       from d in Dish,
-        where: d.date == ^local_now(),
         left_join: l in assoc(d, :likes),
         group_by: [d.id],
-        order_by: [d.category, d.name, d.id],
+        limit: 50,
         select: %{
           id: d.id,
-          name: d.name,
+          name_de: d.name_de,
+          name_en: d.name_en,
           price: d.price,
           category: d.category,
-          likes: coalesce(sum(l.like), 0)
+          likes: selected_as(coalesce(sum(l.like), 0), :likes)
         }
+
+    query = query_fn.(query)
 
     query =
       if user do
@@ -49,6 +51,16 @@ defmodule Mensaplan.Mensa do
       end
 
     Repo.all(query)
+  end
+
+  def single_dish(user, dish_id) do
+    list_dishes(user, fn q -> from d in q, where: d.id == ^dish_id end) |> hd()
+  end
+
+  def list_todays_dishes(user) do
+    list_dishes(user, fn q ->
+      from d in q, join: dd in assoc(d, :dish_dates), where: dd.date == ^local_now()
+    end)
   end
 
   @doc """
@@ -66,7 +78,7 @@ defmodule Mensaplan.Mensa do
 
   """
   def get_dish!(id), do: Repo.get!(Dish, id)
-  def get_dish_by_name(name), do: Repo.get_by(Dish, name: name)
+  def get_dish_by_name(name), do: Repo.get_by(Dish, name_de: name)
 
   @doc """
   Creates a dish.

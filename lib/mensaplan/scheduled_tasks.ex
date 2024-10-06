@@ -5,6 +5,7 @@ defmodule Mensaplan.Periodically do
   import Mensaplan.Helpers
   alias Mensaplan.Mensa
   alias Mensaplan.Mensa.Dish
+  alias Mensaplan.Mensa.DishDate
   alias Mensaplan.Positions.Position
   alias Mensaplan.Repo
   require Logger
@@ -18,10 +19,7 @@ defmodule Mensaplan.Periodically do
 
   def init(state) do
     Process.send_after(self(), :expire_positions, @five_minutes)
-    # run shortly after midnight
-    now = local_now()
-    till_midnight = Time.diff(~T[00:00:00], now, :millisecond)
-    Process.send_after(self(), :fetch_dishes, @daily + @five_minutes + till_midnight)
+    Process.send(self(), :fetch_dishes, [])
     {:ok, state}
   end
 
@@ -53,19 +51,29 @@ defmodule Mensaplan.Periodically do
            Req.get(
              "https://tum-dev.github.io/eat-api/mensa-garching/#{today.year}/#{week_number}.json"
            ),
-         day when day != nil <-
-           Enum.find(response.body["days"], fn day -> day["date"] == Date.to_iso8601(today) end),
-         dishes when dishes != nil <- day["dishes"] do
-      dishes = Enum.filter(dishes, fn dish -> dish["dish_type"] != "Beilagen" end)
+         days when is_list(days) <- response.body["days"],
+         {:ok, response_en} <-
+           Req.get(
+             "https://tum-dev.github.io/eat-api/en/mensa-garching/#{today.year}/#{week_number}.json"
+           ),
+         days_en when is_list(days_en) <- response_en.body["days"] do
+      for day_de <- days do
+        date = %DishDate{date: Date.from_iso8601!(day_de["date"])}
+        day_en = Enum.find(days_en, fn day -> day["date"] == day_de["date"] end)
 
-      Enum.map(dishes, &dish_from_json/1)
-      |> Enum.each(fn dish ->
-        (Mensa.get_dish_by_name(dish.name) || dish)
-        |> Dish.changeset(%{date: today})
-        |> Repo.insert_or_update()
-      end)
+        for {dish_de, dish_en} <- Enum.zip(day_de["dishes"], day_en["dishes"]) do
+          dish =
+            Mensa.get_dish_by_name(dish_de["name"]) ||
+              dish_from_json(dish_de, dish_en)
+              |> Mensa.change_dish()
+              |> Repo.insert_or_update!()
 
-      Logger.info("Fetched #{Enum.count(dishes)} dishes.")
+          Map.put(date, :dish_id, dish.id)
+          |> Repo.insert!(on_conflict: :nothing)
+        end
+      end
+
+      Logger.info("Fetched #{Enum.count(days)} days with dishes.")
     else
       nil ->
         Logger.info("Couldn't find data, mensa is probably closed today.")
@@ -74,7 +82,9 @@ defmodule Mensaplan.Periodically do
         Logger.error("Fetching dishes failed: #{reason}")
     end
 
-    Process.send_after(self(), :fetch_dishes, @daily)
+    now = DateTime.to_time(local_now())
+    until_midnight = @daily - elem(Time.to_seconds_after_midnight(now), 0) * 1000
+    Process.send_after(self(), :fetch_dishes, until_midnight)
     {:noreply, state}
   end
 
@@ -86,12 +96,13 @@ defmodule Mensaplan.Periodically do
     :erlang.float_to_binary(num, decimals: 2)
   end
 
-  def dish_from_json(dish) do
+  def dish_from_json(dish, dish_en) do
     price = dish["prices"]["students"]
     per_unit = format(price["price_per_unit"]) <> "€/" <> price["unit"]
 
     %Dish{
-      name: String.trim(dish["name"]),
+      name_de: String.trim(dish["name"]),
+      name_en: String.trim(dish_en["name"]),
       price:
         ((price["base_price"] > 0 && format(price["base_price"]) <> "€ + ") || "") <>
           per_unit,

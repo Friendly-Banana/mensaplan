@@ -15,12 +15,16 @@ defmodule MensaplanWeb.PositionLive do
   def mount(%{"locale" => locale}, session, socket) do
     Gettext.put_locale(locale)
 
+    Phoenix.PubSub.subscribe(Mensaplan.PubSub, "positions")
+
     user = session["user"]
     socket = assign(socket, user: user)
 
-    Phoenix.PubSub.subscribe(Mensaplan.PubSub, "positions")
-    Phoenix.PubSub.subscribe(Mensaplan.PubSub, "update_dishes")
-    socket = assign_new(socket, :dishes, fn -> Mensa.list_todays_dishes(user) end)
+    dishes = Mensa.list_todays_dishes(user)
+
+    socket =
+      stream(socket, :dishes, dishes)
+      |> assign(:any_dishes, Enum.any?(dishes))
 
     if user do
       Phoenix.PubSub.subscribe(Mensaplan.PubSub, "groups")
@@ -126,20 +130,6 @@ defmodule MensaplanWeb.PositionLive do
   end
 
   @impl true
-  def handle_event("dish_like", %{"id" => dish_id, "like" => like}, socket) do
-    Mensa.like_dish(socket.assigns.user.id, dish_id, like)
-    Phoenix.PubSub.broadcast(Mensaplan.PubSub, "update_dishes", {:update_dishes})
-    {:noreply, socket}
-  end
-
-  @impl true
-  def handle_event("dish_unlike", %{"id" => dish_id}, socket) do
-    Mensa.unlike_dish(socket.assigns.user.id, dish_id)
-    Phoenix.PubSub.broadcast(Mensaplan.PubSub, "update_dishes", {:update_dishes})
-    {:noreply, socket}
-  end
-
-  @impl true
   def handle_params(params, _, socket) do
     if socket.assigns.live_action do
       handle_action(socket.assigns.live_action, params, socket)
@@ -167,8 +157,8 @@ defmodule MensaplanWeb.PositionLive do
   end
 
   @impl true
-  def handle_info({:update_dishes}, socket) do
-    {:noreply, assign(socket, :dishes, Mensa.list_todays_dishes(socket.assigns.user))}
+  def handle_info({:update_dish, dish_id}, socket) do
+    {:noreply, stream_insert(socket, :dishes, Mensa.single_dish(socket.assigns.user, dish_id))}
   end
 
   @impl true

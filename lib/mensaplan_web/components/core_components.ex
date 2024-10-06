@@ -510,7 +510,7 @@ defmodule MensaplanWeb.CoreComponents do
 
     ~H"""
     <div class="overflow-y-auto sm:overflow-visible sm:px-0">
-      <table class="my-5" style="width: min(40rem, 100%)">
+      <table class="my-5">
         <thead class="text-sm text-left leading-6 text-zinc-500">
           <tr>
             <th :for={col <- @col} class="p-0 pb-4 font-normal"><%= col[:label] %></th>

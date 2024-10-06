@@ -33,6 +33,7 @@ defmodule MensaplanWeb.Router do
     live "/groups/new/", PositionLive, :group_new
     live "/groups/:id", PositionLive, :group_edit
     live "/groups/:id/invite/", PositionLive, :group_invite
+    live "/dishes/", DishLive
     get "/settings", PageController, :settings
     get "/join/:invite", PageController, :join
   end
@@ -41,6 +42,7 @@ defmodule MensaplanWeb.Router do
     pipe_through [:browser, :translate]
 
     live "/", PositionLive
+    live "/dishes/", DishLive
     get "/about", PageController, :about
   end
 
