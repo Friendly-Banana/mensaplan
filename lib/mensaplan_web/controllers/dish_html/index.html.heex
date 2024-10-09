@@ -1,0 +1,26 @@
+<.header>
+  Listing Dishes
+  <:actions>
+    <.link href={~p"/dishes/new"}>
+      <.button>New Dish</.button>
+    </.link>
+  </:actions>
+</.header>
+
+<.table id="dishes" rows={@dishes} row_click={&JS.navigate(~p"/dishes/#{&1}")}>
+  <:col :let={dish} label="Name de"><%= dish.name_de %></:col>
+  <:col :let={dish} label="Name en"><%= dish.name_en %></:col>
+  <:col :let={dish} label="Price"><%= dish.price %></:col>
+  <:col :let={dish} label="Category"><%= dish.category %></:col>
+  <:action :let={dish}>
+    <div class="sr-only">
+      <.link navigate={~p"/dishes/#{dish}"}>Show</.link>
+    </div>
+    <.link navigate={~p"/dishes/#{dish}/edit"}>Edit</.link>
+  </:action>
+  <:action :let={dish}>
+    <.link href={~p"/dishes/#{dish}"} method="delete" data-confirm="Are you sure?">
+      Delete
+    </.link>
+  </:action>
+</.table>
