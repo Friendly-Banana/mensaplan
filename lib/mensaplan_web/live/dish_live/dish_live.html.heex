@@ -2,7 +2,7 @@
 
 <form phx-submit="apply" class="flex flex-wrap items-center justify-center gap-2 sm:gap-4">
   <label>
-    <%= gettext("Categories") %>
+    <%= gettext("Category") %>
     <select name="category" class="border-gray-300 rounded-md shadow-sm ml-1">
       <option value="all"><%= dgettext("dishes", "All") %></option>  
 <option value="Pasta" selected={@category == "Pasta"}><%= dgettext("dishes", "Pasta") %></option>

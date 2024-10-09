@@ -35,7 +35,7 @@ defmodule MensaplanWeb.GroupLive.EditFormComponent do
         {:noreply,
          socket
          |> put_flash(:info, dgettext("messages", "Group updated successfully"))
-         |> push_patch(to: "/" <> Gettext.get_locale())}
+         |> push_patch(to: "/" <> Gettext.get_locale(MensaplanWeb.Gettext))}
 
       {:error, %Ecto.Changeset{} = changeset} ->
         {:noreply, assign_form(socket, changeset)}

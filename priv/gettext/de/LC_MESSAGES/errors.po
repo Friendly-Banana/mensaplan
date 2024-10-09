@@ -106,7 +106,7 @@ msgstr "muss gleich %{number} sein"
 msgid "Failed to authenticate."
 msgstr "Authentifizierung fehlgeschlagen."
 
-#: lib/mensaplan_web/controllers/page_controller.ex:31
+#: lib/mensaplan_web/controllers/page_controller.ex:29
 #, elixir-autogen, elixir-format
 msgid "Failed to update settings."
 msgstr "Einstellungen konnten nicht aktualisiert werden."
@@ -116,8 +116,8 @@ msgstr "Einstellungen konnten nicht aktualisiert werden."
 msgid "Group not found"
 msgstr "Gruppe nicht gefunden"
 
-#: lib/mensaplan_web/controllers/page_controller.ex:42
-#: lib/mensaplan_web/controllers/page_controller.ex:66
+#: lib/mensaplan_web/controllers/page_controller.ex:40
+#: lib/mensaplan_web/controllers/page_controller.ex:64
 #, elixir-autogen, elixir-format
 msgid "Invalid invitation link. Please ask for a new one."
 msgstr "Ungültiger Einladungslink. Bitte frag nach einem neuen."

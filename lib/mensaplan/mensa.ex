@@ -8,6 +8,7 @@ defmodule Mensaplan.Mensa do
   import Mensaplan.Helpers
   alias Mensaplan.Repo
   alias Mensaplan.Mensa.Dish
+  alias Mensaplan.Mensa.DishDate
   alias Mensaplan.Mensa.Like
 
   @doc """
@@ -28,7 +29,6 @@ defmodule Mensaplan.Mensa do
       from d in Dish,
         left_join: l in assoc(d, :likes),
         group_by: [d.id],
-        limit: 50,
         select: %{
           id: d.id,
           name_de: d.name_de,
@@ -80,6 +80,10 @@ defmodule Mensaplan.Mensa do
   def get_dish!(id), do: Repo.get!(Dish, id)
   def get_dish_by_name(name), do: Repo.get_by(Dish, name_de: name)
 
+  def get_dates_for_dish!(id) do
+    Repo.all(from(dd in DishDate, where: dd.dish_id == ^id, select: dd.date))
+  end
+
   @doc """
   Creates a dish.
 
@@ -114,6 +118,11 @@ defmodule Mensaplan.Mensa do
     dish
     |> Dish.changeset(attrs)
     |> Repo.update()
+  end
+
+  def add_date_to_dish!(%Dish{} = dish, date) do
+    %DishDate{date: date, dish_id: dish.id}
+    |> Repo.insert!(on_conflict: :nothing)
   end
 
   @doc """

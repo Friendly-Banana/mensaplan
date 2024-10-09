@@ -8,69 +8,54 @@ defmodule Mensaplan.MensaTest do
   describe "dishes" do
     alias Mensaplan.Mensa.Dish
 
-    import Mensaplan.MensaFixtures
     import Mensaplan.Helpers
+    import Mensaplan.MensaFixtures
 
-    @invalid_attrs %{category: nil, name: nil, price: nil}
+    @invalid_attrs %{category: nil, name_de: nil, name_en: nil, price: nil}
 
     test "list_dishes/0 returns all dishes" do
       dish = dish_fixture()
       assert Mensa.list_dishes() == [dish]
     end
 
-    test "list_todays_dishes/1 returns all dishes for today" do
-      user = AccountsFixtures.user_fixture()
-      dish = dish_fixture()
-      dish_fixture(date: Date.add(local_now(), -1))
-      dish_fixture(date: Date.add(local_now(), 1))
-      d = hd(Mensa.list_todays_dishes(user))
-      assert d.id == dish.id
-      assert d.category == dish.category
-      assert d.name == dish.name
-      assert d.price == dish.price
-    end
-
-    test "list_todays_dishes/1 returns whether the user liked a dish" do
+    test "list_dishes/2 returns the correct amount of likes" do
       liked = dish_fixture()
-      default = dish_fixture()
+      ignored = dish_fixture()
       disliked = dish_fixture()
 
       user = AccountsFixtures.user_fixture()
       Mensa.like_dish(user.id, liked.id)
-      Mensa.like_dish(user.id, disliked.id, false)
-
-      dishes = Mensa.list_todays_dishes(user)
-      liked = Enum.find(dishes, fn d -> d.id == liked.id end)
-      default = Enum.find(dishes, fn d -> d.id == default.id end)
-      disliked = Enum.find(dishes, fn d -> d.id == disliked.id end)
-      assert liked[:user_likes] == 1
-      assert default[:user_likes] == 0
-      assert disliked[:user_likes] == -1
-    end
-
-    test "list_todays_dishes/1 returns the correct amount of likes" do
-      liked = dish_fixture()
-      balanced = dish_fixture()
-      disliked = dish_fixture()
-
-      user = AccountsFixtures.user_fixture()
-      Mensa.like_dish(user.id, liked.id)
-      Mensa.like_dish(user.id, balanced.id)
       Mensa.like_dish(user.id, disliked.id, false)
 
       user2 = AccountsFixtures.user_fixture()
       Mensa.like_dish(user2.id, liked.id)
-      Mensa.like_dish(user2.id, balanced.id, false)
+      Mensa.like_dish(user2.id, ignored.id, false)
       Mensa.like_dish(user2.id, disliked.id, false)
 
-      dishes = Mensa.list_todays_dishes(user)
+      dishes = Mensa.list_dishes(user, fn q -> q end)
       assert length(dishes) == 3
       liked = Enum.find(dishes, fn d -> d.id == liked.id end)
-      balanced = Enum.find(dishes, fn d -> d.id == balanced.id end)
+      ignored = Enum.find(dishes, fn d -> d.id == ignored.id end)
       disliked = Enum.find(dishes, fn d -> d.id == disliked.id end)
       assert liked[:likes] == 2
-      assert balanced[:likes] == 0
+      assert ignored[:likes] == -1
       assert disliked[:likes] == -2
+
+      assert liked[:user_likes] > 0
+      assert ignored[:user_likes] == 0
+      assert disliked[:user_likes] < 0
+    end
+
+    test "list_todays_dishes/1 returns all dishes for today" do
+      user = AccountsFixtures.user_fixture()
+      today = dish_fixture()
+      yesterday = dish_fixture()
+      tomorrow = dish_fixture()
+      Mensa.add_date_to_dish!(today, DateTime.to_date(local_now()))
+      Mensa.add_date_to_dish!(yesterday, Date.add(local_now(), -1))
+      Mensa.add_date_to_dish!(tomorrow, Date.add(local_now(), 1))
+      d = hd(Mensa.list_todays_dishes(user))
+      assert d.id == today.id
     end
 
     test "get_dish!/1 returns the dish with given id" do
@@ -81,14 +66,15 @@ defmodule Mensaplan.MensaTest do
     test "create_dish/1 with valid data creates a dish" do
       valid_attrs = %{
         category: "some category",
-        name: "some name",
-        price: "some price",
-        date: local_now()
+        name_de: "some name_de",
+        name_en: "some name_en",
+        price: "some price"
       }
 
       assert {:ok, %Dish{} = dish} = Mensa.create_dish(valid_attrs)
       assert dish.category == "some category"
-      assert dish.name == "some name"
+      assert dish.name_de == "some name_de"
+      assert dish.name_en == "some name_en"
       assert dish.price == "some price"
     end
 
@@ -98,26 +84,33 @@ defmodule Mensaplan.MensaTest do
 
     test "update_dish/2 with valid data updates the dish" do
       dish = dish_fixture()
-      tomorrow = local_now() |> Date.add(1)
 
       update_attrs = %{
         category: "some updated category",
-        name: "some updated name",
-        price: "some updated price",
-        date: tomorrow
+        name_de: "some updated name_de",
+        name_en: "some updated name_en",
+        price: "some updated price"
       }
 
       assert {:ok, %Dish{} = dish} = Mensa.update_dish(dish, update_attrs)
       assert dish.category == "some updated category"
-      assert dish.name == "some updated name"
+      assert dish.name_de == "some updated name_de"
+      assert dish.name_en == "some updated name_en"
       assert dish.price == "some updated price"
-      assert dish.date == tomorrow
     end
 
     test "update_dish/2 with invalid data returns error changeset" do
       dish = dish_fixture()
       assert {:error, %Ecto.Changeset{}} = Mensa.update_dish(dish, @invalid_attrs)
       assert dish == Mensa.get_dish!(dish.id)
+    end
+
+    test "add_date_to_dish/2 adds a date to the dish" do
+      dish = dish_fixture()
+      date = Date.utc_today()
+      assert Mensa.add_date_to_dish!(dish, date)
+      dish = Mensa.get_dish!(dish.id) |> Repo.preload(:dish_dates)
+      assert date == hd(dish.dish_dates).date
     end
 
     test "delete_dish/1 deletes the dish" do

@@ -123,7 +123,7 @@ defmodule MensaplanWeb.PositionLive do
 
       {:noreply,
        stream_delete(socket, :groups, updated_group)
-       |> push_patch(to: "/" <> Gettext.get_locale())}
+       |> push_patch(to: "/" <> Gettext.get_locale(MensaplanWeb.Gettext))}
     else
       {:noreply, put_flash(socket, :error, gettext("You are not the owner of this group"))}
     end

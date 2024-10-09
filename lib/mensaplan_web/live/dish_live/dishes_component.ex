@@ -1,48 +1,24 @@
 defmodule MensaplanWeb.DishLive.DishesComponent do
+  alias Mensaplan.Mensa.Dish
   use MensaplanWeb, :live_component
   alias Mensaplan.Mensa
   import MensaplanWeb.Components.Tooltip
-  import Mensaplan.Helpers
-
-  defmacro categories do
-    quote do: [
-            "Pasta",
-            "Pizza",
-            "Grill",
-            "Wok",
-            "Studitopf",
-            "Fleisch",
-            "Vegetarisch / fleischlos",
-            "Vegan",
-            "Tagessupe",
-            "Tagesgericht",
-            "Dessert (Glas)",
-            "Beilagen",
-            "Salat",
-            "Obst",
-            "Fisch",
-            "Süßspeise",
-            "Traditionelle Küche",
-            "Internationale Küche",
-            "Special"
-          ]
-  end
 
   @impl true
   def render(assigns) do
     ~H"""
     <div id="dish-parent" phx-update="stream" class="flex justify-center">
-      <.table
-        id="dishes"
-        rows={@dishes}
-      >
+      <.table id="dishes" rows={@dishes}>
         <:col :let={{_id, dish}} label={gettext("Dish")}>
-          <p><%= (Gettext.get_locale() == "en" && dish.name_en) || dish.name_de %></p>
-          <p class="text-sm text-gray-500">
-            <%= Gettext.dgettext(MensaplanWeb.Gettext, "dishes", dish.category) %>
-          </p>
+          <.link navigate={~p"/dishes/#{dish.id}"}>
+            <p><%= Dish.get_locale_name(dish) %></p>
+            <p class="text-sm text-gray-500">
+              <%= Gettext.dgettext(MensaplanWeb.Gettext, "dishes", dish.category) %>
+            </p>
+          </.link>
         </:col>
         <:col :let={{_id, dish}} label={gettext("Price for students")}><%= dish.price %></:col>
+        <:col :let={{_id, dish}} :if={!@user} label={gettext("Dishlikes")}><%= dish.likes %></:col>
 
         <:action :let={{_id, dish}} :if={@user}>
           <%= if dish.user_likes > 0 do %>
@@ -57,7 +33,7 @@ defmodule MensaplanWeb.DishLive.DishesComponent do
             </.link>
           <% end %>
         </:action>
-        <:action :let={{_id, dish}}>
+        <:action :let={{_id, dish}} :if={@user}>
           <.tooltip content="Dishlikes"><%= dish.likes %></.tooltip>
         </:action>
         <:action :let={{_id, dish}} :if={@user}>

@@ -10,7 +10,6 @@ defmodule Mensaplan.Application do
     children = [
       MensaplanWeb.Telemetry,
       Mensaplan.Repo,
-      Mensaplan.Periodically,
       {DNSCluster, query: Application.get_env(:mensaplan, :dns_cluster_query) || :ignore},
       {Phoenix.PubSub, name: Mensaplan.PubSub},
       # Start the Finch HTTP client for sending emails
@@ -20,6 +19,11 @@ defmodule Mensaplan.Application do
       # Start to serve requests, typically the last entry
       MensaplanWeb.Endpoint
     ]
+
+    children =
+      if Application.get_env(:mensaplan, :test_environment, false),
+        do: children,
+        else: [Mensaplan.Periodically] ++ children
 
     # See https://hexdocs.pm/elixir/Supervisor.html
     # for other strategies and supported options

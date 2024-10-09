@@ -4,8 +4,8 @@ defmodule Mensaplan.Mensa.DishDate do
 
   @primary_key false
   schema "dish_dates" do
-    field :date, :date
-    belongs_to :dish, Mensaplan.Mensa.Dish
+    field :date, :date, primary_key: true
+    belongs_to :dish, Mensaplan.Mensa.Dish, primary_key: true
   end
 
   @doc false

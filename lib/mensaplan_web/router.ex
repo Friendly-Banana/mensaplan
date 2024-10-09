@@ -34,7 +34,7 @@ defmodule MensaplanWeb.Router do
     live "/groups/:id", PositionLive, :group_edit
     live "/groups/:id/invite/", PositionLive, :group_invite
     live "/dishes/", DishLive
-    resources "/dishes", DishController, except: [:index]
+    get "/dishes/:id", DishController, :show
     get "/settings", PageController, :settings
     get "/join/:invite", PageController, :join
   end
@@ -44,7 +44,7 @@ defmodule MensaplanWeb.Router do
 
     live "/", PositionLive
     live "/dishes/", DishLive
-    resources "/dishes", DishController, except: [:index]
+    get "/dishes/:id", DishController, :show
     get "/about", PageController, :about
   end
 

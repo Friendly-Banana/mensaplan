@@ -9,7 +9,7 @@ defmodule Mensaplan.Helpers do
   end
 
   def locale_patch(url) do
-    Phoenix.LiveView.JS.patch("/" <> Gettext.get_locale() <> url)
+    Phoenix.LiveView.JS.patch("/" <> Gettext.get_locale(MensaplanWeb.Gettext) <> url)
   end
 
   @doc """

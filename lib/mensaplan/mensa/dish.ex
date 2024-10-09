@@ -12,6 +12,10 @@ defmodule Mensaplan.Mensa.Dish do
     has_many :likes, Mensaplan.Mensa.Like
   end
 
+  def get_locale_name(dish) do
+    (Gettext.get_locale(MensaplanWeb.Gettext) == "en" && dish.name_en) || dish.name_de
+  end
+
   @doc false
   def changeset(dish, attrs) do
     dish

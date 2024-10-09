@@ -6,15 +6,35 @@ defmodule MensaplanWeb.DishLive do
   use MensaplanWeb, :live_view
   import MensaplanWeb.Gettext
   alias Mensaplan.Mensa
-  alias MensaplanWeb.DishLive.DishesComponent
-  require DishesComponent
+
+  @categories [
+    "Pasta",
+    "Pizza",
+    "Grill",
+    "Wok",
+    "Studitopf",
+    "Fleisch",
+    "Vegetarisch / fleischlos",
+    "Vegan",
+    "Tagessupe",
+    "Tagesgericht",
+    "Dessert (Glas)",
+    "Beilagen",
+    "Salat",
+    "Obst",
+    "Fisch",
+    "Süßspeise",
+    "Traditionelle Küche",
+    "Internationale Küche",
+    "Special"
+  ]
 
   @impl true
   def mount(%{"locale" => locale}, session, socket) do
     Gettext.put_locale(locale)
 
     user = session["user"]
-    socket = assign(socket, user: user)
+    socket = assign(socket, user: user, page_title: gettext("Dishes"))
 
     {:ok, socket}
   end
@@ -25,12 +45,12 @@ defmodule MensaplanWeb.DishLive do
 
   def sort_and_filter(query, category, sort) do
     query =
-      if(Enum.member?(DishesComponent.categories(), category),
+      if(Enum.member?(@categories, category),
         do: query |> where(category: ^category),
         else: query
       )
 
-    name = if(Gettext.get_locale() == "en", do: :name_en, else: :name_de)
+    name = if(Gettext.get_locale(MensaplanWeb.Gettext) == "en", do: :name_en, else: :name_de)
 
     case sort do
       "likes" -> query |> order_by(desc: fragment("likes"))

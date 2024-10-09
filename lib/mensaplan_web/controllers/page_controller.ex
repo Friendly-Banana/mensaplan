@@ -5,13 +5,11 @@ defmodule MensaplanWeb.PageController do
   alias Mensaplan.Accounts
 
   def about(conn, _params) do
-    conn = assign(conn, :page_title, gettext("About"))
-    render(conn, :about)
+    render(conn, :about, page_title: gettext("About"))
   end
 
   def settings(conn, _params) do
-    conn = assign(conn, :page_title, gettext("Settings"))
-    render(conn, :settings)
+    render(conn, :settings, page_title: gettext("Settings"))
   end
 
   def update_settings(conn, params = %{"default_public" => _}) do
