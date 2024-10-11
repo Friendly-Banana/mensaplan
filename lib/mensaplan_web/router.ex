@@ -87,6 +87,8 @@ defmodule MensaplanWeb.Router do
     pipe_through [:browser, :require_login, :admin_only]
 
     live_dashboard "/dashboard", metrics: MensaplanWeb.Telemetry
-    forward "/mailbox", Plug.Swoosh.MailboxPreview
+
+    if Application.compile_env!(:mensaplan, :environment) == :dev,
+      do: forward("/mailbox", Plug.Swoosh.MailboxPreview)
   end
 end

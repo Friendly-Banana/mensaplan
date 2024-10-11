@@ -21,7 +21,7 @@ defmodule Mensaplan.Application do
     ]
 
     children =
-      if Application.get_env(:mensaplan, :test_environment, false),
+      if Application.get_env(:mensaplan, :environment, :dev) == :test,
         do: children,
         else: [Mensaplan.Periodically] ++ children
 

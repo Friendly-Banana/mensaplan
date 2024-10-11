@@ -13,48 +13,69 @@
   <.list>
     <:item title={gettext("Price for students")}><%= @dish.price %></:item>
     <:item title={gettext("Category")}><%= @dish.category %></:item>
-  </.list> 
+  </.list>
 
   <% first_day = Date.beginning_of_month(@today) %>
   <% last_day = Date.end_of_month(@today) %>
+  <% month = Date.range(first_day, last_day) %>
+  <% days =
+    Enum.map(Date.range(Date.beginning_of_week(first_day), Date.end_of_week(last_day)), fn d ->
+      {d,
+       cond do
+         d in @dates -> "text-green-700 bg-green-100"
+         d in month -> "text-slate-700"
+         true -> "text-slate-400 bg-slate-100"
+       end}
+    end) %>
 
-  <table class="table-auto text-center">
+  <table class="table-auto text-center mx-auto w-full">
     <thead>
       <tr>
-        <th><a href={"?date=" <> Date.to_iso8601(Date.add(first_day, -1))}><pre>◀</pre></a></th>
-        <th colspan="5">
+        <th>
+          <a
+            class="text-blue-500 hover:text-black"
+            href={"?date=" <> Date.to_iso8601(Date.add(first_day, -1))}
+          >
+            <pre>◀</pre>
+          </a>
+        </th>
+        <th class="py-2" colspan="5">
           <%= Calendar.strftime(@today, "%B %Y") %>
         </th>
-        <th><a href={"?date=" <> Date.to_iso8601(Date.add(last_day, 1))}><pre>▶</pre></a></th>
+        <th>
+          <a
+            class="text-blue-500 hover:text-black"
+            href={"?date=" <> Date.to_iso8601(Date.add(last_day, 1))}
+          >
+            <pre>▶</pre>
+          </a>
+        </th>
       </tr>
-      <tr>
-        <th class="px-4 py-2"><%= gettext("Mo") %></th>
-        <th class="px-4 py-2"><%= gettext("Tu") %></th>
-        <th class="px-4 py-2"><%= gettext("We") %></th>
-        <th class="px-4 py-2"><%= gettext("Th") %></th>
-        <th class="px-4 py-2"><%= gettext("Fr") %></th>
-        <th class="px-4 py-2"><%= gettext("Sa") %></th>
-        <th class="px-4 py-2"><%= gettext("Su") %></th>
+      <tr class="px-2 sm:px-4 py-2">
+        <th><%= gettext("Mo") %></th>
+        <th><%= gettext("Tu") %></th>
+        <th><%= gettext("We") %></th>
+        <th><%= gettext("Th") %></th>
+        <th><%= gettext("Fr") %></th>
+        <th><%= gettext("Sa") %></th>
+        <th><%= gettext("Su") %></th>
       </tr>
     </thead>
     <tbody>
-      <%= if Date.beginning_of_week(first_day) != first_day do %>
-        <%= for date <- Date.range(Date.beginning_of_week(first_day), Date.add(first_day, -1)) do %>
-          <td class="border px-4 py-2 text-slate-400 bg-slate-100"><%= date.day %></td>
-        <% end %>
-      <% end %>
-      <%= for date <- Date.range(first_day, last_day) do %>
-        <%= if Date.day_of_week(date) == 1 do %>
-          <tr></tr>
-        <% end %>
-        <td class={"border px-4 py-2 #{if Enum.member?(@dates, date), do: 'text-green-600 bg-green-100', else: 'text-slate-700'}"}>
-          <%= date.day %>
-        </td>
-      <% end %>
-      <%= if Date.end_of_week(last_day) != last_day do %>
-        <%= for date <- Date.range(Date.add(last_day, 1), Date.end_of_week(last_day)) do %>
-          <td class="border px-4 py-2 text-slate-400 bg-slate-100"><%= date.day %></td>
-        <% end %>
+      <%= for week <- Enum.chunk_every(days, 7) do %>
+        <tr>
+          <%= for {date, color} <- week do %>
+            <td class={"border sm:px-4 sm:py-2 px-2 py-1 #{color}"}>
+              <%= if Date.compare(date, @today) == :eq do %>
+                <div class="inline-flex items-center justify-center h-6 w-6 rounded-full ring-2 sm:ring-4 ring-slate-700">
+                  <span class="font-bold"><%= date.day %></span>
+                </div>
+              <% else %>
+                <%= date.day %>
+              <% end %>
+            </td>
+          <% end %>
+        </tr>
       <% end %>
     </tbody>
   </table>

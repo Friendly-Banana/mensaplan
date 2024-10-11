@@ -8,7 +8,7 @@
 import Config
 
 config :mensaplan,
-  test_environment: config_env() == :test,
+  environment: config_env(),
   ecto_repos: [Mensaplan.Repo],
   generators: [timestamp_type: :utc_datetime]
 
