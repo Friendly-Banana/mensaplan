@@ -1,0 +1,8 @@
+<.header>
+  Edit Group <%= @group.id %>
+  <:subtitle>Use this form to manage group records in your database.</:subtitle>
+</.header>
+
+<.group_form changeset={@changeset} action={~p"/admin/groups/#{@group}"} />
+
+<.back navigate={~p"/admin/groups"}>Back to groups</.back>

@@ -1,0 +1,12 @@
+<.simple_form :let={f} for={@changeset} action={@action}>
+  <.error :if={@changeset.action}>
+    Oops, something went wrong! Please check the errors below.
+  </.error>
+  <.input field={f[:auth_id]} type="text" label="Auth" />
+  <.input field={f[:name]} type="text" label="Name" />
+  <.input field={f[:avatar]} type="text" label="Avatar" />
+  <.input field={f[:default_public]} type="checkbox" label="Default public" />
+  <:actions>
+    <.button>Save User</.button>
+  </:actions>
+</.simple_form>

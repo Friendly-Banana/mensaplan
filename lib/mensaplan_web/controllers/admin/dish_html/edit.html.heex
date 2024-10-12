@@ -1,0 +1,8 @@
+<.header>
+  Edit Dish <%= @dish.id %>
+  <:subtitle>Use this form to manage dish records in your database.</:subtitle>
+</.header>
+
+<.dish_form changeset={@changeset} action={~p"/dishes/#{@dish}"} />
+
+<.back navigate={~p"/dishes"}>Back to dishes</.back>

@@ -1,0 +1,18 @@
+<.header>
+  Dish <%= @dish.id %>
+  <:subtitle>This is a dish record from your database.</:subtitle>
+  <:actions>
+    <.link href={~p"/admin/dishes/#{@dish}/edit"}>
+      <.button>Edit dish</.button>
+    </.link>
+  </:actions>
+</.header>
+
+<.list>
+  <:item title="Name de"><%= @dish.name_de %></:item>
+  <:item title="Name en"><%= @dish.name_en %></:item>
+  <:item title="Price"><%= @dish.price %></:item>
+  <:item title="Category"><%= @dish.category %></:item>
+</.list>
+
+<.back navigate={~p"/admin/dishes"}>Back to dishes</.back>

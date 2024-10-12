@@ -74,7 +74,11 @@ defmodule MensaplanWeb.DishLive do
   def handle_event("apply", %{"category" => category, "sort" => sort}, socket) do
     {:noreply,
      assign(socket, category: category, sort: sort)
-     |> push_patch(to: ~p"/dishes?category=#{category}&sort=#{sort}")}
+     |> push_patch(
+       to:
+         "/" <>
+           Gettext.get_locale(MensaplanWeb.Gettext) <> "/dishes?category=#{category}&sort=#{sort}"
+     )}
   end
 
   @impl true
