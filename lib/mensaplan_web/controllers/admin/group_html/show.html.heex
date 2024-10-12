@@ -1,18 +1,20 @@
-<.header>
-  Group <%= @group.id %>
-  <:subtitle>This is a group record from your database.</:subtitle>
-  <:actions>
-    <.link href={~p"/admin/groups/#{@group}/edit"}>
-      <.button>Edit group</.button>
-    </.link>
-  </:actions>
-</.header>
+<div class="mx-auto">
+  <.header>
+    Group <%= @group.id %>
+    <:subtitle>This is a group record from your database.</:subtitle>
+    <:actions>
+      <.link href={~p"/admin/groups/#{@group}/edit"}>
+        <.button>Edit group</.button>
+      </.link>
+    </:actions>
+  </.header>
 
-<.list>
-  <:item title="Name"><%= @group.name %></:item>
-  <:item title="Avatar"><%= @group.avatar %></:item>
-  <:item title="Server"><%= @group.server_id %></:item>
-  <:item title="Owner"><%= @group.owner_id %></:item>
-</.list>
+  <.list>
+    <:item title="Name"><%= @group.name %></:item>
+    <:item title="Avatar"><%= @group.avatar %></:item>
+    <:item title="Server"><%= @group.server_id %></:item>
+    <:item title="Owner"><%= @group.owner_id %></:item>
+  </.list>
 
-<.back navigate={~p"/admin/groups"}>Back to groups</.back>
+  <.back navigate={~p"/admin/groups"}>Back to groups</.back>
+</div>

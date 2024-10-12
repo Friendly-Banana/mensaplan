@@ -1,8 +1,10 @@
-<.header>
-  Edit Dish <%= @dish.id %>
-  <:subtitle>Use this form to manage dish records in your database.</:subtitle>
-</.header>
+<div class="mx-auto">
+  <.header>
+    Edit Dish <%= @dish.id %>
+    <:subtitle>Use this form to manage dish records in your database.</:subtitle>
+  </.header>
 
-<.dish_form changeset={@changeset} action={~p"/dishes/#{@dish}"} />
+  <.dish_form changeset={@changeset} action={~p"/admin/dishes/#{@dish}"} />
 
-<.back navigate={~p"/dishes"}>Back to dishes</.back>
+  <.back navigate={~p"/admin/dishes"}>Back to dishes</.back>
+</div>

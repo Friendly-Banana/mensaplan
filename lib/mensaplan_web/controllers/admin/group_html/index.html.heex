@@ -1,26 +1,28 @@
-<.header>
-  Listing Groups
-  <:actions>
-    <.link href={~p"/admin/groups/new"}>
-      <.button>New Group</.button>
-    </.link>
-  </:actions>
-</.header>
+<div class="mx-auto">
+  <.header>
+    Listing Groups
+    <:actions>
+      <.link href={~p"/admin/groups/new"}>
+        <.button>New Group</.button>
+      </.link>
+    </:actions>
+  </.header>
 
-<.table id="groups" rows={@groups} row_click={&JS.navigate(~p"/admin/groups/#{&1}")}>
-  <:col :let={group} label="Name"><%= group.name %></:col>
-  <:col :let={group} label="Avatar"><%= group.avatar %></:col>
-  <:col :let={group} label="Server"><%= group.server_id %></:col>
-  <:col :let={group} label="Owner"><%= group.owner_id %></:col>
-  <:action :let={group}>
-    <div class="sr-only">
-      <.link navigate={~p"/admin/groups/#{group}"}>Show</.link>
-    </div>
-    <.link navigate={~p"/admin/groups/#{group}/edit"}>Edit</.link>
-  </:action>
-  <:action :let={group}>
-    <.link href={~p"/admin/groups/#{group}"} method="delete" data-confirm="Are you sure?">
-      Delete
-    </.link>
-  </:action>
-</.table>
+  <.table id="groups" rows={@groups} row_click={&JS.navigate(~p"/admin/groups/#{&1}")}>
+    <:col :let={group} label="Name"><%= group.name %></:col>
+    <:col :let={group} label="Avatar"><.avatar user={group} /></:col>
+    <:col :let={group} label="Server"><%= group.server_id %></:col>
+    <:col :let={group} label="Owner"><%= group.owner_id %></:col>
+    <:action :let={group}>
+      <div class="sr-only">
+        <.link navigate={~p"/admin/groups/#{group}"}>Show</.link>
+      </div>
+      <.link navigate={~p"/admin/groups/#{group}/edit"}>Edit</.link>
+    </:action>
+    <:action :let={group}>
+      <.link href={~p"/admin/groups/#{group}"} method="delete" data-confirm="Are you sure?">
+        Delete
+      </.link>
+    </:action>
+  </.table>
+</div>
