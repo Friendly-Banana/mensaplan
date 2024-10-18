@@ -11,11 +11,11 @@
 </div>
 
 <style>
-   #about a {
+   #about p a {
       color: rgb(37 99 235);
    }
 
-  #about a:hover {
+  #about p a:hover {
       color: rgb(29 78 216);
       text-decoration: underline;
    }
@@ -35,7 +35,7 @@
     ) %>
   </p>
 
-  <h2 class="text-xl my-3 font-medium">
+  <h2 id="origin" class="text-xl my-3 font-medium">
     <%= gettext("Helping Students find lunch peers since 2023") %>
   </h2>
   <p>
@@ -49,16 +49,16 @@
     ) %>
   </p>
 
-  <h2 class="text-xl my-3 font-medium"><%= gettext("Frequently Asked Questions") %></h2>
+  <h2 id="faq" class="text-xl my-3 font-medium"><a href="#faq"><%= gettext("Frequently Asked Questions") %></a></h2>
 
-  <h3 class="text-lg font-medium"><%= gettext("How can I set my position?") %></h3>
+  <h3 id="set-position" class="text-lg font-medium"><a href="#set-position"><%= gettext("How can I set my position?") %></a></h3>
   <p>
     <%= gettext(
       "To set your position on the map, double click on the place where you are. You can also first click the position to move the avatar and then use the \"Set Position\" button."
     ) %>
   </p>
 
-  <h3 class="text-lg font-medium"><%= gettext("What are public positions?") %></h3>
+  <h3 id="public-positions" class="text-lg font-medium"><a href="#public-positions"><%= gettext("What are public positions?") %></a></h3>
   <p>
     <%= gettext(
       "By default, positions on Mensaplan are only visible to users you share a group with. Public positions, on the other hand, are visible to all users, including non-logged-in visitors. However, anonymous visitors will only see your avatar and not your name."
@@ -68,14 +68,14 @@
     ) %>
   </p>
 
-  <h3 class="text-lg font-medium"><%= gettext("Can I change my username?") %></h3>
+  <h3 id="change-username" class="text-lg font-medium"><a href="#change-username"><%= gettext("Can I change my username?") %></a></h3>
   <p>
     <%= gettext(
       "Mensaplan uses the name associated with your login method. If you log in via Discord, Mensaplan will use your Discord username. After you changed your username, please log out and log in again to update your name in Mensaplan."
     ) %>
   </p>
 
-  <h3 class="text-lg font-medium"><%= gettext("How can I report a bug or issue?") %></h3>
+  <h3 id="report-bug" class="text-lg font-medium"><a href="#report-bug"><%= gettext("How can I report a bug or issue?") %></a></h3>
   <p>
     <%= raw gettext(
       "If you encounter any bugs or issues while using Mensaplan, please report them on %{link}. Please provide detailed information about the problem you are facing, including any error messages or screenshots if possible.",
