@@ -14,8 +14,8 @@ defmodule MensaplanWeb.ProxyController do
     if signature != expected_signature do
       send_resp(conn, 401, "Unauthorized")
     else
-      case Req.get(url, http_errors: :raise) do
-        {:ok, %{body: body}} ->
+      case Req.get(url) do
+        {:ok, %{body: body, status: status}} when status >= 200 and status < 300 ->
           img = Image.thumbnail!(Image.from_binary!(body), 300)
           conn = put_resp_header(conn, "cache-control", "public, immutable, max-age=31536000")
           conn = send_chunked(conn, 200)
@@ -29,7 +29,7 @@ defmodule MensaplanWeb.ProxyController do
             end
           end)
 
-        {:error, _} ->
+        _ ->
           conn
           |> put_status(404)
           |> text("Image not found")
