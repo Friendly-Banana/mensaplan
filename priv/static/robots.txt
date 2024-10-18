@@ -5,3 +5,4 @@
 # Disallow: /
 User-agent: *
 Disallow: /join/
+Disallow: /proxy/

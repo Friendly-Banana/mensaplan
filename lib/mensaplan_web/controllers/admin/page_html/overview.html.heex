@@ -1,0 +1,25 @@
+<.flash_group flash={@flash} />
+
+<div class="mx-auto flex flex-col gap-4 text-center">
+  <h1 class="text-3xl font-bold">Secret Admin Page</h1>
+
+  <h2 class="text-xl font-bold">Actions</h2>
+
+  <a href={~p"/admin/users"} class="hover:text-blue-700">Users</a>
+  <a href={~p"/admin/groups"} class="hover:text-blue-700">Groups</a>
+  <a href={~p"/admin/dishes"} class="hover:text-blue-700">Dishes</a>
+
+  <form action={~p"/admin/fetch_dishes"} method="post">
+    <input type="hidden" name="_csrf_token" value={get_csrf_token()} />
+    <.button>
+      Fetch dishes
+    </.button>
+  </form>
+
+  <h2 class="text-xl font-bold mt-4">Information</h2>
+
+  <a href={~p"/admin/dashboard"} class="hover:text-blue-700">Dashboard</a>
+
+  <h2 class="text-xl font-bold mt-4">Random Cat</h2>
+  <img src={@random_image} class="mx-2 md:mx-auto md:w-1/2 rounded-2xl" />
+</div>

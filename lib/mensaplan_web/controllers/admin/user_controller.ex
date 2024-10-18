@@ -6,7 +6,7 @@ defmodule MensaplanWeb.Admin.UserController do
 
   def index(conn, _params) do
     users = Accounts.list_users()
-    render(conn, :index, users: users)
+    render(conn, :index, page_title: "Users", users: users)
   end
 
   def new(conn, _params) do

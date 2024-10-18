@@ -11,18 +11,17 @@
 </div>
 
 <style>
-  main a, small a {
-      color: rgb(59 130 246);
-      text-decoration: none;
-  }
-
-  main a:hover, small a:hover {
+   #about a {
       color: rgb(37 99 235);
+   }
+
+  #about a:hover {
+      color: rgb(29 78 216);
       text-decoration: underline;
-  }
+   }
 </style>
 
-<main class="container mx-auto px-6 py-4 text-lg space-y-4 leading-6">
+<main id="about" class="container mx-auto px-6 py-4 text-lg space-y-4 leading-6">
   <p>
     <%= raw gettext(
       "Experience the buzz of Garching with our unique platform, designed to connect you with fellow %{tumensa} enthusiasts. With an <a href='https://en.wikipedia.org/wiki/IEEE_754'>almost</a> infinitely-precise grid, both finding and sharing a position is easier than ever.",

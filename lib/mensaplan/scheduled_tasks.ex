@@ -14,7 +14,7 @@ defmodule Mensaplan.Periodically do
   @daily 24 * 60 * 60 * 1000
 
   def start_link(_opts) do
-    GenServer.start_link(__MODULE__, %{})
+    GenServer.start_link(__MODULE__, %{}, name: :mensaplan_periodically)
   end
 
   def init(state) do
@@ -43,6 +43,25 @@ defmodule Mensaplan.Periodically do
   end
 
   def handle_info(:fetch_dishes, state) do
+    case fetch_dishes() do
+      {:ok, message} ->
+        Logger.info(message)
+
+      {:error, message} ->
+        Logger.error(message)
+    end
+
+    now = DateTime.to_time(local_now())
+    until_midnight = @daily - elem(Time.to_seconds_after_midnight(now), 0) * 1000
+    Process.send_after(self(), :fetch_dishes, until_midnight)
+    {:noreply, state}
+  end
+
+  def handle_call(:fetch_dishes, _from, state) do
+    {:reply, fetch_dishes(), state}
+  end
+
+  def fetch_dishes() do
     today = local_now()
     week_number = div(Date.day_of_year(today) - 1, 7) + 1
     Logger.info("Fetching dishes for #{today}...")
@@ -73,19 +92,14 @@ defmodule Mensaplan.Periodically do
         end
       end
 
-      Logger.info("Fetched #{Enum.count(days)} days with dishes.")
+      {:ok, "Fetched #{Enum.count(days)} days with dishes."}
     else
       nil ->
-        Logger.info("Couldn't find data, mensa is probably closed today.")
+        {:ok, "Couldn't find data, mensa is probably closed today."}
 
       {:error, reason} ->
-        Logger.error("Fetching dishes failed: #{reason}")
+        {:error, "Fetching dishes failed: #{reason}"}
     end
-
-    now = DateTime.to_time(local_now())
-    until_midnight = @daily - elem(Time.to_seconds_after_midnight(now), 0) * 1000
-    Process.send_after(self(), :fetch_dishes, until_midnight)
-    {:noreply, state}
   end
 
   def format(num) when is_integer(num) do
