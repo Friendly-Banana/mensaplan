@@ -18,7 +18,7 @@
     <%= if @user && @form.data do %>
       <% pos = "top: #{@form[:y].value}%; left: #{@form[:x].value}%" %>
       <img
-        src={@user.avatar}
+        src={MensaplanWeb.ProxyController.sign(@user.avatar)}
         id="new-position-indicator"
         class="absolute h-12 ring-4 ring-blue-600 rounded-full"
         style={pos}

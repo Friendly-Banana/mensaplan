@@ -61,7 +61,8 @@ defmodule Mensaplan.MixProject do
       {:ueberauth_discord, "~> 0.6"},
       {:req, "~> 0.5.0"},
       {:tzdata, "~> 1.1.2"},
-      {:set_locale, github: "jackjoe/set_locale"}
+      {:set_locale, github: "jackjoe/set_locale"},
+      {:image, "~> 0.54.4"}
     ]
   end
 

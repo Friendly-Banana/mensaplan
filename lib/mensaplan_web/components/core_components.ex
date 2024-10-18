@@ -17,6 +17,7 @@ defmodule MensaplanWeb.CoreComponents do
   use Phoenix.Component
 
   alias Phoenix.LiveView.JS
+  alias MensaplanWeb.ProxyController
   import MensaplanWeb.Gettext
 
   @doc """
@@ -36,7 +37,7 @@ defmodule MensaplanWeb.CoreComponents do
       if assigns.user.avatar == nil || String.length(String.trim(assigns.user.avatar)) == 0 do
         "https://ui-avatars.com/api/?name=" <> String.first(assigns.user.name)
       else
-        assigns.user.avatar
+        ProxyController.sign(assigns.user.avatar)
       end
 
     assigns = assign(assigns, :avatar, avatar)

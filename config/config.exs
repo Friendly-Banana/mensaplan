@@ -12,6 +12,8 @@ config :mensaplan,
   ecto_repos: [Mensaplan.Repo],
   generators: [timestamp_type: :utc_datetime]
 
+config :mensaplan, MensaplanWeb.ProxyController, secret_key: System.get_env("SECRET_KEY")
+
 # Configures the endpoint
 config :mensaplan, MensaplanWeb.Endpoint,
   url: [host: "localhost"],

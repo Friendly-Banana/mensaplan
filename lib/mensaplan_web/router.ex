@@ -60,8 +60,10 @@ defmodule MensaplanWeb.Router do
       do: forward("/mailbox", Plug.Swoosh.MailboxPreview)
   end
 
+  get "/proxy/:signature/:url", MensaplanWeb.ProxyController, :proxy
+
   scope "/:locale", MensaplanWeb do
-    pipe_through [:browser, :translate]
+    pipe_through [:translate, :browser]
 
     live "/", PositionLive
     live "/dishes/", DishLive
@@ -70,7 +72,7 @@ defmodule MensaplanWeb.Router do
   end
 
   scope "/:locale", MensaplanWeb do
-    pipe_through [:browser, :translate, :require_login]
+    pipe_through [:translate, :browser, :require_login]
 
     live "/groups/new/", PositionLive, :group_new
     live "/groups/:id", PositionLive, :group_edit
@@ -82,7 +84,7 @@ defmodule MensaplanWeb.Router do
   end
 
   scope "/", MensaplanWeb do
-    pipe_through [:browser, :translate]
+    pipe_through [:translate]
 
     # this is not called, but still required
     get "/", PageController, :dummy

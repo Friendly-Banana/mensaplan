@@ -1,7 +1,7 @@
 defmodule MensaplanWeb.DishLive.DishesComponent do
-  alias Mensaplan.Mensa.Dish
   use MensaplanWeb, :live_component
   alias Mensaplan.Mensa
+  alias Mensaplan.Mensa.Dish
   import MensaplanWeb.Components.Tooltip
 
   @impl true
@@ -10,7 +10,7 @@ defmodule MensaplanWeb.DishLive.DishesComponent do
     <div id="dish-parent" phx-update="stream" class="flex justify-center">
       <.table id="dishes" rows={@dishes}>
         <:col :let={{_id, dish}} label={gettext("Dish")}>
-          <.link navigate={"dishes/#{dish.id}"}>
+          <.link navigate={"/" <> Gettext.get_locale(MensaplanWeb.Gettext) <> "/dishes/#{dish.id}"}>
             <p><%= Dish.get_locale_name(dish) %></p>
             <p class="text-sm text-gray-500">
               <%= Gettext.dgettext(MensaplanWeb.Gettext, "dishes", dish.category) %>
