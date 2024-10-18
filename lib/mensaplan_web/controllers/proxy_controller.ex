@@ -25,7 +25,7 @@ defmodule MensaplanWeb.ProxyController do
           |> Enum.reduce_while(conn, fn chunk, conn ->
             case chunk(conn, chunk) do
               {:ok, conn} -> {:cont, conn}
-              {:error, :closed} -> {:halt, conn}
+              {:error, "closed"} -> {:halt, conn}
             end
           end)
 

@@ -6,7 +6,7 @@ defmodule MensaplanWeb.Admin.DishController do
 
   def index(conn, _params) do
     dishes = Mensa.list_dishes()
-    render(conn, :index, dishes: dishes)
+    render(conn, :index, page_title: "Dishes", dishes: dishes)
   end
 
   def new(conn, _params) do

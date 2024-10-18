@@ -6,7 +6,7 @@ defmodule MensaplanWeb.Admin.GroupController do
 
   def index(conn, _params) do
     groups = Accounts.list_groups()
-    render(conn, :index, groups: groups)
+    render(conn, :index, page_title: "Groups", groups: groups)
   end
 
   def new(conn, _params) do

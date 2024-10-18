@@ -51,6 +51,8 @@ defmodule MensaplanWeb.Router do
   scope "/admin" do
     pipe_through [:browser, :require_login, :admin_only]
 
+    get "/", MensaplanWeb.Admin.PageController, :overview
+    post "/fetch_dishes", MensaplanWeb.Admin.PageController, :fetch_dishes
     resources "/dishes", MensaplanWeb.Admin.DishController
     resources "/groups", MensaplanWeb.Admin.GroupController
     resources "/users", MensaplanWeb.Admin.UserController
