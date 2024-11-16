@@ -103,7 +103,7 @@ msgstr ""
 
 #: lib/mensaplan_web/live/dish_live/dish_live.html.heex:14
 #, elixir-autogen, elixir-format, fuzzy
-msgid "Vegetarisch / fleischlos"
+msgid "Vegetarisch/fleischlos"
 msgstr "Vegetarian"
 
 #: lib/mensaplan_web/live/dish_live/dish_live.html.heex:7

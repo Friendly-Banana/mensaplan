@@ -14,18 +14,15 @@ defmodule MensaplanWeb.DishLive do
     "Wok",
     "Studitopf",
     "Fleisch",
-    "Vegetarisch / fleischlos",
+    "Vegetarisch/fleischlos",
     "Vegan",
     "Tagessupe",
-    "Tagesgericht",
     "Dessert (Glas)",
     "Beilagen",
     "Salat",
     "Obst",
     "Fisch",
     "Süßspeise",
-    "Traditionelle Küche",
-    "Internationale Küche",
     "Special"
   ]
 

@@ -7,7 +7,7 @@ Garching's hottest new tool to find friends while eating.
 * Cool and responsive web interface
 * Current mensa menu with food ratings
 * Private groups for friend groups, clubs, ...
-* API for (Discord) Bots like [WoBot](https://github.com/Friendly-Banana/wobot).
+* API for (Discord) Bots like [WoBot](https://github.com/Friendly-Banana/wobot)
 
 ![phone.png](.github/phone.png)
 ![PC.png](.github/PC.png)
@@ -38,7 +38,9 @@ Authentication is done via Discord, so you'll need to
 You can also use [uberauth](https://github.com/ueberauth/ueberauth/wiki/List-of-Strategies) directly with your favorite
 OpenID provider, add the strategy to `mix.exs`, configure it in `config.exs` and replace the sign-in link.
 
-User ids < 10 are reserved, these ids can only be assigned via direct DB access. User 1 is considered admin and can access special pages like the Dashboard.
+User ids < 10 are reserved, these ids can only be assigned via direct DB access.
+User 1 is considered admin and can access special pages like the Dashboard.
+User 2 is used for the API, for example groups created via the API are owned by User 2.
 
 ### API
 
