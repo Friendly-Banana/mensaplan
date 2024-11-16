@@ -62,8 +62,6 @@ defmodule MensaplanWeb.Router do
       do: forward("/mailbox", Plug.Swoosh.MailboxPreview)
   end
 
-  get "/proxy/:signature/:url", MensaplanWeb.ProxyController, :proxy
-
   scope "/:locale", MensaplanWeb do
     pipe_through [:translate, :browser]
 
