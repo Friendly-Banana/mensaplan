@@ -20,6 +20,17 @@
         )
       }
     />
+    <link rel="canonical" href={Phoenix.Controller.current_url(@conn, %{})} />
+    <link
+      rel="alternate"
+      href={"https://mensa.grabriel.co/en" <> path_without_locale(@conn)}
+      hreflang="x-default"
+    />
+    <link
+      rel="alternate"
+      href={"https://mensa.grabriel.co/de" <> path_without_locale(@conn)}
+      hreflang="de"
+    />
     <.live_title suffix=" · Mensaplan">
       <%= assigns[:page_title] || gettext("Homepage") %>
     </.live_title>

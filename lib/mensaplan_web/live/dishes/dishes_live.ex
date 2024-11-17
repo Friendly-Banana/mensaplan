@@ -1,4 +1,4 @@
-defmodule MensaplanWeb.DishLive do
+defmodule MensaplanWeb.DishesLive do
   require Logger
 
   import Ecto.Query, warn: false

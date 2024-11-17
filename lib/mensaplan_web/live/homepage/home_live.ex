@@ -1,4 +1,4 @@
-defmodule MensaplanWeb.PositionLive do
+defmodule MensaplanWeb.HomeLive do
   require Logger
   use MensaplanWeb, :live_view
 

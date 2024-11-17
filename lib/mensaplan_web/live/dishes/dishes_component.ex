@@ -1,4 +1,4 @@
-defmodule MensaplanWeb.DishLive.DishesComponent do
+defmodule MensaplanWeb.DishesLive.DishesComponent do
   use MensaplanWeb, :live_component
   alias Mensaplan.Mensa
   alias Mensaplan.Mensa.Dish

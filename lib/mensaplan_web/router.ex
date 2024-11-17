@@ -65,8 +65,8 @@ defmodule MensaplanWeb.Router do
   scope "/:locale", MensaplanWeb do
     pipe_through [:translate, :browser]
 
-    live "/", PositionLive
-    live "/dishes/", DishLive
+    live "/", HomeLive
+    live "/dishes/", DishesLive
     get "/dishes/:id", DishController, :show
     get "/about", PageController, :about
   end
@@ -74,9 +74,9 @@ defmodule MensaplanWeb.Router do
   scope "/:locale", MensaplanWeb do
     pipe_through [:translate, :browser, :require_login]
 
-    live "/groups/new/", PositionLive, :group_new
-    live "/groups/:id", PositionLive, :group_edit
-    live "/groups/:id/invite/", PositionLive, :group_invite
+    live "/groups/new/", HomeLive, :group_new
+    live "/groups/:id", HomeLive, :group_edit
+    live "/groups/:id/invite/", HomeLive, :group_invite
     get "/settings", PageController, :settings
     post "/settings", PageController, :update_settings
     get "/join/:invite", PageController, :join
