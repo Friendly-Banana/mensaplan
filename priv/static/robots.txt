@@ -4,5 +4,6 @@
 # User-agent: *
 # Disallow: /
 User-agent: *
+Disallow: /auth/
+Disallow: /cgi-bin/
 Disallow: /join/
-Disallow: /proxy/

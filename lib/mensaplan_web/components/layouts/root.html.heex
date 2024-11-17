@@ -20,16 +20,28 @@
         )
       }
     />
-    <link rel="canonical" href={Phoenix.Controller.current_url(@conn, %{})} />
-    <link
-      rel="alternate"
-      href={"https://mensa.grabriel.co/en" <> path_without_locale(@conn)}
-      hreflang="x-default"
+    <meta
+      property="og:description"
+      content={
+        gettext(
+          "The hottest tool in Garching to find friends in the TUM Mensa. Checkout today's menu complete with ratings to guide your culinary journey."
+        )
+      }
     />
-    <link
-      rel="alternate"
-      href={"https://mensa.grabriel.co/de" <> path_without_locale(@conn)}
-      hreflang="de"
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={Phoenix.Controller.current_url(@conn, %{})} />
+    <link rel="canonical" href={Phoenix.Controller.current_url(@conn, %{})} />
+    <% host = Phoenix.VerifiedRoutes.unverified_url(@conn, "") %>
+    <link rel="alternate" href={host <> "/en" <> path_without_locale(@conn)} hreflang="x-default" />
+    <link rel="alternate" href={host <> "/de" <> path_without_locale(@conn)} hreflang="de" />
+    <meta
+      property="og:image"
+      content={host <> "/cdn-cgi/image/width=1200/images/people-eating-W3SEyZODn8U.jpg"}
+    />
+    <meta name="theme-color" content="#3B82F6" />
+    <meta
+      property="og:title"
+      content={(assigns[:page_title] || gettext("Homepage")) <> " · Mensaplan"}
     />
     <.live_title suffix=" · Mensaplan">
       <%= assigns[:page_title] || gettext("Homepage") %>

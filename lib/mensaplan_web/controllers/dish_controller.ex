@@ -20,7 +20,7 @@ defmodule MensaplanWeb.DishController do
         _ -> today
       end
 
-    render(conn, :show,
+    render(conn,
       page_title: name,
       dish: dish,
       served_dates: served_dates,
