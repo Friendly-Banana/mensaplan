@@ -17,7 +17,6 @@ defmodule MensaplanWeb.CoreComponents do
   use Phoenix.Component
 
   alias Phoenix.LiveView.JS
-  alias MensaplanWeb.ProxyController
   import MensaplanWeb.Gettext
 
   @doc """
@@ -37,19 +36,22 @@ defmodule MensaplanWeb.CoreComponents do
       if assigns.user.avatar == nil || String.length(String.trim(assigns.user.avatar)) == 0 do
         "https://ui-avatars.com/api/?name=" <> String.first(assigns.user.name)
       else
-        ProxyController.sign(assigns.user.avatar)
+        Mensaplan.Helpers.proxy_image(assigns.user.avatar)
       end
 
     assigns = assign(assigns, :avatar, avatar)
+    import MensaplanWeb.Components.Tooltip
 
     ~H"""
     <div title={@user.name} {@rest}>
-      <img
-        src={@avatar}
-        alt={"Avatar of " <> (@user.name || "User")}
-        class={["w-12 h-12 rounded-full", @img_class]}
-        draggable="false"
-      />
+      <.tooltip content={@user.name||""}>
+        <img
+          src={@avatar}
+          alt={"Avatar of " <> (@user.name || "User")}
+          class={["w-12 h-12 rounded-full", @img_class]}
+          draggable="false"
+        />
+      </.tooltip>
     </div>
     """
   end

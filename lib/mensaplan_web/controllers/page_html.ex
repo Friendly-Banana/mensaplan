@@ -5,7 +5,6 @@ defmodule MensaplanWeb.PageHTML do
   See the `page_html` directory for all templates available.
   """
   use MensaplanWeb, :html
-  import Mensaplan.Helpers
 
   embed_templates "page_html/*"
 end

@@ -33,7 +33,7 @@
 <% user = Plug.Conn.get_session(@conn, :user) %>
 <%= if user do %>
   <a href="/settings" class="p-4 sm:py-2 rounded hover:bg-blue-100" title="Settings">
-    <img src={MensaplanWeb.ProxyController.sign(user.avatar)} class="rounded-full max-h-9" alt="User Avatar" />
+    <.avatar user={user} img_class="h-9 w-9" />
   </a>
   <a
     href={~p"/auth/logout"}

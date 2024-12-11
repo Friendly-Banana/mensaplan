@@ -15,4 +15,12 @@ defmodule Mensaplan.Helpers do
   def locale_patch(url) do
     Phoenix.LiveView.JS.patch("/" <> Gettext.get_locale(MensaplanWeb.Gettext) <> url)
   end
+
+  def proxy_image(url, options \\ "format=auto,fit=scale-down,width=300") do
+    if Application.get_env(:mensaplan, :environment, :dev) == :prod do
+      MensaplanWeb.Endpoint.url() <> "/cdn-cgi/image/#{options}/#{url}"
+    else
+      url
+    end
+  end
 end

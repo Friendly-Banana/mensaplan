@@ -58,7 +58,7 @@ defmodule Mensaplan.Positions do
       from p in Position,
         join: owner in assoc(p, :owner),
         where: not p.expired and p.public,
-        select: %{id: p.id, name: nil, avatar: owner.avatar, x: p.x, y: p.y}
+        select: %{id: owner.id, name: nil, avatar: owner.avatar, x: p.x, y: p.y}
     )
   end
 
@@ -85,15 +85,15 @@ defmodule Mensaplan.Positions do
         join: member in assoc(group, :members),
         join: pos in assoc(member, :positions),
         where: not pos.expired,
-        select: %{id: pos.id, name: member.name, avatar: member.avatar, x: pos.x, y: pos.y}
+        select: %{id: member.id, name: member.name, avatar: member.avatar, x: pos.x, y: pos.y}
       )
 
     Repo.all(
       from(pos in Position,
         where: not pos.expired and (pos.public or pos.owner_id == ^user.id),
         join: owner in assoc(pos, :owner),
-        select: %{id: pos.id, name: owner.name, avatar: owner.avatar, x: pos.x, y: pos.y},
-        union_all: ^query
+        select: %{id: owner.id, name: owner.name, avatar: owner.avatar, x: pos.x, y: pos.y},
+        union: ^query
       )
     )
   end

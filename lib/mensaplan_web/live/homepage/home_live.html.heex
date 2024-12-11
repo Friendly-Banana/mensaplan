@@ -8,17 +8,17 @@
       draggable="false"
       class="w-full h-full border-2 border-gray-500 rounded-md"
     />
-    <div id="position-map" phx-update="replace">
-      <%= for {_, position} <- @streams.positions do %>
+    <div id="position-map" phx-update="stream">
+      <%= for {id, position} <- @streams.positions do %>
         <% pos = "top: min(100% - 3rem, #{position.y}%); left: min(100% - 3rem, #{position.x}%)" %>
-        <.avatar user={position} id={"position-#{position.id}"} class="absolute" style={pos} />
+        <.avatar user={position} id={id} class="absolute" style={pos} />
       <% end %>
     </div>
 
     <%= if @user && @form.data do %>
       <% pos = "top: #{@form[:y].value}%; left: #{@form[:x].value}%" %>
       <img
-        src={MensaplanWeb.ProxyController.sign(@user.avatar)}
+        src={Mensaplan.Helpers.proxy_image(@user.avatar)}
         id="new-position-indicator"
         class="absolute h-12 ring-4 ring-blue-600 rounded-full"
         style={pos}
@@ -116,7 +116,7 @@
   
   <%= if @any_dishes do %>
     <details open>
-      <summary class="text-lg font-semibold"><%= gettext("Today's Menu") %></summary>
+      <summary class="text-center text-lg font-semibold"><%= gettext("Today's Menu") %></summary>
       <.live_component
         id={:dishes}
         module={MensaplanWeb.DishesLive.DishesComponent}
