@@ -7,3 +7,4 @@ User-agent: *
 Disallow: /auth/
 Disallow: /cgi-bin/
 Disallow: /join/
+Disallow: /*/dishes/*?date=

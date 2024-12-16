@@ -104,5 +104,8 @@ defmodule MensaplanWeb.Router do
 
     # this is not called, but still required
     get "/", PageController, :dummy
+    get "/groups/:id", PageController, :dummy
+    get "/dishes/:id", PageController, :dummy
+    get "/join/:invite", PageController, :dummy
   end
 end
