@@ -32,8 +32,16 @@
     <meta property="og:type" content="website" />
     <meta property="og:url" content={host <> Phoenix.Controller.current_path(@conn, %{})} />
     <link rel="canonical" href={host <> Phoenix.Controller.current_path(@conn, %{})} />
-    <link rel="alternate" href={host <> change_locale(@conn, Gettext.get_locale(MensaplanWeb.Gettext), "en")} hreflang="x-default" />
-    <link rel="alternate" href={host <> change_locale(@conn, Gettext.get_locale(MensaplanWeb.Gettext), "de")} hreflang="de" />
+    <link
+      rel="alternate"
+      href={host <> change_locale(@conn, Gettext.get_locale(MensaplanWeb.Gettext), "en")}
+      hreflang="x-default"
+    />
+    <link
+      rel="alternate"
+      href={host <> change_locale(@conn, Gettext.get_locale(MensaplanWeb.Gettext), "de")}
+      hreflang="de"
+    />
     <meta
       property="og:image"
       content={proxy_image("/images/people-eating-W3SEyZODn8U.jpg", "width=1200")}

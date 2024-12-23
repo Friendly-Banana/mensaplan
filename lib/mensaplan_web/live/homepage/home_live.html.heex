@@ -127,28 +127,28 @@
   <% else %>
     <p><%= gettext("No dishes available today.") %></p>
   <% end %>
-
-  <.modal
-    :if={@user && @live_action in [:group_new, :group_edit]}
-    id="group-modal"
-    show
-    on_cancel={locale_patch("")}
-  >
-    <.live_component
-      :if={@live_action == :group_new}
-      module={MensaplanWeb.GroupLive.FormComponent}
-      id={:new}
-      group={@group}
-      user={@user}
-    />
-    <.live_component
-      :if={@live_action == :group_edit}
-      module={MensaplanWeb.GroupLive.EditFormComponent}
-      id={@group.id || :new}
-      title={@page_title}
-      action={@live_action}
-      group={@group}
-      user={@user}
-    />
-  </.modal>
 </div>
+
+<.modal
+  :if={@user && @live_action in [:group_new, :group_edit]}
+  id="group-modal"
+  show
+  on_cancel={locale_patch("")}
+>
+  <.live_component
+    :if={@live_action == :group_new}
+    module={MensaplanWeb.GroupLive.FormComponent}
+    id={:new}
+    group={@group}
+    user={@user}
+  />
+  <.live_component
+    :if={@live_action == :group_edit}
+    module={MensaplanWeb.GroupLive.EditFormComponent}
+    id={@group.id || :new}
+    title={@page_title}
+    action={@live_action}
+    group={@group}
+    user={@user}
+  />
+</.modal>

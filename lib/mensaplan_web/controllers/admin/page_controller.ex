@@ -5,6 +5,7 @@ defmodule MensaplanWeb.Admin.PageController do
 
   def overview(conn, _params) do
     random_image = Enum.random(@cat_images)
+
     render(conn, :overview, page_title: "Admin Page", random_image: "/images/cats/#{random_image}")
   end
 

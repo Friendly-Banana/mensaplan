@@ -44,7 +44,7 @@ defmodule MensaplanWeb.CoreComponents do
 
     ~H"""
     <div title={@user.name} {@rest}>
-      <.tooltip content={@user.name||""}>
+      <.tooltip content={@user.name || ""}>
         <img
           src={@avatar}
           alt={"Avatar of " <> (@user.name || "User")}
@@ -513,10 +513,10 @@ defmodule MensaplanWeb.CoreComponents do
 
     ~H"""
     <div class="overflow-y-auto sm:overflow-visible sm:px-0">
-      <table class="my-5">
+      <table class="my-5 w-full">
         <thead class="text-sm text-left leading-6 text-zinc-500">
           <tr>
-            <th :for={col <- @col} class="p-0 pb-4 font-normal"><%= col[:label] %></th>
+            <th :for={col <- @col} class="p-0 pr-1 pb-4 font-normal"><%= col[:label] %></th>
             <th :if={@action != []} class="relative p-0 pb-4">
               <span class="sr-only"><%= gettext("Actions") %></span>
             </th>
@@ -542,10 +542,9 @@ defmodule MensaplanWeb.CoreComponents do
             </td>
             <td :if={@action != []} class="relative w-14 p-0">
               <div class="relative whitespace-nowrap py-4 text-right text-sm font-medium">
-                <span class="absolute -inset-y-px -right-4 left-0" />
                 <span
                   :for={action <- @action}
-                  class="relative mr-4 last:mr-0 font-semibold leading-6 text-zinc-900 hover:text-blue-500"
+                  class="relative mr-2 last:mr-0 font-semibold leading-6 text-zinc-900 hover:text-blue-500"
                 >
                   <%= render_slot(action, @row_item.(row)) %>
                 </span>
