@@ -14,12 +14,12 @@ defmodule Mensaplan.Periodically do
   @daily 24 * 60 * 60 * 1000
 
   def start_link(_opts) do
-    GenServer.start_link(__MODULE__, %{}, name: :mensaplan_periodically)
+    GenServer.start_link(__MODULE__, %{}, name: __MODULE__)
   end
 
   def init(state) do
-    Process.send_after(self(), :expire_positions, @five_minutes)
     Process.send(self(), :fetch_dishes, [])
+    Process.send_after(self(), :expire_positions, @five_minutes)
     {:ok, state}
   end
 
@@ -64,17 +64,19 @@ defmodule Mensaplan.Periodically do
   def fetch_dishes() do
     today = local_now()
     week_number = div(Date.day_of_year(today) - 1, 7) + 1
-    Logger.info("Fetching dishes for #{today}...")
+    Logger.info("Fetching dishes for week #{week_number}...")
 
     with {:ok, response} <-
            Req.get(
              "https://tum-dev.github.io/eat-api/mensa-garching/#{today.year}/#{week_number}.json"
            ),
+         200 <- response.status,
          days when is_list(days) <- response.body["days"],
          {:ok, response_en} <-
            Req.get(
              "https://tum-dev.github.io/eat-api/en/mensa-garching/#{today.year}/#{week_number}.json"
            ),
+         200 <- response_en.status,
          days_en when is_list(days_en) <- response_en.body["days"] do
       for day_de <- days do
         date = %DishDate{date: Date.from_iso8601!(day_de["date"])}
@@ -94,11 +96,11 @@ defmodule Mensaplan.Periodically do
 
       {:ok, "Fetched #{Enum.count(days)} days with dishes."}
     else
-      nil ->
-        {:ok, "Couldn't find data, mensa is probably closed today."}
-
       {:error, reason} ->
         {:error, "Fetching dishes failed: #{reason}"}
+
+      x ->
+        {:ok, "Couldn't find data, mensa is probably closed today: #{x}"}
     end
   end
 

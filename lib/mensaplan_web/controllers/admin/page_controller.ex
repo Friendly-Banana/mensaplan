@@ -9,7 +9,7 @@ defmodule MensaplanWeb.Admin.PageController do
   end
 
   def fetch_dishes(conn, _params) do
-    {state, msg} = GenServer.call(:mensaplan_periodically, :fetch_dishes)
+    {state, msg} = GenServer.call(Mensaplan.Periodically, :fetch_dishes)
 
     conn
     |> put_flash(if(state == :ok, do: :info, else: :error), msg)
