@@ -47,13 +47,25 @@ defmodule MensaplanWeb.DishesLive do
         else: query
       )
 
-    name = if(Gettext.get_locale(MensaplanWeb.Gettext) == "en", do: :name_en, else: :name_de)
-
     case sort do
-      "likes" -> query |> order_by(desc: fragment("likes"))
-      "price_asc" -> query |> order_by(asc: :price)
-      "price_desc" -> query |> order_by(desc: :price)
-      _ -> query |> order_by(asc: ^name)
+      "likes" ->
+        query |> order_by(desc: fragment("likes"))
+
+      "price_asc" ->
+        query |> order_by(asc: :price)
+
+      "price_desc" ->
+        query |> order_by(desc: :price)
+
+      "amount" ->
+        from d in query,
+          order_by: [
+            desc: fragment("(SELECT count(*) FROM dish_dates WHERE ? = dish_dates.dish_id)", d.id)
+          ]
+
+      _ ->
+        name = if Gettext.get_locale(MensaplanWeb.Gettext) == "en", do: :name_en, else: :name_de
+        query |> order_by(asc: ^name)
     end
   end
 

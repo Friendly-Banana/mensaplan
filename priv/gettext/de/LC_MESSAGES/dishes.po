@@ -11,102 +11,87 @@ msgstr ""
 "Language: de\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: lib/mensaplan_web/live/dish_live/dish_live.html.heex:19
+#: lib/mensaplan_web/live/dishes/dishes_live.html.heex:18
 #, elixir-autogen, elixir-format
 msgid "Beilagen"
 msgstr ""
 
-#: lib/mensaplan_web/live/dish_live/dish_live.html.heex:18
+#: lib/mensaplan_web/live/dishes/dishes_live.html.heex:17
 #, elixir-autogen, elixir-format
 msgid "Dessert (Glas)"
 msgstr ""
 
-#: lib/mensaplan_web/live/dish_live/dish_live.html.heex:22
+#: lib/mensaplan_web/live/dishes/dishes_live.html.heex:21
 #, elixir-autogen, elixir-format
 msgid "Fisch"
 msgstr ""
 
-#: lib/mensaplan_web/live/dish_live/dish_live.html.heex:13
+#: lib/mensaplan_web/live/dishes/dishes_live.html.heex:13
 #, elixir-autogen, elixir-format
 msgid "Fleisch"
 msgstr ""
 
-#: lib/mensaplan_web/live/dish_live/dish_live.html.heex:10
+#: lib/mensaplan_web/live/dishes/dishes_live.html.heex:10
 #, elixir-autogen, elixir-format
 msgid "Grill"
 msgstr ""
 
-#: lib/mensaplan_web/live/dish_live/dish_live.html.heex:25
-#, elixir-autogen, elixir-format
-msgid "Internationale Küche"
-msgstr ""
-
-#: lib/mensaplan_web/live/dish_live/dish_live.html.heex:21
+#: lib/mensaplan_web/live/dishes/dishes_live.html.heex:20
 #, elixir-autogen, elixir-format
 msgid "Obst"
 msgstr ""
 
-#: lib/mensaplan_web/live/dish_live/dish_live.html.heex:8
+#: lib/mensaplan_web/live/dishes/dishes_live.html.heex:8
 #, elixir-autogen, elixir-format
 msgid "Pasta"
 msgstr ""
 
-#: lib/mensaplan_web/live/dish_live/dish_live.html.heex:9
+#: lib/mensaplan_web/live/dishes/dishes_live.html.heex:9
 #, elixir-autogen, elixir-format
 msgid "Pizza"
 msgstr ""
 
-#: lib/mensaplan_web/live/dish_live/dish_live.html.heex:20
+#: lib/mensaplan_web/live/dishes/dishes_live.html.heex:19
 #, elixir-autogen, elixir-format
 msgid "Salat"
 msgstr ""
 
-#: lib/mensaplan_web/live/dish_live/dish_live.html.heex:26
+#: lib/mensaplan_web/live/dishes/dishes_live.html.heex:23
 #, elixir-autogen, elixir-format
 msgid "Special"
 msgstr ""
 
-#: lib/mensaplan_web/live/dish_live/dish_live.html.heex:12
+#: lib/mensaplan_web/live/dishes/dishes_live.html.heex:12
 #, elixir-autogen, elixir-format
 msgid "Studitopf"
 msgstr ""
 
-#: lib/mensaplan_web/live/dish_live/dish_live.html.heex:23
+#: lib/mensaplan_web/live/dishes/dishes_live.html.heex:22
 #, elixir-autogen, elixir-format
 msgid "Süßspeise"
 msgstr ""
 
-#: lib/mensaplan_web/live/dish_live/dish_live.html.heex:17
-#, elixir-autogen, elixir-format
-msgid "Tagesgericht"
-msgstr ""
-
-#: lib/mensaplan_web/live/dish_live/dish_live.html.heex:16
+#: lib/mensaplan_web/live/dishes/dishes_live.html.heex:16
 #, elixir-autogen, elixir-format
 msgid "Tagessupe"
 msgstr ""
 
-#: lib/mensaplan_web/live/dish_live/dish_live.html.heex:24
-#, elixir-autogen, elixir-format
-msgid "Traditionelle Küche"
-msgstr ""
-
-#: lib/mensaplan_web/live/dish_live/dish_live.html.heex:15
+#: lib/mensaplan_web/live/dishes/dishes_live.html.heex:15
 #, elixir-autogen, elixir-format
 msgid "Vegan"
 msgstr ""
 
-#: lib/mensaplan_web/live/dish_live/dish_live.html.heex:11
+#: lib/mensaplan_web/live/dishes/dishes_live.html.heex:11
 #, elixir-autogen, elixir-format
 msgid "Wok"
 msgstr ""
 
-#: lib/mensaplan_web/live/dish_live/dish_live.html.heex:14
+#: lib/mensaplan_web/live/dishes/dishes_live.html.heex:14
 #, elixir-autogen, elixir-format, fuzzy
 msgid "Vegetarisch/fleischlos"
 msgstr ""
 
-#: lib/mensaplan_web/live/dish_live/dish_live.html.heex:7
+#: lib/mensaplan_web/live/dishes/dishes_live.html.heex:7
 #, elixir-autogen, elixir-format
 msgid "All"
 msgstr "Alle"

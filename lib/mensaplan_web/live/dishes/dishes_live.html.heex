@@ -1,6 +1,6 @@
 <.flash_group flash={@flash} />
 
-<form phx-submit="apply" class="flex flex-wrap items-center justify-center gap-2 sm:gap-4">
+<form phx-change="apply" class="flex flex-wrap items-center justify-center gap-2 sm:gap-4">
   <label>
     <%= gettext("Category") %>
     <select name="category" class="border-gray-300 rounded-md shadow-sm ml-1">
@@ -27,14 +27,17 @@
     <%= gettext("Sort by") %>
     <select name="sort" class="border-gray-300 rounded-md shadow-sm ml-1">
       <option value="name"><%= gettext("Name") %></option>
+      <option value="likes" selected={@sort == "likes"}><%= gettext("Dishlikes") %></option>
       <option value="price_asc" selected={@sort == "price_asc"}><%= gettext("Cheapest") %></option>
       <option value="price_desc" selected={@sort == "price_desc"}><%= gettext("Most Expensive") %></option>
-      <option value="likes" selected={@sort == "likes"}><%= gettext("Dishlikes") %></option>
+      <option value="amount" selected={@sort == "amount"}><%= gettext("Occurences") %></option>
     </select>
   </label>
-  <.button>
-    <%= gettext("Apply") %>
-  </.button>
+  <noscript>
+    <.button>
+      <%= gettext("Apply") %>
+    </.button>
+  </noscript>
 </form>
 
 <.live_component

@@ -121,7 +121,7 @@ msgstr ""
 msgid "Failed to update settings."
 msgstr ""
 
-#: lib/mensaplan_web/live/position_live/position_live.ex:155
+#: lib/mensaplan_web/live/homepage/home_live.ex:155
 #, elixir-autogen, elixir-format
 msgid "Group not found"
 msgstr ""

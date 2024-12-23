@@ -11,27 +11,27 @@ msgstr ""
 "Language: en\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: lib/mensaplan_web/live/group_live/form_component.ex:57
+#: lib/mensaplan_web/live/group/form_component.ex:57
 #, elixir-autogen, elixir-format
 msgid "Group created successfully"
 msgstr ""
 
-#: lib/mensaplan_web/live/group_live/edit_form_component.ex:37
+#: lib/mensaplan_web/live/group/edit_form_component.ex:37
 #, elixir-autogen, elixir-format
 msgid "Group updated successfully"
 msgstr ""
 
-#: lib/mensaplan_web/live/position_live/position_live.ex:90
+#: lib/mensaplan_web/live/homepage/home_live.ex:90
 #, elixir-autogen, elixir-format
 msgid "Owner changed"
 msgstr ""
 
-#: lib/mensaplan_web/live/position_live/position_live.ex:58
+#: lib/mensaplan_web/live/homepage/home_live.ex:58
 #, elixir-autogen, elixir-format
 msgid "Position cleared"
 msgstr ""
 
-#: lib/mensaplan_web/live/position_live/position_live.ex:74
+#: lib/mensaplan_web/live/homepage/home_live.ex:74
 #, elixir-autogen, elixir-format
 msgid "Position set"
 msgstr ""
