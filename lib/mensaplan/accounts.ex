@@ -92,6 +92,17 @@ defmodule Mensaplan.Accounts do
     |> Repo.insert()
   end
 
+  # update the user in case the name or avatar has changed
+  def create_or_update_user(attrs \\ %{}) do
+    %User{}
+    |> User.changeset(attrs)
+    |> Repo.insert(
+      on_conflict: {:replace, [:name, :avatar]},
+      conflict_target: [:auth_id],
+      returning: true
+    )
+  end
+
   @doc """
   Updates a user.
 

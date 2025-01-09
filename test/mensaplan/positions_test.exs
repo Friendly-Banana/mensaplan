@@ -34,7 +34,7 @@ defmodule Mensaplan.PositionsTest do
     test "get_public_positions/0 returns all public positions" do
       position_fixture(%{public: false})
       position = position_fixture(public: true)
-      assert hd(Positions.get_public_positions()).id == position.id
+      assert hd(Positions.get_public_positions()).id == position.owner.id
     end
 
     test "get_position_of_user/1 returns the position of the user" do
@@ -53,12 +53,12 @@ defmodule Mensaplan.PositionsTest do
       user2 = AccountsFixtures.user_fixture()
       _common_group = AccountsFixtures.group_fixture(%{}, owner: user, members: [user, user2])
       position = position_fixture(%{public: true})
-      position1 = position_fixture(%{public: false, owner_id: user.id})
-      position2 = position_fixture(%{public: false, owner_id: user2.id})
+      position_fixture(%{public: false, owner_id: user.id})
+      position_fixture(%{public: false, owner_id: user2.id})
       position_fixture(%{public: false})
 
       assert Enum.all?(Positions.get_positions_visible_to_user(user), fn p ->
-               Enum.member?([position.id, position1.id, position2.id], p.id)
+               Enum.member?([position.owner.id, user.id, user2.id], p.id)
              end)
     end
 

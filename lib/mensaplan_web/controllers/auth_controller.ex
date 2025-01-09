@@ -44,41 +44,57 @@ defmodule MensaplanWeb.AuthController do
     |> redirect(to: "/")
   end
 
-  defp get_or_create_user(oauth_user) do
-    if user = Accounts.get_user_by_auth_id(oauth_user.id) do
-      {:ok, user}
-    else
-      Accounts.create_user(Map.put(oauth_user, :auth_id, oauth_user[:id]))
-    end
-  end
+  def callback(%{assigns: %{ueberauth_failure: %Ueberauth.Failure{} = fail}} = conn, _params) do
+    Logger.warning("Failed to authenticate: #{inspect(fail)}")
 
-  def callback(%{assigns: %{ueberauth_failure: _fails}} = conn, _params) do
     conn
-    |> put_flash(:error, dgettext("errors", "Failed to authenticate."))
+    |> put_flash(:error, "Failed to authenticate")
     |> redirect(to: "/")
   end
 
-  def callback(%{assigns: %{ueberauth_auth: auth}} = conn, _params) do
-    case UserFromAuth.extract_info(auth) do
-      {:ok, oauth_user} ->
-        case get_or_create_user(oauth_user) do
-          {:ok, user} ->
-            conn
-            |> put_flash(:info, dgettext("messages", "Successfully authenticated."))
-            |> put_resp_cookie(
-              @remember_me_cookie,
-              UserToken.generate_user_token(user),
-              @remember_me_options
-            )
-            |> put_session(:user, user)
-            |> configure_session(renew: true)
-            |> redirect(to: "/")
+  def callback(%{assigns: %{ueberauth_auth: %Ueberauth.Auth{} = auth}} = conn, _params) do
+    case Accounts.create_or_update_user(basic_info(auth)) do
+      {:ok, user} ->
+        conn
+        |> put_flash(:info, dgettext("messages", "Successfully authenticated."))
+        |> put_resp_cookie(
+          @remember_me_cookie,
+          UserToken.generate_user_token(user),
+          @remember_me_options
+        )
+        |> put_session(:user, user)
+        |> configure_session(renew: true)
+        |> redirect(to: "/")
 
-          {:error, reason} ->
-            conn
-            |> put_flash(:error, reason)
-            |> redirect(to: "/")
-        end
+      {:error, reason} ->
+        conn
+        |> put_flash(:error, reason)
+        |> redirect(to: "/")
+    end
+  end
+
+  def basic_info(auth) do
+    %{
+      auth_id: "oauth2|#{auth.provider}|#{auth.uid}",
+      name: name_from_auth(auth),
+      email: auth.info.email,
+      avatar: auth.info.image
+    }
+  end
+
+  defp name_from_auth(auth) do
+    if auth.info.name do
+      auth.info.name
+    else
+      name =
+        [auth.info.first_name, auth.info.last_name]
+        |> Enum.filter(&(&1 != nil and &1 != ""))
+
+      if Enum.empty?(name) do
+        auth.info.nickname
+      else
+        Enum.join(name, " ")
+      end
     end
   end
 end

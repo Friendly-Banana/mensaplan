@@ -27,7 +27,7 @@ defmodule MensaplanWeb.PageController do
         conn
         |> put_status(:bad_request)
         |> put_flash(:error, dgettext("errors", "Failed to update settings."))
-        |> redirect(to: "/")
+        |> redirect(to: "/settings")
     end
   end
 

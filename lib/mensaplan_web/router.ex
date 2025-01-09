@@ -7,7 +7,9 @@ defmodule MensaplanWeb.Router do
   import MensaplanWeb.AuthController, only: [fetch_user_from_cookie: 2]
 
   pipeline :browser do
-    plug :redirect_host
+    if Application.compile_env!(:mensaplan, :environment) != :test,
+      do: plug(:redirect_host)
+
     plug :accepts, ["html"]
     plug :fetch_session
     plug :fetch_live_flash

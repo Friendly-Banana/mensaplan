@@ -16,7 +16,7 @@ defmodule MensaplanWeb.UserControllerTest do
   test "get or create creates a user", %{conn: conn} do
     conn = post(conn, ~p"/api/users/auth/#{@create_attrs.auth_id}", user: @create_attrs)
 
-    resp = json_response(conn, 201)
+    resp = json_response(conn, 200)
 
     assert @create_attrs.auth_id == resp["auth_id"]
     assert @create_attrs.avatar == resp["avatar"]
@@ -25,7 +25,7 @@ defmodule MensaplanWeb.UserControllerTest do
   test "get or create gets a user", %{conn: conn} do
     {:ok, user} = Mensaplan.Accounts.create_user(@create_attrs)
 
-    conn = post(conn, ~p"/api/users/auth/#{user.auth_id}", user: %{})
+    conn = post(conn, ~p"/api/users/auth/#{user.auth_id}", user: @create_attrs)
 
     resp = json_response(conn, 200)
 
