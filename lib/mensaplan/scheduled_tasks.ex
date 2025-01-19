@@ -64,6 +64,7 @@ defmodule Mensaplan.Periodically do
   def fetch_dishes() do
     today = local_now()
     week_number = div(Date.day_of_year(today) - 1, 7) + 1
+    week_number = Integer.to_string(week_number, 10) |> String.pad_leading(2, "0")
     Logger.info("Fetching dishes for week #{week_number}...")
 
     with {:ok, response} <-
