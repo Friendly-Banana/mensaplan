@@ -391,7 +391,7 @@ msgstr ""
 msgid "Mensaplan started as a feature of %{wobot}, a Discord bot, when I, the developer, came across the floor plan of the TUM Mensa. Due to the popularity of this feature, I decided to expand it into a web application in order to make it more accessible to a wider audience."
 msgstr ""
 
-#: lib/mensaplan_web/controllers/dish_html/show.html.heex:14
+#: lib/mensaplan_web/controllers/dish_html/show.html.heex:18
 #: lib/mensaplan_web/live/dishes/dishes_component.ex:20
 #, elixir-autogen, elixir-format, fuzzy
 msgid "Price for students"
@@ -408,7 +408,7 @@ msgstr ""
 msgid "Sort by"
 msgstr ""
 
-#: lib/mensaplan_web/live/dishes/dishes_live.html.heex:37
+#: lib/mensaplan_web/live/dishes/dishes_live.html.heex:38
 #, elixir-autogen, elixir-format
 msgid "Apply"
 msgstr ""
@@ -419,7 +419,7 @@ msgid "Cheapest"
 msgstr ""
 
 #: lib/mensaplan_web/components/layouts/navbar_links.html.heex:6
-#: lib/mensaplan_web/live/dishes/dishes_live.ex:35
+#: lib/mensaplan_web/live/dishes/dishes_live.ex:34
 #, elixir-autogen, elixir-format, fuzzy
 msgid "Dishes"
 msgstr ""
@@ -429,7 +429,7 @@ msgstr ""
 msgid "Most Expensive"
 msgstr ""
 
-#: lib/mensaplan_web/controllers/dish_html/show.html.heex:15
+#: lib/mensaplan_web/controllers/dish_html/show.html.heex:19
 #: lib/mensaplan_web/live/dishes/dishes_live.html.heex:5
 #, elixir-autogen, elixir-format, fuzzy
 msgid "Category"
@@ -446,49 +446,14 @@ msgstr ""
 msgid "food cover"
 msgstr ""
 
-#: lib/mensaplan_web/controllers/dish_html/show.html.heex:53
-#, elixir-autogen, elixir-format
-msgid "Fr"
-msgstr ""
-
-#: lib/mensaplan_web/controllers/dish_html/show.html.heex:49
-#, elixir-autogen, elixir-format
-msgid "Mo"
-msgstr ""
-
-#: lib/mensaplan_web/controllers/dish_html/show.html.heex:54
-#, elixir-autogen, elixir-format
-msgid "Sa"
-msgstr ""
-
-#: lib/mensaplan_web/controllers/dish_html/show.html.heex:55
-#, elixir-autogen, elixir-format
-msgid "Su"
-msgstr ""
-
-#: lib/mensaplan_web/controllers/dish_html/show.html.heex:52
-#, elixir-autogen, elixir-format
-msgid "Th"
-msgstr ""
-
-#: lib/mensaplan_web/controllers/dish_html/show.html.heex:5
-#, elixir-autogen, elixir-format
-msgid "This dish was offered one time."
-msgid_plural "This dish was offered %{count} times."
-msgstr[0] ""
-msgstr[1] ""
-
-#: lib/mensaplan_web/controllers/dish_html/show.html.heex:50
-#, elixir-autogen, elixir-format
-msgid "Tu"
-msgstr ""
-
-#: lib/mensaplan_web/controllers/dish_html/show.html.heex:51
-#, elixir-autogen, elixir-format
-msgid "We"
-msgstr ""
-
 #: lib/mensaplan_web/live/dishes/dishes_live.html.heex:33
 #, elixir-autogen, elixir-format
 msgid "Occurences"
 msgstr ""
+
+#: lib/mensaplan_web/controllers/dish_html/show.html.heex:5
+#, elixir-autogen, elixir-format, fuzzy
+msgid "This dish was offered one time:"
+msgid_plural "This dish was offered %{count} times:"
+msgstr[0] ""
+msgstr[1] ""

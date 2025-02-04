@@ -41,7 +41,7 @@ msgstr ""
 msgid "Settings updated."
 msgstr ""
 
-#: lib/mensaplan_web/controllers/auth_controller.ex:67
+#: lib/mensaplan_web/controllers/auth_controller.ex:59
 #, elixir-autogen, elixir-format
 msgid "Successfully authenticated."
 msgstr ""

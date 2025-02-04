@@ -471,7 +471,7 @@ defmodule MensaplanWeb.CoreComponents do
         <h1 class="text-lg font-semibold leading-8 text-zinc-800">
           <%= render_slot(@inner_block) %>
         </h1>
-        <p :if={@subtitle != []} class="mt-2 text-sm leading-6 text-zinc-600">
+        <p :if={@subtitle != []} class="mt-2 leading-6 text-zinc-600">
           <%= render_slot(@subtitle) %>
         </p>
       </div>
@@ -574,7 +574,7 @@ defmodule MensaplanWeb.CoreComponents do
   def list(assigns) do
     ~H"""
     <dl class="my-5 divide-y divide-zinc-100">
-      <div :for={item <- @item} class="flex gap-4 py-4 text-sm leading-6 sm:gap-8">
+      <div :for={item <- @item} class="flex gap-4 py-4 leading-6 sm:gap-8">
         <dt class="w-1/2 flex-none text-zinc-500"><%= item.title %></dt>
         <dd class="text-zinc-700"><%= render_slot(item) %></dd>
       </div>

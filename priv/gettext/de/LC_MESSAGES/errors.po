@@ -101,11 +101,6 @@ msgstr "muss größer oder gleich %{number} sein"
 msgid "must be equal to %{number}"
 msgstr "muss gleich %{number} sein"
 
-#: lib/mensaplan_web/controllers/auth_controller.ex:57
-#, elixir-autogen, elixir-format
-msgid "Failed to authenticate."
-msgstr "Authentifizierung fehlgeschlagen."
-
 #: lib/mensaplan_web/controllers/page_controller.ex:29
 #, elixir-autogen, elixir-format
 msgid "Failed to update settings."

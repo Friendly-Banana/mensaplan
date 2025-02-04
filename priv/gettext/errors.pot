@@ -108,11 +108,6 @@ msgstr ""
 msgid "must be equal to %{number}"
 msgstr ""
 
-#: lib/mensaplan_web/controllers/auth_controller.ex:57
-#, elixir-autogen, elixir-format
-msgid "Failed to authenticate."
-msgstr ""
-
 #: lib/mensaplan_web/controllers/page_controller.ex:29
 #, elixir-autogen, elixir-format
 msgid "Failed to update settings."
