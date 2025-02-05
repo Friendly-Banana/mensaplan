@@ -1,6 +1,6 @@
-<div class="mx-auto text-zinc-700">
+<div class="mx-auto text-zinc-700" itemscope itemtype="https://schema.org/Product">
   <.header>
-    <%= @page_title %>
+    <span itemprop="name"><%= @page_title %></span>
     <:subtitle>
       <%= ngettext(
         "This dish was offered one time:",
@@ -10,21 +10,29 @@
       <noscript>
         <%= Enum.join(@served_dates, ", ") %>
       </noscript>
-      <span id="list"></span>
+      <span id="served-dates"></span>
     </:subtitle>
   </.header>
 
   <.list>
-    <:item title={gettext("Price for students")}><%= @dish.price %></:item>
-    <:item title={gettext("Category")}><%= @dish.category %></:item>
+    <:item title={gettext("Price for students")}>
+      <span itemprop="offers" itemscope itemtype="https://schema.org/Offer">
+        <span itemprop="price"><%= @dish.price %></span>
+        <meta itemprop="priceCurrency" content="EUR">
+        <link itemprop="availability" href="https://schema.org/InStock">
+      </span>
+    </:item>
+    <:item title={gettext("Category")}>
+      <span itemprop="category"><%= @dish.category %></span>
+    </:item>
   </.list>
 
   <div id="calendar" class="hidden text-center" data-served-dates={Jason.encode!(@served_dates)}>
-    <div class="flex justify-between items-center mb-4">
+    <div id="header" class="mb-4">
       <button
         title="Previous"
         onclick="previous()"
-        class="text-zinc-500 hover:bg-blue-50 hover:text-blue-600 rounded cursor-pointer p-2"
+        class="text-zinc-500 hover:bg-blue-50 hover:text-blue-600 rounded cursor-pointer"
       >
         <.icon name="hero-chevron-left" />
       </button>
@@ -32,7 +40,7 @@
         id="quick-select"
         title="Select month"
         onclick="select()"
-        class="hover:bg-blue-50 hover:text-blue-600 rounded cursor-pointer px-4 py-2"
+        class="hover:bg-blue-50 hover:text-blue-600 rounded cursor-pointer"
       >
         October 2023
       </button>
@@ -40,7 +48,7 @@
       <button
         title="Next"
         onclick="next()"
-        class="text-zinc-500 hover:bg-blue-50 hover:text-blue-600 rounded cursor-pointer p-2"
+        class="text-zinc-500 hover:bg-blue-50 hover:text-blue-600 rounded cursor-pointer"
       >
         <.icon name="hero-chevron-right" />
       </button>
@@ -52,7 +60,7 @@
 <script async>
     const calendar = document.getElementById("calendar");
     const servedDates = JSON.parse(calendar.dataset.servedDates).map((d) => new Date(d));
-    const list = document.getElementById("list");
+    const list = document.getElementById("served-dates");
     list.textContent = servedDates.map((d) => d.toLocaleDateString()).join(", ");
 
     const headerEl = document.getElementById("quick-select");
@@ -187,6 +195,11 @@
 </script>
 
 <style>
+  #header{
+      display: grid;
+      grid-template-columns: 1fr 5fr 1fr;    
+  }
+
   #day-header {
       display: grid;
       grid-template-columns: repeat(7, 1fr);

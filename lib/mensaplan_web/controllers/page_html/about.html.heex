@@ -1,8 +1,8 @@
 <div class="relative">
   <img
     src={Mensaplan.Helpers.proxy_image("/images/people-eating-W3SEyZODn8U.jpg", "width=1200")}
-    alt="People eating"
-    class="hero w-full h-72 object-cover filter brightness-50"
+    alt={gettext("A group of people sitting around a long outdoor table, eating and talking.")}
+    class="w-full h-72 object-cover filter brightness-50 text-white bg-[#6d6e72]"
   />
   <div class="absolute inset-0 flex flex-col items-center justify-center text-white drop-shadow-md">
     <h1 class="text-3xl font-bold mb-1"><%= gettext("About Mensaplan") %></h1>
@@ -19,74 +19,109 @@
       color: rgb(29 78 216);
       text-decoration: underline;
    }
+
+   #about h2 {
+      font-size: 1.125rem;
+      line-height: 1.75rem;
+      font-weight: 500;
+      margin-bottom: 0.5rem;
+   }
 </style>
 
-<main id="about" class="container mx-auto px-6 py-4 text-lg space-y-4 leading-6">
-  <p>
-    <%= raw gettext(
-      "Experience the buzz of Garching with our unique platform, designed to connect you with fellow %{tumensa} enthusiasts. With an <a href='https://en.wikipedia.org/wiki/IEEE_754'>almost</a> infinitely-precise grid, both finding and sharing a position is easier than ever.",
-      tumensa:
-        '<a href="https://www.studierendenwerk-muenchen-oberbayern.de/mensa/"> TUM Mensa </a>'
-    ) %>
-  </p>
-  <p>
-    <%= gettext(
-      "Looking for a lunch companion at TUM Mensa? Mensaplan is your go-to solution. Discover if your friends are already dining, and where they're seated. Be the first to arrive? Share your location on our interactive grid. Vote on your favorite dishes to help others make the best choice. Connect, dine, and enjoy with Mensaplan."
-    ) %>
-  </p>
+<main id="about" class="container mx-auto px-6 py-4 text-lg space-y-4 leading-6" itemscope itemtype="https://schema.org/FAQPage">
+  <div itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+    <h2 itemprop="name">
+      <a href="#what-is" itemprop="url"><%= gettext("What is Mensaplan?") %></a>
+    </h2>
+    <div itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+      <p itemprop="text">
+        <%= raw(
+          gettext(
+            "Experience the buzz of Garching with our unique platform, designed to connect you with fellow %{tumensa} enthusiasts. With an <a href='https://en.wikipedia.org/wiki/IEEE_754'>almost</a> infinitely-precise grid, both finding and sharing a position is easier than ever.",
+            tumensa:
+              '<a href="https://www.studierendenwerk-muenchen-oberbayern.de/mensa/"> TUM Mensa </a>'
+          )
+        ) %>
+      </p>
+    </div>
+  </div>
+  <div itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+    <h2 itemprop="name">
+      <a href="#find-friends" itemprop="url"><%= gettext("How can I find friends at TUM Mensa?") %></a>
+    </h2>
+    <div itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+      <p itemprop="text">
+        <%= gettext(
+          "Looking for a lunch companion at TUM Mensa? Mensaplan is your go-to solution. Discover if your friends are already dining, and where they're seated. Be the first to arrive? Share your location on our interactive grid. Vote on your favorite dishes to help others make the best choice. Connect, dine, and enjoy with Mensaplan."
+        ) %>
+      </p>
+    </div>
+  </div>
 
-  <h2 id="origin" class="text-xl my-3 font-medium">
-    <%= gettext("Helping Students find lunch peers since 2023") %>
-  </h2>
-  <p>
-    <%= raw gettext(
-      "Mensaplan started as a feature of %{wobot}, a Discord bot, when I, the developer, came across the floor plan of the TUM Mensa. Due to the popularity of this feature, I decided to expand it into a web application in order to make it more accessible to a wider audience.",
-      wobot: '<a href="https://github.com/Friendly-Banana/wobot">WoBot</a>'
-    ) %>
-    <br />
-    <%= gettext(
-      "My friends and I have been using this for over a year and it's been a great success. We hope you enjoy it as much as we do."
-    ) %>
-  </p>
+  <div itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+    <h2 itemprop="name">
+      <a href="#set-position" itemprop="url"><%= gettext("How can I set my position?") %></a>
+    </h2>
+    <div itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+      <p itemprop="text">
+        <%= gettext(
+          "To set your position on the map, double click on the place where you are. You can also first click the position to move the avatar and then use the \"Set Position\" button."
+        ) %>
+      </p>
+    </div>
+  </div>
 
-  <h2 id="faq" class="text-xl my-3 font-medium"><a href="#faq"><%= gettext("Frequently Asked Questions") %></a></h2>
+  <div itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+    <h2 itemprop="name">
+      <a href="#public-positions" itemprop="url"><%= gettext("What are public positions?") %></a>
+    </h2>
+    <div itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+      <p itemprop="text">
+        <%= gettext(
+          "By default, positions on Mensaplan are only visible to users you share a group with. Public positions, on the other hand, are visible to all users, including non-logged-in visitors. However, anonymous visitors will only see your avatar and not your name."
+        ) %><br />
+        <%= gettext(
+          "Public positions allow you to connect with new people and potentially make new friends. You can discover other users who are also dining at TUM Mensa and reach out to them for a meal together. It's a great way to expand your social circle."
+        ) %>
+      </p>
+    </div>
+  </div>
 
-  <h3 id="set-position" class="text-lg font-medium"><a href="#set-position"><%= gettext("How can I set my position?") %></a></h3>
-  <p>
-    <%= gettext(
-      "To set your position on the map, double click on the place where you are. You can also first click the position to move the avatar and then use the \"Set Position\" button."
-    ) %>
-  </p>
+  <div itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+    <h2 itemprop="name">
+      <a href="#change-username" itemprop="url"><%= gettext("Can I change my username?") %></a>
+    </h2>
+    <div itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+      <p itemprop="text">
+        <%= gettext(
+          "Mensaplan uses the name associated with your login method. If you log in via Discord, Mensaplan will use your Discord username. After you changed your username, please log out and log in again to update your name in Mensaplan."
+        ) %>
+      </p>
+    </div>
+  </div>
 
-  <h3 id="public-positions" class="text-lg font-medium"><a href="#public-positions"><%= gettext("What are public positions?") %></a></h3>
-  <p>
-    <%= gettext(
-      "By default, positions on Mensaplan are only visible to users you share a group with. Public positions, on the other hand, are visible to all users, including non-logged-in visitors. However, anonymous visitors will only see your avatar and not your name."
-    ) %><br />
-    <%= gettext(
-      "Public positions allow you to connect with new people and potentially make new friends. You can discover other users who are also dining at TUM Mensa and reach out to them for a meal together. It's a great way to expand your social circle."
-    ) %>
-  </p>
-
-  <h3 id="change-username" class="text-lg font-medium"><a href="#change-username"><%= gettext("Can I change my username?") %></a></h3>
-  <p>
-    <%= gettext(
-      "Mensaplan uses the name associated with your login method. If you log in via Discord, Mensaplan will use your Discord username. After you changed your username, please log out and log in again to update your name in Mensaplan."
-    ) %>
-  </p>
-
-  <h3 id="report-bug" class="text-lg font-medium"><a href="#report-bug"><%= gettext("How can I report a bug or issue?") %></a></h3>
-  <p>
-    <%= raw gettext(
-      "If you encounter any bugs or issues while using Mensaplan, please report them on %{link}. Please provide detailed information about the problem you are facing, including any error messages or screenshots if possible.",
-      link: '<a href="https://github.com/Friendly-Banana/mensaplan/issues">GitHub</a>'
-    ) %>
-  </p>
+  <div itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+    <h2 itemprop="name">
+      <a href="#report-bug" itemprop="url"><%= gettext("How can I report a bug or issue?") %></a>
+    </h2>
+    <div itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+      <p itemprop="text">
+        <%= raw(
+          gettext(
+            "If you encounter any bugs or issues while using Mensaplan, please report them on %{link}. Please provide detailed information about the problem you are facing, including any error messages or screenshots if possible.",
+            link: '<a href="https://github.com/Friendly-Banana/mensaplan/issues">GitHub</a>'
+          )
+        ) %>
+      </p>
+    </div>
+  </div>
 </main>
 
 <small class="text-gray-500 text-center">
-  <%= raw gettext("All icons in the mensa map are %{free_icons} used under %{license}",
-    free_icons: '<a href="https://github.com/free-icons/free-icons"> Free Icons </a>',
-    license: '<a href="https://creativecommons.org/licenses/by/4.0/"> CC BY 4.0 </a>'
+  <%= raw(
+    gettext("All icons in the mensa map are %{free_icons} used under %{license}",
+      free_icons: '<a href="https://github.com/free-icons/free-icons"> Free Icons </a>',
+      license: '<a href="https://creativecommons.org/licenses/by/4.0/"> CC BY 4.0 </a>'
+    )
   ) %>
 </small>
