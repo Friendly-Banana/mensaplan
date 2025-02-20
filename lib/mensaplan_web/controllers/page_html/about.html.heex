@@ -28,16 +28,21 @@
    }
 </style>
 
-<main id="about" class="container mx-auto px-6 py-4 text-lg space-y-4 leading-6" itemscope itemtype="https://schema.org/FAQPage">
+<main
+  id="about"
+  class="container mx-auto px-6 py-4 text-lg space-y-4 leading-6"
+  itemscope
+  itemtype="https://schema.org/FAQPage"
+>
   <div itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
     <h2 itemprop="name">
-      <a href="#what-is" itemprop="url"><%= gettext("What is Mensaplan?") %></a>
+      <%= gettext("What is Mensaplan?") %>
     </h2>
     <div itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
       <p itemprop="text">
         <%= raw(
           gettext(
-            "Experience the buzz of Garching with our unique platform, designed to connect you with fellow %{tumensa} enthusiasts. With an <a href='https://en.wikipedia.org/wiki/IEEE_754'>almost</a> infinitely-precise grid, both finding and sharing a position is easier than ever.",
+            "Mensaplan is your ultimate tool for finding friends and food at the %{tumensa} in Garching. Our platform connects TUM students in real-time, helping you locate your friends and discover today's dishes.",
             tumensa:
               '<a href="https://www.studierendenwerk-muenchen-oberbayern.de/mensa/"> TUM Mensa </a>'
           )
@@ -45,22 +50,32 @@
       </p>
     </div>
   </div>
+
   <div itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
     <h2 itemprop="name">
-      <a href="#find-friends" itemprop="url"><%= gettext("How can I find friends at TUM Mensa?") %></a>
+      <%= gettext("Why Mensaplan?") %>
     </h2>
     <div itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
       <p itemprop="text">
         <%= gettext(
-          "Looking for a lunch companion at TUM Mensa? Mensaplan is your go-to solution. Discover if your friends are already dining, and where they're seated. Be the first to arrive? Share your location on our interactive grid. Vote on your favorite dishes to help others make the best choice. Connect, dine, and enjoy with Mensaplan."
+          "Mensaplan offers real-time positioning, displays today's dishes, and provides long-term analytics about dish popularity. Whether you're looking for a lunch buddy or deciding what to eat, Mensaplan has got you covered."
         ) %>
       </p>
     </div>
   </div>
 
+  <section>
+    <h2><%= gettext("Our Story") %></h2>
+    <p>
+      <%= gettext(
+        "Mensaplan started out as a simple Discord bot, and through this journey, I got to learn a really cool programming language. Now, it's evolved into a full-fledged platform designed to make your Mensa experience better."
+      ) %>
+    </p>
+  </section>
+
   <div itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
     <h2 itemprop="name">
-      <a href="#set-position" itemprop="url"><%= gettext("How can I set my position?") %></a>
+      <%= gettext("How can I set my position?") %>
     </h2>
     <div itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
       <p itemprop="text">
@@ -73,12 +88,12 @@
 
   <div itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
     <h2 itemprop="name">
-      <a href="#public-positions" itemprop="url"><%= gettext("What are public positions?") %></a>
+      <%= gettext("What are public positions?") %>
     </h2>
     <div itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
       <p itemprop="text">
         <%= gettext(
-          "By default, positions on Mensaplan are only visible to users you share a group with. Public positions, on the other hand, are visible to all users, including non-logged-in visitors. However, anonymous visitors will only see your avatar and not your name."
+          "By default, positions on Mensaplan are only visible to users you share a group with. Public positions, on the other hand, are visible to all users, including anonymous visitors."
         ) %><br />
         <%= gettext(
           "Public positions allow you to connect with new people and potentially make new friends. You can discover other users who are also dining at TUM Mensa and reach out to them for a meal together. It's a great way to expand your social circle."
@@ -89,7 +104,7 @@
 
   <div itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
     <h2 itemprop="name">
-      <a href="#change-username" itemprop="url"><%= gettext("Can I change my username?") %></a>
+      <%= gettext("Can I change my username?") %>
     </h2>
     <div itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
       <p itemprop="text">
@@ -102,7 +117,7 @@
 
   <div itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
     <h2 itemprop="name">
-      <a href="#report-bug" itemprop="url"><%= gettext("How can I report a bug or issue?") %></a>
+      <%= gettext("How can I report a bug or issue?") %>
     </h2>
     <div itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
       <p itemprop="text">

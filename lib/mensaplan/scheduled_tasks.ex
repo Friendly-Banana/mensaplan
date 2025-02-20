@@ -101,7 +101,8 @@ defmodule Mensaplan.Periodically do
         {:error, "Fetching dishes failed: #{reason}"}
 
       x ->
-        {:ok, "Couldn't find data, mensa is probably closed today: #{x}"}
+        {:ok,
+         "Couldn't find data, mensa is probably closed today: #{x}, https://tum-dev.github.io/eat-api/mensa-garching/#{today.year}/#{week_number}.json"}
     end
   end
 
