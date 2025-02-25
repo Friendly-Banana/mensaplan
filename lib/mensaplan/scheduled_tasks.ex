@@ -72,21 +72,14 @@ defmodule Mensaplan.Periodically do
              "https://tum-dev.github.io/eat-api/mensa-garching/#{today.year}/#{week_number}.json"
            ),
          200 <- response.status,
-         days when is_list(days) <- response.body["days"],
-         {:ok, response_en} <-
-           Req.get(
-             "https://tum-dev.github.io/eat-api/en/mensa-garching/#{today.year}/#{week_number}.json"
-           ),
-         200 <- response_en.status,
-         days_en when is_list(days_en) <- response_en.body["days"] do
+         days when is_list(days) <- response.body["days"] do
       for day_de <- days do
         date = %DishDate{date: Date.from_iso8601!(day_de["date"])}
-        day_en = Enum.find(days_en, fn day -> day["date"] == day_de["date"] end)
 
-        for {dish_de, dish_en} <- Enum.zip(day_de["dishes"], day_en["dishes"]) do
+        for dish_de <- day_de["dishes"] do
           dish =
             Mensa.get_dish_by_name(dish_de["name"]) ||
-              dish_from_json(dish_de, dish_en)
+              dish_from_json(dish_de)
               |> Mensa.change_dish()
               |> Repo.insert_or_update!()
 
@@ -114,13 +107,12 @@ defmodule Mensaplan.Periodically do
     :erlang.float_to_binary(num, decimals: 2)
   end
 
-  def dish_from_json(dish, dish_en) do
+  def dish_from_json(dish) do
     price = dish["prices"]["students"]
     per_unit = format(price["price_per_unit"]) <> "€/" <> price["unit"]
 
     %Dish{
       name_de: String.trim(dish["name"]),
-      name_en: String.trim(dish_en["name"]),
       price:
         ((price["base_price"] > 0 && format(price["base_price"]) <> "€ + ") || "") <>
           per_unit,
