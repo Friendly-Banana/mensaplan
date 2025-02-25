@@ -54,3 +54,12 @@ Don't forget to set the environment variables.
 
 I use [Gigalixir](https://www.gigalixir.com/docs/getting-started-guide/).
 New versions are deployed with `git push gigalixir main`.
+
+## Translating
+
+Phoenix includes [Gettext](https://hexdocs.pm/gettext/Gettext.html). To update the translation files:
+
+```sh
+mix gettext.extract
+mix gettext.merge priv/gettext
+```

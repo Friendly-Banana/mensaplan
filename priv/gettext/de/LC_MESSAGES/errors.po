@@ -106,7 +106,7 @@ msgstr "muss gleich %{number} sein"
 msgid "Failed to update settings."
 msgstr "Einstellungen konnten nicht aktualisiert werden."
 
-#: lib/mensaplan_web/live/homepage/home_live.ex:155
+#: lib/mensaplan_web/live/homepage/home_live.ex:156
 #, elixir-autogen, elixir-format
 msgid "Group not found"
 msgstr "Gruppe nicht gefunden"

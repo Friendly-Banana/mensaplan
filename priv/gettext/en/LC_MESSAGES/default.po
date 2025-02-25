@@ -72,7 +72,7 @@ msgstr ""
 msgid "Edit"
 msgstr ""
 
-#: lib/mensaplan_web/live/homepage/home_live.ex:151
+#: lib/mensaplan_web/live/homepage/home_live.ex:152
 #, elixir-autogen, elixir-format
 msgid "Edit Group %{name}"
 msgstr ""
@@ -189,9 +189,9 @@ msgid "We can't find the internet"
 msgstr ""
 
 #: lib/mensaplan_web/live/group/edit_form_component.ex:55
-#: lib/mensaplan_web/live/homepage/home_live.ex:93
-#: lib/mensaplan_web/live/homepage/home_live.ex:113
-#: lib/mensaplan_web/live/homepage/home_live.ex:128
+#: lib/mensaplan_web/live/homepage/home_live.ex:94
+#: lib/mensaplan_web/live/homepage/home_live.ex:114
+#: lib/mensaplan_web/live/homepage/home_live.ex:129
 #, elixir-autogen, elixir-format
 msgid "You are not the owner of this group"
 msgstr ""
@@ -356,7 +356,7 @@ msgstr ""
 msgid "To set your position on the map, double click on the place where you are. You can also first click the position to move the avatar and then use the \"Set Position\" button."
 msgstr ""
 
-#: lib/mensaplan_web/controllers/dish_html/show.html.heex:18
+#: lib/mensaplan_web/controllers/dish_html/show.html.heex:23
 #: lib/mensaplan_web/live/dishes/dishes_component.ex:20
 #, elixir-autogen, elixir-format, fuzzy
 msgid "Price for students"
@@ -394,7 +394,7 @@ msgstr ""
 msgid "Most Expensive"
 msgstr ""
 
-#: lib/mensaplan_web/controllers/dish_html/show.html.heex:25
+#: lib/mensaplan_web/controllers/dish_html/show.html.heex:30
 #: lib/mensaplan_web/live/dishes/dishes_live.html.heex:5
 #, elixir-autogen, elixir-format, fuzzy
 msgid "Category"
@@ -415,13 +415,6 @@ msgstr ""
 #, elixir-autogen, elixir-format
 msgid "Occurences"
 msgstr ""
-
-#: lib/mensaplan_web/controllers/dish_html/show.html.heex:5
-#, elixir-autogen, elixir-format, fuzzy
-msgid "This dish was offered one time:"
-msgid_plural "This dish was offered %{count} times:"
-msgstr[0] ""
-msgstr[1] ""
 
 #: lib/mensaplan_web/controllers/page_html/about.html.heex:4
 #, elixir-autogen, elixir-format
@@ -462,3 +455,15 @@ msgstr ""
 #, elixir-autogen, elixir-format, fuzzy
 msgid "By default, positions on Mensaplan are only visible to users you share a group with. Public positions, on the other hand, are visible to all users, including anonymous visitors."
 msgstr ""
+
+#: lib/mensaplan_web/controllers/dish_html/show.html.heex:12
+#, elixir-autogen, elixir-format
+msgid "Show dates"
+msgstr ""
+
+#: lib/mensaplan_web/controllers/dish_html/show.html.heex:5
+#, elixir-autogen, elixir-format, fuzzy
+msgid "This dish was offered one time."
+msgid_plural "This dish was offered %{count} times."
+msgstr[0] ""
+msgstr[1] ""

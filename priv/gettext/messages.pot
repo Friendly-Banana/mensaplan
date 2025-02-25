@@ -21,17 +21,17 @@ msgstr ""
 msgid "Group updated successfully"
 msgstr ""
 
-#: lib/mensaplan_web/live/homepage/home_live.ex:90
+#: lib/mensaplan_web/live/homepage/home_live.ex:91
 #, elixir-autogen, elixir-format
 msgid "Owner changed"
 msgstr ""
 
-#: lib/mensaplan_web/live/homepage/home_live.ex:58
+#: lib/mensaplan_web/live/homepage/home_live.ex:59
 #, elixir-autogen, elixir-format
 msgid "Position cleared"
 msgstr ""
 
-#: lib/mensaplan_web/live/homepage/home_live.ex:74
+#: lib/mensaplan_web/live/homepage/home_live.ex:75
 #, elixir-autogen, elixir-format
 msgid "Position set"
 msgstr ""

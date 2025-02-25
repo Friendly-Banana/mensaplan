@@ -1,16 +1,25 @@
-<div class="mx-auto text-zinc-700" itemscope itemtype="https://schema.org/Product">
+<div
+  class="container mx-auto px-6 py-4 text-lg space-y-4 leading-6"
+  itemscope
+  itemtype="https://schema.org/Product"
+>
   <.header>
     <span itemprop="name"><%= @page_title %></span>
     <:subtitle>
       <%= ngettext(
-        "This dish was offered one time:",
-        "This dish was offered %{count} times:",
+        "This dish was offered one time.",
+        "This dish was offered %{count} times.",
         Enum.count(@served_dates)
       ) %>
-      <noscript>
-        <%= Enum.join(@served_dates, ", ") %>
-      </noscript>
-      <span id="served-dates"></span>
+      <details class="text-zinc-600">
+        <summary>
+          <%= gettext("Show dates") %>
+        </summary>
+        <noscript>
+          <%= Enum.join(@served_dates, ", ") %>
+        </noscript>
+        <span id="served-dates"></span>
+      </details>
     </:subtitle>
   </.header>
 
@@ -18,8 +27,8 @@
     <:item title={gettext("Price for students")}>
       <span itemprop="offers" itemscope itemtype="https://schema.org/Offer">
         <span itemprop="price"><%= @dish.price %></span>
-        <meta itemprop="priceCurrency" content="EUR">
-        <link itemprop="availability" href="https://schema.org/InStock">
+        <meta itemprop="priceCurrency" content="EUR" />
+        <link itemprop="availability" href="https://schema.org/InStock" />
       </span>
     </:item>
     <:item title={gettext("Category")}>
@@ -58,140 +67,140 @@
   </div>
 </div>
 <script async>
-    const calendar = document.getElementById("calendar");
-    const servedDates = JSON.parse(calendar.dataset.servedDates).map((d) => new Date(d));
-    const list = document.getElementById("served-dates");
-    list.textContent = servedDates.map((d) => d.toLocaleDateString()).join(", ");
+  const calendar = document.getElementById("calendar");
+  const servedDates = JSON.parse(calendar.dataset.servedDates).map((d) => new Date(d));
+  const list = document.getElementById("served-dates");
+  list.textContent = servedDates.map((d) => d.toLocaleDateString()).join(", ");
 
-    const headerEl = document.getElementById("quick-select");
-    const daysEl = document.getElementById("days");
-    const dayHeader = document.getElementById("day-header");
+  const headerEl = document.getElementById("quick-select");
+  const daysEl = document.getElementById("days");
+  const dayHeader = document.getElementById("day-header");
 
-    const firstDay = 0; // 0 - Sunday, 1 - Monday
-    const today = new Date();
-    let date = new Date();
-    let mode = 0; // selecting days, month, year
+  const firstDay = 0; // 0 - Sunday, 1 - Monday
+  const today = new Date();
+  let date = new Date();
+  let mode = 0; // selecting days, month, year
 
-    for (let i = 0; i < 7; i++) {
-        let dayEl = document.createElement("div");
-        dayEl.textContent = new Date(2020, 5, i + firstDay).toLocaleString(window.navigator.language, {
-            weekday: "short",
-        });
-        dayHeader.appendChild(dayEl);
-    }
-    render();
-    calendar.classList.remove("hidden");
+  for (let i = 0; i < 7; i++) {
+      let dayEl = document.createElement("div");
+      dayEl.textContent = new Date(2020, 5, i + firstDay).toLocaleString(window.navigator.language, {
+          weekday: "short",
+      });
+      dayHeader.appendChild(dayEl);
+  }
+  render();
+  calendar.classList.remove("hidden");
 
-    document.addEventListener("keydown", (event) => {
-        if (event.key === "ArrowLeft") {
-            previous();
-        } else if (event.key === "ArrowRight") {
-            next();
-        }
-    });
+  document.addEventListener("keydown", (event) => {
+      if (event.key === "ArrowLeft") {
+          previous();
+      } else if (event.key === "ArrowRight") {
+          next();
+      }
+  });
 
-    function getDaysCount(date) {
-        return new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate();
-    }
+  function getDaysCount(date) {
+      return new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate();
+  }
 
-    function render() {
-        daysEl.innerHTML = "";
-        if (mode === 0) {
-            headerEl.textContent = new Date(date.getFullYear(), date.getMonth()).toLocaleString(
-                window.navigator.language,
-                { month: "long", year: "numeric" }
-            );
-            headerEl.title = "Select month";
+  function render() {
+      daysEl.innerHTML = "";
+      if (mode === 0) {
+          headerEl.textContent = new Date(date.getFullYear(), date.getMonth()).toLocaleString(
+              window.navigator.language,
+              { month: "long", year: "numeric" }
+          );
+          headerEl.title = "Select month";
 
-            let totalMonthDays = getDaysCount(date),
-                year = date.getFullYear(),
-                month = date.getMonth(),
-                firstDayOfMonth = new Date(year, month, 1),
-                lastDayOfMonth = new Date(year, month, totalMonthDays);
+          let totalMonthDays = getDaysCount(date),
+              year = date.getFullYear(),
+              month = date.getMonth(),
+              firstDayOfMonth = new Date(year, month, 1),
+              lastDayOfMonth = new Date(year, month, totalMonthDays);
 
-            let daysFromPrevMonth = firstDayOfMonth.getDay() - firstDay,
-                daysFromNextMonth = 6 - lastDayOfMonth.getDay() + firstDay;
-            daysFromPrevMonth = daysFromPrevMonth < 0 ? daysFromPrevMonth + 7 : daysFromPrevMonth;
-            daysFromNextMonth = daysFromNextMonth > 6 ? daysFromNextMonth - 7 : daysFromNextMonth;
+          let daysFromPrevMonth = firstDayOfMonth.getDay() - firstDay,
+              daysFromNextMonth = 6 - lastDayOfMonth.getDay() + firstDay;
+          daysFromPrevMonth = daysFromPrevMonth < 0 ? daysFromPrevMonth + 7 : daysFromPrevMonth;
+          daysFromNextMonth = daysFromNextMonth > 6 ? daysFromNextMonth - 7 : daysFromNextMonth;
 
-            let renderDate = new Date(year, month, 1 - daysFromPrevMonth),
-                totalRenderDays = totalMonthDays + daysFromPrevMonth + daysFromNextMonth;
+          let renderDate = new Date(year, month, 1 - daysFromPrevMonth),
+              totalRenderDays = totalMonthDays + daysFromPrevMonth + daysFromNextMonth;
 
-            for (let i = 0; i < totalRenderDays; i++) {
-                let dayEl = document.createElement("div");
-                dayEl.textContent = renderDate.getDate();
-                if (renderDate.getMonth() !== month) {
-                    dayEl.classList.add("text-zinc-300");
-                }
-                if (servedDates.some((d) => d.toDateString() === renderDate.toDateString())) {
-                    dayEl.classList.add("bg-blue-100");
-                }
-                daysEl.appendChild(dayEl);
-                renderDate.setDate(renderDate.getDate() + 1);
-            }
-        } else if (mode === 1) {
-            headerEl.textContent = `${date.getFullYear()}`;
-            headerEl.title = "Select year";
-            dayHeader.classList.add("select");
-            daysEl.classList.add("select");
-            for (let i = 0; i < 12; i++) {
-                let monthEl = document.createElement("button");
-                monthEl.classList.add("hover:bg-blue-50", "hover:text-blue-600", "rounded", "cursor-pointer");
-                monthEl.textContent = new Date(date.getFullYear(), i).toLocaleString(
-                    window.navigator.language,
-                    { month: "long" }
-                );
-                monthEl.addEventListener("click", () => {
-                    date = new Date(date.getFullYear(), i);
-                    mode = 0;
-                    dayHeader.classList.remove("select");
-                    daysEl.classList.remove("select");
-                    render();
-                });
-                daysEl.appendChild(monthEl);
-            }
-        } else {
-            const decade = Math.floor(date.getFullYear() / 10) * 10 - 1;
-            headerEl.disabled = true;
-            headerEl.textContent = `${decade} - ${decade + 11}`;
-            headerEl.title = "";
-            for (let i = 0; i < 12; i++) {
-                let yearEl = document.createElement("button");
-                yearEl.classList.add("hover:bg-blue-50", "hover:text-blue-600", "rounded", "cursor-pointer");
-                yearEl.textContent = decade + i;
-                yearEl.addEventListener("click", () => {
-                    date = new Date(decade + i, date.getMonth());
-                    mode = 1;
-                    headerEl.disabled = false;
-                    render();
-                });
-                daysEl.appendChild(yearEl);
-            }
-        }
-    }
+          for (let i = 0; i < totalRenderDays; i++) {
+              let dayEl = document.createElement("div");
+              dayEl.textContent = renderDate.getDate();
+              if (renderDate.getMonth() !== month) {
+                  dayEl.classList.add("text-zinc-300");
+              }
+              if (servedDates.some((d) => d.toDateString() === renderDate.toDateString())) {
+                  dayEl.classList.add("bg-blue-100");
+              }
+              daysEl.appendChild(dayEl);
+              renderDate.setDate(renderDate.getDate() + 1);
+          }
+      } else if (mode === 1) {
+          headerEl.textContent = `${date.getFullYear()}`;
+          headerEl.title = "Select year";
+          dayHeader.classList.add("select");
+          daysEl.classList.add("select");
+          for (let i = 0; i < 12; i++) {
+              let monthEl = document.createElement("button");
+              monthEl.classList.add("hover:bg-blue-50", "hover:text-blue-600", "rounded", "cursor-pointer");
+              monthEl.textContent = new Date(date.getFullYear(), i).toLocaleString(
+                  window.navigator.language,
+                  { month: "long" }
+              );
+              monthEl.addEventListener("click", () => {
+                  date = new Date(date.getFullYear(), i);
+                  mode = 0;
+                  dayHeader.classList.remove("select");
+                  daysEl.classList.remove("select");
+                  render();
+              });
+              daysEl.appendChild(monthEl);
+          }
+      } else {
+          const decade = Math.floor(date.getFullYear() / 10) * 10 - 1;
+          headerEl.disabled = true;
+          headerEl.textContent = `${decade} - ${decade + 11}`;
+          headerEl.title = "";
+          for (let i = 0; i < 12; i++) {
+              let yearEl = document.createElement("button");
+              yearEl.classList.add("hover:bg-blue-50", "hover:text-blue-600", "rounded", "cursor-pointer");
+              yearEl.textContent = decade + i;
+              yearEl.addEventListener("click", () => {
+                  date = new Date(decade + i, date.getMonth());
+                  mode = 1;
+                  headerEl.disabled = false;
+                  render();
+              });
+              daysEl.appendChild(yearEl);
+          }
+      }
+  }
 
-    function previous() {
-        date = new Date(
-            date.getFullYear() - (mode == 1) - (mode == 2) * 10,
-            date.getMonth() - (mode == 0)
-        );
-        render();
-    }
+  function previous() {
+      date = new Date(
+          date.getFullYear() - (mode == 1) - (mode == 2) * 10,
+          date.getMonth() - (mode == 0)
+      );
+      render();
+  }
 
-    function next() {
-        date = new Date(
-            date.getFullYear() + (mode == 1) + (mode == 2) * 10,
-            date.getMonth() + (mode == 0)
-        );
-        render();
-    }
+  function next() {
+      date = new Date(
+          date.getFullYear() + (mode == 1) + (mode == 2) * 10,
+          date.getMonth() + (mode == 0)
+      );
+      render();
+  }
 
-    function select() {
-        if (mode < 2) {
-            mode++;
-            render();
-        }
-    }
+  function select() {
+      if (mode < 2) {
+          mode++;
+          render();
+      }
+  }
 </script>
 
 <style>
