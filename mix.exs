@@ -4,7 +4,7 @@ defmodule Mensaplan.MixProject do
   def project do
     [
       app: :mensaplan,
-      version: "0.3.0",
+      version: "0.4.0",
       elixir: "~> 1.14",
       elixirc_paths: elixirc_paths(Mix.env()),
       start_permanent: Mix.env() == :prod,
@@ -19,7 +19,7 @@ defmodule Mensaplan.MixProject do
   def application do
     [
       mod: {Mensaplan.Application, []},
-      extra_applications: [:logger, :runtime_tools]
+      extra_applications: [:logger, :runtime_tools, :os_mon]
     ]
   end
 

@@ -11,9 +11,8 @@
 
   <form action={~p"/admin/fetch_dishes"} method="post">
     <input type="hidden" name="_csrf_token" value={get_csrf_token()} />
-    <.button>
-      Fetch dishes
-    </.button>
+    <input type="date" name="date" class="rounded-lg border-gray-400 mr-2" />
+    <.button>Fetch dishes</.button>
   </form>
 
   <h2 class="text-xl font-bold mt-4">Information</h2>

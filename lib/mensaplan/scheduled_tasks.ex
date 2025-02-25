@@ -43,7 +43,11 @@ defmodule Mensaplan.Periodically do
   end
 
   def handle_info(:fetch_dishes, state) do
-    case fetch_dishes() do
+    date = local_now()
+    # fetch next week already on the weekend
+    date = if date |> Date.day_of_week() >= 6, do: Date.add(date, 2), else: date
+
+    case fetch_dishes(date) do
       {:ok, message} ->
         Logger.info(message)
 
@@ -57,20 +61,17 @@ defmodule Mensaplan.Periodically do
     {:noreply, state}
   end
 
-  def handle_call(:fetch_dishes, _from, state) do
-    {:reply, fetch_dishes(), state}
+  def handle_call({:fetch_dishes, date}, _from, state) do
+    {:reply, fetch_dishes(date), state}
   end
 
-  def fetch_dishes() do
-    today = local_now()
-    week_number = div(Date.day_of_year(today) - 1, 7) + 1
+  def fetch_dishes(date) do
+    {year, week_number} = Date.to_erl(date) |> :calendar.iso_week_number()
     week_number = Integer.to_string(week_number, 10) |> String.pad_leading(2, "0")
     Logger.info("Fetching dishes for week #{week_number}...")
 
     with {:ok, response} <-
-           Req.get(
-             "https://tum-dev.github.io/eat-api/mensa-garching/#{today.year}/#{week_number}.json"
-           ),
+           Req.get("https://tum-dev.github.io/eat-api/mensa-garching/#{year}/#{week_number}.json"),
          200 <- response.status,
          days when is_list(days) <- response.body["days"] do
       for day_de <- days do
@@ -95,7 +96,7 @@ defmodule Mensaplan.Periodically do
 
       x ->
         {:ok,
-         "Couldn't find data, mensa is probably closed today: #{x}, https://tum-dev.github.io/eat-api/mensa-garching/#{today.year}/#{week_number}.json"}
+         "Couldn't find data, mensa is probably closed today: #{x}, https://tum-dev.github.io/eat-api/mensa-garching/#{year}/#{week_number}.json"}
     end
   end
 
