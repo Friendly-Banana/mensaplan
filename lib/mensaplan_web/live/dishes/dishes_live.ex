@@ -52,10 +52,10 @@ defmodule MensaplanWeb.DishesLive do
         query |> order_by(desc: fragment("likes"))
 
       "price_asc" ->
-        query |> order_by(asc: :price)
+        query |> order_by(asc: [:fixed_price, :price_per_unit])
 
       "price_desc" ->
-        query |> order_by(desc: :price)
+        query |> order_by(desc: [:fixed_price, :price_per_unit])
 
       "amount" ->
         from d in query,

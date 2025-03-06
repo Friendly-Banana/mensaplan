@@ -5,7 +5,8 @@ defmodule Mensaplan.Mensa.Dish do
   schema "dishes" do
     field :name_de, :string
     field :name_en, :string
-    field :price, :string
+    field :fixed_price, :integer
+    field :price_per_unit, :integer
     field :category, :string
 
     has_many :dish_dates, Mensaplan.Mensa.DishDate
@@ -19,7 +20,7 @@ defmodule Mensaplan.Mensa.Dish do
   @doc false
   def changeset(dish, attrs) do
     dish
-    |> cast(attrs, [:name_de, :name_en, :price, :category])
-    |> validate_required([:name_de, :price, :category])
+    |> cast(attrs, [:name_de, :name_en, :fixed_price, :price_per_unit, :category])
+    |> validate_required([:name_de, :fixed_price, :price_per_unit, :category])
   end
 end

@@ -1,10 +1,6 @@
-<div
-  class="container mx-auto px-6 py-4 text-lg space-y-4 leading-6"
-  itemscope
-  itemtype="https://schema.org/Product"
->
+<div class="container mx-auto px-6 py-4 text-lg space-y-4 leading-6">
   <.header>
-    <span itemprop="name"><%= @page_title %></span>
+    <span><%= @page_title %></span>
     <:subtitle>
       <%= ngettext(
         "This dish was offered one time.",
@@ -25,15 +21,9 @@
 
   <.list>
     <:item title={gettext("Price for students")}>
-      <span itemprop="offers" itemscope itemtype="https://schema.org/Offer">
-        <span itemprop="price"><%= @dish.price %></span>
-        <meta itemprop="priceCurrency" content="EUR" />
-        <link itemprop="availability" href="https://schema.org/InStock" />
-      </span>
+      <%= Mensaplan.Helpers.price(@dish) %>
     </:item>
-    <:item title={gettext("Category")}>
-      <span itemprop="category"><%= @dish.category %></span>
-    </:item>
+    <:item title={gettext("Category")}><span><%= @dish.category %></span></:item>
   </.list>
 
   <div id="calendar" class="hidden text-center" data-served-dates={Jason.encode!(@served_dates)}>
@@ -66,6 +56,23 @@
     <div id="days"></div>
   </div>
 </div>
+
+<script type="application/ld+json">
+   <%= raw Jason.encode!(%{
+    "@context" => "https://schema.org/",
+    "@type" => "Product",
+    "name" => @page_title,
+    "offers" => %{
+      "@type" => "Offer",
+      "priceCurrency" => "EUR",
+      "price" => @dish.fixed_price/100,
+      "pricePerUnit" => @dish.price_per_unit/100,
+      "priceValidUntil" => List.last(@served_dates),
+      "availability" => "https://schema.org/InStock"
+    }
+  }) %>
+</script>
+
 <script async>
   const calendar = document.getElementById("calendar");
   const servedDates = JSON.parse(calendar.dataset.servedDates).map((d) => new Date(d));

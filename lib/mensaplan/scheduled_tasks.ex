@@ -100,23 +100,13 @@ defmodule Mensaplan.Periodically do
     end
   end
 
-  def format(num) when is_integer(num) do
-    :erlang.integer_to_binary(num) <> ".00"
-  end
-
-  def format(num) when is_float(num) do
-    :erlang.float_to_binary(num, decimals: 2)
-  end
-
   def dish_from_json(dish) do
     price = dish["prices"]["students"]
-    per_unit = format(price["price_per_unit"]) <> "€/" <> price["unit"]
 
     %Dish{
       name_de: String.trim(dish["name"]),
-      price:
-        ((price["base_price"] > 0 && format(price["base_price"]) <> "€ + ") || "") <>
-          per_unit,
+      fixed_price: round(price["base_price"] * 100),
+      price_per_unit: round(price["price_per_unit"] * 100),
       category: dish["dish_type"]
     }
   end

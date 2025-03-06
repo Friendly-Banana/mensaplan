@@ -11,7 +11,8 @@
   <.table id="dishes" rows={@dishes} row_click={&JS.navigate(~p"/admin/dishes/#{&1}")}>
     <:col :let={dish} label="Name de"><%= dish.name_de %></:col>
     <:col :let={dish} label="Name en"><%= dish.name_en %></:col>
-    <:col :let={dish} label="Price"><%= dish.price %></:col>
+    <:col :let={dish} label="Fixed Price"><%= dish.fixed_price %></:col>
+    <:col :let={dish} label="Per Unit Price"><%= dish.price_per_unit %></:col>
     <:col :let={dish} label="Category"><%= dish.category %></:col>
     <:action :let={dish}>
       <div class="sr-only">

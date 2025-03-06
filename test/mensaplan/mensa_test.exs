@@ -11,7 +11,7 @@ defmodule Mensaplan.MensaTest do
     import Mensaplan.Helpers
     import Mensaplan.MensaFixtures
 
-    @invalid_attrs %{category: nil, name_de: nil, name_en: nil, price: nil}
+    @invalid_attrs %{category: nil, name_de: nil, name_en: nil, fixed_price: nil, price_per_unit: nil}
 
     test "list_dishes/0 returns all dishes" do
       dish = dish_fixture()
@@ -68,14 +68,16 @@ defmodule Mensaplan.MensaTest do
         category: "some category",
         name_de: "some name_de",
         name_en: "some name_en",
-        price: "some price"
+        fixed_price: 1,
+        price_per_unit: 2
       }
 
       assert {:ok, %Dish{} = dish} = Mensa.create_dish(valid_attrs)
       assert dish.category == "some category"
       assert dish.name_de == "some name_de"
       assert dish.name_en == "some name_en"
-      assert dish.price == "some price"
+      assert dish.fixed_price == 1
+      assert dish.price_per_unit == 2
     end
 
     test "create_dish/1 with invalid data returns error changeset" do
@@ -89,14 +91,17 @@ defmodule Mensaplan.MensaTest do
         category: "some updated category",
         name_de: "some updated name_de",
         name_en: "some updated name_en",
-        price: "some updated price"
+        fixed_price: 3,
+        price_per_unit: 4
+
       }
 
       assert {:ok, %Dish{} = dish} = Mensa.update_dish(dish, update_attrs)
       assert dish.category == "some updated category"
       assert dish.name_de == "some updated name_de"
       assert dish.name_en == "some updated name_en"
-      assert dish.price == "some updated price"
+      assert dish.fixed_price == 3
+      assert dish.price_per_unit == 4
     end
 
     test "update_dish/2 with invalid data returns error changeset" do

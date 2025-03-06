@@ -14,7 +14,8 @@ defmodule Mensaplan.MensaFixtures do
         category: "some category",
         name_de: "some name_de #{System.unique_integer()}",
         name_en: "some name_en",
-        price: "some price"
+        fixed_price: 100,
+        price_per_unit: 80
       })
       |> Mensaplan.Mensa.create_dish()
 

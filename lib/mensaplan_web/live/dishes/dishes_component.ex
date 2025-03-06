@@ -1,5 +1,6 @@
 defmodule MensaplanWeb.DishesLive.DishesComponent do
   use MensaplanWeb, :live_component
+  alias Mensaplan.Helpers
   alias Mensaplan.Mensa
   alias Mensaplan.Mensa.Dish
   import MensaplanWeb.Components.Tooltip
@@ -17,7 +18,9 @@ defmodule MensaplanWeb.DishesLive.DishesComponent do
             </p>
           </.link>
         </:col>
-        <:col :let={{_id, dish}} label={gettext("Price for students")}><%= dish.price %></:col>
+        <:col :let={{_id, dish}} label={gettext("Price for students")}>
+          <%= Helpers.price(dish) %>
+        </:col>
         <:col :let={{_id, dish}} :if={!@user} label={gettext("Dishlikes")}><%= dish.likes %></:col>
 
         <:action :let={{_id, dish}} :if={@user}>

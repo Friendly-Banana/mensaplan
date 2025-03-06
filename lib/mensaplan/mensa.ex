@@ -33,7 +33,8 @@ defmodule Mensaplan.Mensa do
           id: d.id,
           name_de: d.name_de,
           name_en: d.name_en,
-          price: d.price,
+          fixed_price: d.fixed_price,
+          price_per_unit: d.price_per_unit,
           category: d.category,
           likes: selected_as(coalesce(sum(l.like), 0), :likes)
         }

@@ -19,4 +19,13 @@ defmodule Mensaplan.Helpers do
       url
     end
   end
+
+  def price(dish) do
+    fixed = :erlang.float_to_binary(dish.fixed_price / 100, decimals: 2)
+    unit = :erlang.float_to_binary(dish.price_per_unit / 100, decimals: 2)
+
+    if dish.fixed_price == 0,
+      do: "#{unit}€/100g",
+      else: if(dish.price_per_unit == 0, do: "#{fixed}€", else: "#{fixed}€ + #{unit}€/100g")
+  end
 end
