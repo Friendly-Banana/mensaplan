@@ -7,7 +7,7 @@
         "This dish was offered %{count} times.",
         Enum.count(@served_dates)
       ) %>
-      <details class="text-zinc-600">
+      <details data-nosnippet class="text-zinc-600">
         <summary>
           <%= gettext("Show dates") %>
         </summary>
@@ -64,11 +64,15 @@
     "name" => @page_title,
     "offers" => %{
       "@type" => "Offer",
+      "availability" => "https://schema.org/InStock",
       "priceCurrency" => "EUR",
-      "price" => @dish.fixed_price/100,
-      "pricePerUnit" => @dish.price_per_unit/100,
-      "priceValidUntil" => List.last(@served_dates),
-      "availability" => "https://schema.org/InStock"
+      "price" => @dish.fixed_price/100 + 5 * @dish.price_per_unit/100,
+      "referenceQuantity" => %{
+        "@type" => "QuantitativeValue",
+        "value" => 500,
+        "unitCode" => "GRM",
+        "unitText" => "g"
+      }
     }
   }) %>
 </script>
