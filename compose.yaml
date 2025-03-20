@@ -1,0 +1,28 @@
+services:
+  db:
+    image: postgres:17-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: mensaplan
+      POSTGRES_PASSWORD: example
+      POSTGRES_DB: mensaplan_db
+    volumes:
+      - ./data:/var/lib/postgresql/data
+    networks:
+      - mensaplan_network
+
+  mensaplan:
+    image: mensaplan
+    restart: unless-stopped
+    depends_on:
+      - db
+    environment:
+      DATABASE_URL: postgres://mensaplan:example@db:5432/mensaplan_db
+    env_file:
+      - .env
+    networks:
+      - mensaplan_network
+
+networks:
+  mensaplan_network:
+    driver: bridge

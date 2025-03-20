@@ -49,8 +49,9 @@ The API uses the environment variable `API_TOKEN` to authorize requests, they ne
 ## Deploying
 
 Wherever you want, requirements: can run Elixir and has a database.
+You can also use the Docker (Compose) setup instead.
 
-Don't forget to set the environment variables.
+Don't forget to set the environment variables, you can see them in `config/runtime.exs`.
 
 I use [Gigalixir](https://www.gigalixir.com/docs/getting-started-guide/).
 New versions are deployed with `git push gigalixir main`.
