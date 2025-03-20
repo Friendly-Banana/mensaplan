@@ -1,5 +1,7 @@
 import Config
 
+config :mensaplan, :api_token, "secret"
+
 # Configure your database
 config :mensaplan, Mensaplan.Repo,
   username: "postgres",

@@ -1,6 +1,7 @@
 defmodule MensaplanWeb.AccessControl do
   use MensaplanWeb, :controller
 
+  require Logger
   import Plug.Conn
   alias Mensaplan.Accounts
 
@@ -28,11 +29,18 @@ defmodule MensaplanWeb.AccessControl do
 
   def require_api_token(conn, _opts) do
     with ["Bearer " <> token] <- get_req_header(conn, "authorization"),
-         secret <- System.get_env("API_TOKEN"),
+         secret when not is_nil(secret) <- Application.get_env(:mensaplan, :api_token),
          true <- byte_size(token) == byte_size(secret) && :crypto.hash_equals(token, secret) do
       conn
       |> assign(:user, Accounts.get_user!(2))
     else
+      nil ->
+        Logger.warning("environment variable API_TOKEN is missing. API is disabled.")
+
+        conn
+        |> send_resp(:unauthorized, "Unauthorized")
+        |> halt()
+
       _ ->
         conn
         |> send_resp(:unauthorized, "Unauthorized")

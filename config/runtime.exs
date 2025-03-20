@@ -21,6 +21,8 @@ if System.get_env("PHX_SERVER") do
 end
 
 if config_env() == :prod do
+  config :mensaplan, :api_token, System.get_env("API_TOKEN")
+
   database_url =
     System.get_env("DATABASE_URL") ||
       raise """

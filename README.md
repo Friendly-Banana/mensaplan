@@ -44,7 +44,7 @@ User 2 is used for the API, for example groups created via the API are owned by 
 
 ### API
 
-The API uses the environment variable `API_TOKEN` to authorize requests, they need to include it as a [bearer token](https://swagger.io/docs/specification/authentication/bearer-authentication/).
+The API uses the environment variable `API_TOKEN` to authorize requests, they need to include it as a [bearer token](https://swagger.io/docs/specification/authentication/bearer-authentication/). In development mode it's automatically set to `secret`. If not set in production, the API is disabled (will always return Unauthorized).
 
 ## Deploying
 
