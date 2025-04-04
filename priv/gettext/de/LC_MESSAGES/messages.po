@@ -21,22 +21,22 @@ msgstr "Gruppe erstellt"
 msgid "Group updated successfully"
 msgstr "Gruppe geändert"
 
-#: lib/mensaplan_web/live/homepage/home_live.ex:91
+#: lib/mensaplan_web/live/homepage/home_live.ex:97
 #, elixir-autogen, elixir-format
 msgid "Owner changed"
 msgstr "Eigentumer geändert"
 
-#: lib/mensaplan_web/live/homepage/home_live.ex:59
+#: lib/mensaplan_web/live/homepage/home_live.ex:65
 #, elixir-autogen, elixir-format
 msgid "Position cleared"
 msgstr "Position gelöscht"
 
-#: lib/mensaplan_web/live/homepage/home_live.ex:75
+#: lib/mensaplan_web/live/homepage/home_live.ex:81
 #, elixir-autogen, elixir-format
 msgid "Position set"
 msgstr "Position gesetzt"
 
-#: lib/mensaplan_web/controllers/page_controller.ex:21
+#: lib/mensaplan_web/controllers/page_controller.ex:25
 #, elixir-autogen, elixir-format
 msgid "Settings updated."
 msgstr "Einstellungen geändert"
@@ -51,7 +51,7 @@ msgstr "Erfolgreich angemeldet."
 msgid "You have been logged out!"
 msgstr "Du wurdest abgemeldet!"
 
-#: lib/mensaplan_web/controllers/page_controller.ex:55
+#: lib/mensaplan_web/controllers/page_controller.ex:59
 #, elixir-autogen, elixir-format
 msgid "You have joined the group."
 msgstr "Du bist der Gruppe beigetreten."

@@ -1,13 +1,20 @@
 <div class="relative">
   <img
-    src={Mensaplan.Helpers.proxy_image("/images/people-eating-W3SEyZODn8U.jpg", "width=1200")}
-    alt={gettext("A group of people sitting around a long outdoor table, eating and talking.")}
-    class="w-full h-72 object-cover filter brightness-50 text-white bg-[#6d6e72]"
+    src={Mensaplan.Helpers.proxy_image("/images/tumensa-people.jpg", "width=1200")}
+    alt={gettext("Students eating in the Mensa at TUM Garching campus")}
+    class="w-full h-[30vh] object-cover object-bottom filter brightness-50 text-white bg-black"
   />
   <div class="absolute inset-0 flex flex-col items-center justify-center text-white drop-shadow-md">
     <h1 class="text-3xl font-bold mb-1"><%= gettext("About Mensaplan") %></h1>
     <h2 class="text-2xl"><%= gettext("Find friends and food!") %></h2>
   </div>
+  <a
+    target="_blank"
+    href="https://mediatum.ub.tum.de/1519393?show_id=1519384"
+    class="absolute bottom-0 right-0 bg-black/50 text-white text-xs p-1"
+  >
+    © Andreas Heddergott / TU Muenchen
+  </a>
 </div>
 
 <style>
@@ -36,15 +43,34 @@
 >
   <div itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
     <h2 itemprop="name">
+      <%= gettext("What is the TU Mensa?") %>
+    </h2>
+    <div itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+      <p itemprop="text">
+        <%= raw(
+          gettext(
+            "The TU Mensa this website refers to is the main cafeteria at the Technical University of Munich's Garching campus. With a capacity of 2,000 seats, it serves over 7,300 meals daily. Built after award winning plans by %{meck}, it replaced the old Mensa after three years of construction in %{sept2019}.",
+            meck:
+              "<a target='_blank' href='https://www.meck-architekten.de/projekte/id/2019-mensa-campus-garching/'>meck architekten</a>",
+            sept2019:
+              "<a target='_blank' href='https://www.tum.de/aktuelles/alle-meldungen/pressemitteilungen/detail/35678'>September 2019</a>"
+          )
+        ) %>
+      </p>
+    </div>
+  </div>
+
+  <div itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+    <h2 itemprop="name">
       <%= gettext("What is Mensaplan?") %>
     </h2>
     <div itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
       <p itemprop="text">
         <%= raw(
           gettext(
-            "Mensaplan is your ultimate tool for finding friends and food at the %{tumensa} in Garching. Our platform connects TUM students in real-time, helping you locate your friends and discover today's dishes.",
+            "Mensaplan is your ultimate tool for finding friends and food at the %{tumensa} in Garching. Our platform connects TUM students in real-time, helping you locate your friends and discover today's dishes. Originally a private Discord bot, it is now accessible to everyone.",
             tumensa:
-              '<a href="https://www.studierendenwerk-muenchen-oberbayern.de/mensa/"> TUM Mensa </a>'
+              "<a target='_blank' href='https://www.studierendenwerk-muenchen-oberbayern.de/mensa/standorte-und-oeffnungszeiten/garching/'> TUM Mensa </a>"
           )
         ) %>
       </p>
@@ -63,15 +89,6 @@
       </p>
     </div>
   </div>
-
-  <section>
-    <h2><%= gettext("Our Story") %></h2>
-    <p>
-      <%= gettext(
-        "Mensaplan started out as a simple Discord bot, and through this journey, I got to learn a really cool programming language. Now, it's evolved into a full-fledged platform designed to make your Mensa experience better."
-      ) %>
-    </p>
-  </section>
 
   <div itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
     <h2 itemprop="name">
@@ -124,7 +141,8 @@
         <%= raw(
           gettext(
             "If you encounter any bugs or issues while using Mensaplan, please report them on %{link}. Please provide detailed information about the problem you are facing, including any error messages or screenshots if possible.",
-            link: '<a href="https://github.com/Friendly-Banana/mensaplan/issues">GitHub</a>'
+            link:
+              "<a target='_blank' href='https://github.com/Friendly-Banana/mensaplan/issues'>GitHub</a>"
           )
         ) %>
       </p>
@@ -135,8 +153,10 @@
 <small class="text-gray-500 text-center">
   <%= raw(
     gettext("All icons in the mensa map are %{free_icons} used under %{license}",
-      free_icons: '<a href="https://github.com/free-icons/free-icons"> Free Icons </a>',
-      license: '<a href="https://creativecommons.org/licenses/by/4.0/"> CC BY 4.0 </a>'
+      free_icons:
+        "<a target='_blank' href='https://github.com/free-icons/free-icons'> Free Icons </a>",
+      license:
+        "<a target='_blank' href='https://creativecommons.org/licenses/by/4.0/'> CC BY 4.0 </a>"
     )
   ) %>
 </small>

@@ -54,7 +54,13 @@ defmodule MensaplanWeb.HomeLive do
   @impl true
   def handle_event("position_clear", _, socket) do
     Positions.expire_all_positions(socket.assigns.user.id)
-    Phoenix.PubSub.broadcast(Mensaplan.PubSub, "positions", {:position_deleted, "positions-#{socket.assigns.user.id}"})
+
+    Phoenix.PubSub.broadcast(
+      Mensaplan.PubSub,
+      "positions",
+      {:position_deleted, "positions-#{socket.assigns.user.id}"}
+    )
+
     socket = assign(socket, form: to_form(Ecto.Changeset.change(%Position{})))
     {:noreply, socket |> put_flash(:info, dgettext("messages", "Position cleared"))}
   end

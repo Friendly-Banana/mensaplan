@@ -103,7 +103,7 @@ defmodule MensaplanWeb.Router do
   scope "/", MensaplanWeb do
     pipe_through [:translate]
 
-    # this is not called, but still required
+    # this is not called, but still required for the redirects
     get "/", PageController, :dummy
     get "/groups/:id", PageController, :dummy
     get "/dishes/:id", PageController, :dummy

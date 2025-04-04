@@ -62,7 +62,7 @@ msgstr ""
 msgid "Delete Group"
 msgstr ""
 
-#: lib/mensaplan_web/live/dishes/dishes_component.ex:12
+#: lib/mensaplan_web/live/dishes/dishes_component.ex:13
 #, elixir-autogen, elixir-format
 msgid "Dish"
 msgstr ""
@@ -72,7 +72,7 @@ msgstr ""
 msgid "Edit"
 msgstr ""
 
-#: lib/mensaplan_web/live/homepage/home_live.ex:152
+#: lib/mensaplan_web/live/homepage/home_live.ex:158
 #, elixir-autogen, elixir-format
 msgid "Edit Group %{name}"
 msgstr ""
@@ -112,7 +112,7 @@ msgstr ""
 msgid "Members"
 msgstr ""
 
-#: lib/mensaplan_web/live/dishes/dishes_live.html.heex:29
+#: lib/mensaplan_web/live/dishes/dishes_live.html.heex:59
 #: lib/mensaplan_web/live/group/edit_form_component.html.heex:13
 #: lib/mensaplan_web/live/group/edit_form_component.html.heex:46
 #: lib/mensaplan_web/live/group/form_component.ex:20
@@ -189,9 +189,9 @@ msgid "We can't find the internet"
 msgstr ""
 
 #: lib/mensaplan_web/live/group/edit_form_component.ex:55
-#: lib/mensaplan_web/live/homepage/home_live.ex:94
-#: lib/mensaplan_web/live/homepage/home_live.ex:114
-#: lib/mensaplan_web/live/homepage/home_live.ex:129
+#: lib/mensaplan_web/live/homepage/home_live.ex:100
+#: lib/mensaplan_web/live/homepage/home_live.ex:120
+#: lib/mensaplan_web/live/homepage/home_live.ex:135
 #, elixir-autogen, elixir-format
 msgid "You are not the owner of this group"
 msgstr ""
@@ -214,12 +214,12 @@ msgid "New Group"
 msgstr ""
 
 #: lib/mensaplan_web/live/group/edit_form_component.html.heex:32
-#, elixir-autogen, elixir-format, fuzzy
+#, elixir-autogen, elixir-format
 msgid "Each invite link can be used only once"
 msgstr ""
 
 #: lib/mensaplan_web/live/group/edit_form_component.html.heex:59
-#, elixir-autogen, elixir-format, fuzzy
+#, elixir-autogen, elixir-format
 msgid "Are you sure you want to change the owner?"
 msgstr ""
 
@@ -239,7 +239,7 @@ msgstr ""
 msgid "About Mensaplan"
 msgstr ""
 
-#: lib/mensaplan_web/controllers/page_html/about.html.heex:137
+#: lib/mensaplan_web/controllers/page_html/about.html.heex:155
 #, elixir-autogen, elixir-format
 msgid "All icons in the mensa map are %{free_icons} used under %{license}"
 msgstr ""
@@ -279,7 +279,7 @@ msgstr ""
 msgid "Make Positions public by default"
 msgstr ""
 
-#: lib/mensaplan_web/controllers/page_controller.ex:12
+#: lib/mensaplan_web/controllers/page_controller.ex:16
 #: lib/mensaplan_web/controllers/page_html/settings.html.heex:4
 #, elixir-autogen, elixir-format
 msgid "Settings"
@@ -295,37 +295,37 @@ msgstr ""
 msgid "has invited you to the group"
 msgstr ""
 
-#: lib/mensaplan_web/controllers/page_html/about.html.heex:107
+#: lib/mensaplan_web/controllers/page_html/about.html.heex:124
 #, elixir-autogen, elixir-format
 msgid "Can I change my username?"
 msgstr ""
 
-#: lib/mensaplan_web/controllers/page_html/about.html.heex:120
+#: lib/mensaplan_web/controllers/page_html/about.html.heex:137
 #, elixir-autogen, elixir-format
 msgid "How can I report a bug or issue?"
 msgstr ""
 
-#: lib/mensaplan_web/controllers/page_html/about.html.heex:78
+#: lib/mensaplan_web/controllers/page_html/about.html.heex:95
 #, elixir-autogen, elixir-format
 msgid "How can I set my position?"
 msgstr ""
 
-#: lib/mensaplan_web/controllers/page_html/about.html.heex:125
+#: lib/mensaplan_web/controllers/page_html/about.html.heex:142
 #, elixir-autogen, elixir-format
 msgid "If you encounter any bugs or issues while using Mensaplan, please report them on %{link}. Please provide detailed information about the problem you are facing, including any error messages or screenshots if possible."
 msgstr ""
 
 #: lib/mensaplan_web/controllers/page_html/join.html.heex:2
-#, elixir-autogen, elixir-format, fuzzy
+#, elixir-autogen, elixir-format
 msgid "Invitation"
 msgstr ""
 
-#: lib/mensaplan_web/controllers/page_html/about.html.heex:111
+#: lib/mensaplan_web/controllers/page_html/about.html.heex:128
 #, elixir-autogen, elixir-format
 msgid "Mensaplan uses the name associated with your login method. If you log in via Discord, Mensaplan will use your Discord username. After you changed your username, please log out and log in again to update your name in Mensaplan."
 msgstr ""
 
-#: lib/mensaplan_web/controllers/page_html/about.html.heex:98
+#: lib/mensaplan_web/controllers/page_html/about.html.heex:115
 #, elixir-autogen, elixir-format
 msgid "Public positions allow you to connect with new people and potentially make new friends. You can discover other users who are also dining at TUM Mensa and reach out to them for a meal together. It's a great way to expand your social circle."
 msgstr ""
@@ -336,12 +336,12 @@ msgstr ""
 msgid "The hottest tool in Garching to find friends in the TUM Mensa. Checkout today's menu complete with ratings to guide your culinary journey."
 msgstr ""
 
-#: lib/mensaplan_web/components/layouts/root.html.heex:74
+#: lib/mensaplan_web/components/layouts/root.html.heex:71
 #, elixir-autogen, elixir-format
 msgid "Version %{version}"
 msgstr ""
 
-#: lib/mensaplan_web/controllers/page_html/about.html.heex:91
+#: lib/mensaplan_web/controllers/page_html/about.html.heex:108
 #, elixir-autogen, elixir-format
 msgid "What are public positions?"
 msgstr ""
@@ -351,108 +351,88 @@ msgstr ""
 msgid "mensa, mensaplan, tum, garching, friends, menu, lunch, food, canteen, university, students, social"
 msgstr ""
 
-#: lib/mensaplan_web/controllers/page_html/about.html.heex:82
-#, elixir-autogen, elixir-format, fuzzy
+#: lib/mensaplan_web/controllers/page_html/about.html.heex:99
+#, elixir-autogen, elixir-format
 msgid "To set your position on the map, double click on the place where you are. You can also first click the position to move the avatar and then use the \"Set Position\" button."
 msgstr ""
 
 #: lib/mensaplan_web/controllers/dish_html/show.html.heex:23
-#: lib/mensaplan_web/live/dishes/dishes_component.ex:20
-#, elixir-autogen, elixir-format, fuzzy
+#: lib/mensaplan_web/live/dishes/dishes_component.ex:21
+#, elixir-autogen, elixir-format
 msgid "Price for students"
 msgstr ""
 
-#: lib/mensaplan_web/live/dishes/dishes_component.ex:21
-#: lib/mensaplan_web/live/dishes/dishes_live.html.heex:30
-#, elixir-autogen, elixir-format, fuzzy
+#: lib/mensaplan_web/live/dishes/dishes_component.ex:24
+#: lib/mensaplan_web/live/dishes/dishes_live.html.heex:60
+#, elixir-autogen, elixir-format
 msgid "Dishlikes"
 msgstr ""
 
-#: lib/mensaplan_web/live/dishes/dishes_live.html.heex:27
+#: lib/mensaplan_web/live/dishes/dishes_live.html.heex:57
 #, elixir-autogen, elixir-format
 msgid "Sort by"
 msgstr ""
 
-#: lib/mensaplan_web/live/dishes/dishes_live.html.heex:38
+#: lib/mensaplan_web/live/dishes/dishes_live.html.heex:72
 #, elixir-autogen, elixir-format
 msgid "Apply"
 msgstr ""
 
-#: lib/mensaplan_web/live/dishes/dishes_live.html.heex:31
+#: lib/mensaplan_web/live/dishes/dishes_live.html.heex:62
 #, elixir-autogen, elixir-format
 msgid "Cheapest"
 msgstr ""
 
 #: lib/mensaplan_web/components/layouts/navbar_links.html.heex:6
 #: lib/mensaplan_web/live/dishes/dishes_live.ex:34
-#, elixir-autogen, elixir-format, fuzzy
+#, elixir-autogen, elixir-format
 msgid "Dishes"
 msgstr ""
 
-#: lib/mensaplan_web/live/dishes/dishes_live.html.heex:32
+#: lib/mensaplan_web/live/dishes/dishes_live.html.heex:65
 #, elixir-autogen, elixir-format
 msgid "Most Expensive"
 msgstr ""
 
-#: lib/mensaplan_web/controllers/dish_html/show.html.heex:30
+#: lib/mensaplan_web/controllers/dish_html/show.html.heex:26
 #: lib/mensaplan_web/live/dishes/dishes_live.html.heex:5
-#, elixir-autogen, elixir-format, fuzzy
+#, elixir-autogen, elixir-format
 msgid "Category"
 msgstr ""
 
+#: lib/mensaplan_web/components/layouts/root.html.heex:49
 #: lib/mensaplan_web/components/layouts/root.html.heex:52
-#: lib/mensaplan_web/components/layouts/root.html.heex:55
-#, elixir-autogen, elixir-format, fuzzy
+#, elixir-autogen, elixir-format
 msgid "Homepage"
 msgstr ""
 
-#: lib/mensaplan_web/components/layouts/root.html.heex:69
+#: lib/mensaplan_web/components/layouts/root.html.heex:66
 #, elixir-autogen, elixir-format
 msgid "food cover"
 msgstr ""
 
-#: lib/mensaplan_web/live/dishes/dishes_live.html.heex:33
+#: lib/mensaplan_web/live/dishes/dishes_live.html.heex:67
 #, elixir-autogen, elixir-format
 msgid "Occurences"
 msgstr ""
 
-#: lib/mensaplan_web/controllers/page_html/about.html.heex:4
-#, elixir-autogen, elixir-format
-msgid "A group of people sitting around a long outdoor table, eating and talking."
-msgstr ""
-
-#: lib/mensaplan_web/controllers/page_html/about.html.heex:39
+#: lib/mensaplan_web/controllers/page_html/about.html.heex:65
 #, elixir-autogen, elixir-format
 msgid "What is Mensaplan?"
 msgstr ""
 
-#: lib/mensaplan_web/controllers/page_html/about.html.heex:44
-#, elixir-autogen, elixir-format
-msgid "Mensaplan is your ultimate tool for finding friends and food at the %{tumensa} in Garching. Our platform connects TUM students in real-time, helping you locate your friends and discover today's dishes."
-msgstr ""
-
-#: lib/mensaplan_web/controllers/page_html/about.html.heex:60
+#: lib/mensaplan_web/controllers/page_html/about.html.heex:86
 #, elixir-autogen, elixir-format
 msgid "Mensaplan offers real-time positioning, displays today's dishes, and provides long-term analytics about dish popularity. Whether you're looking for a lunch buddy or deciding what to eat, Mensaplan has got you covered."
 msgstr ""
 
-#: lib/mensaplan_web/controllers/page_html/about.html.heex:70
+#: lib/mensaplan_web/controllers/page_html/about.html.heex:82
 #, elixir-autogen, elixir-format
-msgid "Mensaplan started out as a simple Discord bot, and through this journey, I got to learn a really cool programming language. Now, it's evolved into a full-fledged platform designed to make your Mensa experience better."
-msgstr ""
-
-#: lib/mensaplan_web/controllers/page_html/about.html.heex:68
-#, elixir-autogen, elixir-format
-msgid "Our Story"
-msgstr ""
-
-#: lib/mensaplan_web/controllers/page_html/about.html.heex:56
-#, elixir-autogen, elixir-format, fuzzy
 msgid "Why Mensaplan?"
 msgstr ""
 
-#: lib/mensaplan_web/controllers/page_html/about.html.heex:95
-#, elixir-autogen, elixir-format, fuzzy
+#: lib/mensaplan_web/controllers/page_html/about.html.heex:112
+#, elixir-autogen, elixir-format
 msgid "By default, positions on Mensaplan are only visible to users you share a group with. Public positions, on the other hand, are visible to all users, including anonymous visitors."
 msgstr ""
 
@@ -462,8 +442,33 @@ msgid "Show dates"
 msgstr ""
 
 #: lib/mensaplan_web/controllers/dish_html/show.html.heex:5
-#, elixir-autogen, elixir-format, fuzzy
+#, elixir-autogen, elixir-format
 msgid "This dish was offered one time."
 msgid_plural "This dish was offered %{count} times."
 msgstr[0] ""
 msgstr[1] ""
+
+#: lib/mensaplan_web/controllers/page_controller.ex:12
+#, elixir-autogen, elixir-format
+msgid "About TUM Mensa"
+msgstr ""
+
+#: lib/mensaplan_web/controllers/page_html/about.html.heex:70
+#, elixir-autogen, elixir-format
+msgid "Mensaplan is your ultimate tool for finding friends and food at the %{tumensa} in Garching. Our platform connects TUM students in real-time, helping you locate your friends and discover today's dishes. Originally a private Discord bot, it is now accessible to everyone."
+msgstr ""
+
+#: lib/mensaplan_web/controllers/page_html/about.html.heex:46
+#, elixir-autogen, elixir-format
+msgid "What is the TU Mensa?"
+msgstr ""
+
+#: lib/mensaplan_web/controllers/page_html/about.html.heex:4
+#, elixir-autogen, elixir-format
+msgid "Students eating in the Mensa at TUM Garching campus"
+msgstr ""
+
+#: lib/mensaplan_web/controllers/page_html/about.html.heex:51
+#, elixir-autogen, elixir-format
+msgid "The TU Mensa this website refers to is the main cafeteria at the Technical University of Munich's Garching campus. With a capacity of 2,000 seats, it serves over 7,300 meals daily. Built after award winning plans by %{meck}, it replaced the old Mensa after three years of construction in %{sept2019}."
+msgstr ""

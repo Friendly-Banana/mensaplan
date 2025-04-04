@@ -11,7 +11,13 @@ defmodule Mensaplan.MensaTest do
     import Mensaplan.Helpers
     import Mensaplan.MensaFixtures
 
-    @invalid_attrs %{category: nil, name_de: nil, name_en: nil, fixed_price: nil, price_per_unit: nil}
+    @invalid_attrs %{
+      category: nil,
+      name_de: nil,
+      name_en: nil,
+      fixed_price: nil,
+      price_per_unit: nil
+    }
 
     test "list_dishes/0 returns all dishes" do
       dish = dish_fixture()
@@ -93,7 +99,6 @@ defmodule Mensaplan.MensaTest do
         name_en: "some updated name_en",
         fixed_price: 3,
         price_per_unit: 4
-
       }
 
       assert {:ok, %Dish{} = dish} = Mensa.update_dish(dish, update_attrs)
