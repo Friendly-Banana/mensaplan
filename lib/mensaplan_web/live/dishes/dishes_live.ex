@@ -16,7 +16,7 @@ defmodule MensaplanWeb.DishesLive do
     "Fleisch",
     "Vegetarisch/fleischlos",
     "Vegan",
-    "Tagessupe",
+    "Tagessupe, Brot, Obst",
     "Dessert (Glas)",
     "Beilagen",
     "Salat",

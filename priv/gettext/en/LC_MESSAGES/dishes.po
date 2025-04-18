@@ -73,7 +73,7 @@ msgstr "Dessert"
 
 #: lib/mensaplan_web/live/dishes/dishes_live.html.heex:31
 #, elixir-autogen, elixir-format
-msgid "Tagessupe"
+msgid "Tagessupe, Brot, Obst"
 msgstr "Soup of the day"
 
 #: lib/mensaplan_web/live/dishes/dishes_live.html.heex:28
