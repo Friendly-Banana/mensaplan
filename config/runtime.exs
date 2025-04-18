@@ -20,6 +20,10 @@ if System.get_env("PHX_SERVER") do
   config :mensaplan, MensaplanWeb.Endpoint, server: true
 end
 
+config :ueberauth, Ueberauth.Strategy.Discord.OAuth,
+  client_id: System.get_env("DISCORD_CLIENT_ID"),
+  client_secret: System.get_env("DISCORD_CLIENT_SECRET")
+
 if config_env() == :prod do
   config :mensaplan, :api_token, System.get_env("API_TOKEN")
 

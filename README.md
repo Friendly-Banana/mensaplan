@@ -51,10 +51,28 @@ The API uses the environment variable `API_TOKEN` to authorize requests, they ne
 Wherever you want, requirements: can run Elixir and has a database.
 You can also use the Docker (Compose) setup instead.
 
-Don't forget to set the environment variables, you can see them in `config/runtime.exs`.
+<details>
+<summary>Example .env file with default values</summary>
 
-I use [Gigalixir](https://www.gigalixir.com/docs/getting-started-guide/).
-New versions are deployed with `git push gigalixir main`.
+```sh
+# OAuth Credentials
+export DISCORD_CLIENT_ID=''
+export DISCORD_CLIENT_SECRET=''
+
+# mix phx.gen.secret
+export SECRET_KEY_BASE=''
+
+# domain and port
+export PHX_HOST='localhost'
+export PORT='4000'
+
+# already set in the compose yaml
+#export DATABASE_URL=''
+
+# see API
+export API_TOKEN='secret'
+```
+</details>
 
 ## Translating
 

@@ -12,6 +12,7 @@ services:
       - mensaplan_network
 
   mensaplan:
+    build: .
     image: mensaplan
     restart: unless-stopped
     depends_on:
@@ -20,6 +21,8 @@ services:
       DATABASE_URL: postgres://mensaplan:example@db:5432/mensaplan_db
     env_file:
       - .env
+    ports:
+    - "4000:4000"
     networks:
       - mensaplan_network
 

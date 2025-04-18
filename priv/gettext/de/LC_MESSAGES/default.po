@@ -90,7 +90,7 @@ msgstr "Wird generiert..."
 #: lib/mensaplan_web/components/core_components.ex:209
 #, elixir-autogen, elixir-format
 msgid "Hang in there while we get back on track"
-msgstr "Einen Moment Geduld bitte, wir kümmern uns"
+msgstr "Einen Moment Geduld bitte"
 
 #: lib/mensaplan_web/live/group/edit_form_component.html.heex:54
 #, elixir-autogen, elixir-format

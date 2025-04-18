@@ -37,10 +37,6 @@ config :ueberauth, Ueberauth,
     discord: {Ueberauth.Strategy.Discord, []}
   ]
 
-config :ueberauth, Ueberauth.Strategy.Discord.OAuth,
-  client_id: System.get_env("DISCORD_CLIENT_ID"),
-  client_secret: System.get_env("DISCORD_CLIENT_SECRET")
-
 # Configure esbuild (the version is required)
 config :esbuild,
   version: "0.17.11",
