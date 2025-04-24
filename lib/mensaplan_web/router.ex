@@ -7,8 +7,6 @@ defmodule MensaplanWeb.Router do
   import MensaplanWeb.AuthController, only: [fetch_user_from_cookie: 2]
 
   pipeline :browser do
-    if Application.compile_env!(:mensaplan, :environment) != :test, do: plug(:redirect_host)
-
     plug :accepts, ["html"]
     plug :fetch_session
     plug :fetch_live_flash
@@ -16,21 +14,6 @@ defmodule MensaplanWeb.Router do
     plug :protect_from_forgery
     plug :put_secure_browser_headers
     plug :fetch_user_from_cookie
-  end
-
-  defp redirect_host(conn, _) do
-    uri = MensaplanWeb.Endpoint.struct_url()
-
-    if conn.host != uri.host do
-      path = Phoenix.Controller.current_path(conn)
-
-      conn
-      |> put_resp_header("location", Phoenix.VerifiedRoutes.unverified_url(uri, path))
-      |> send_resp(301, "")
-      |> halt()
-    else
-      conn
-    end
   end
 
   pipeline :translate do
