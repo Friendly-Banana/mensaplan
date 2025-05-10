@@ -73,16 +73,19 @@ defmodule Mensaplan.Periodically do
     with {:ok, response} <-
            Req.get("https://tum-dev.github.io/eat-api/mensa-garching/#{year}/#{week_number}.json"),
          200 <- response.status,
-         days when is_list(days) <- response.body["days"] do
+         days when is_list(days) <- response.body["days"],
+         {:ok, response_en} <-
+           Req.get(
+             "https://tum-dev.github.io/eat-api/en/mensa-garching/#{year}/#{week_number}.json"
+           ),
+         200 <- response_en.status,
+         days_en when is_list(days_en) <- response_en.body["days"] do
       for day_de <- days do
         date = %DishDate{date: Date.from_iso8601!(day_de["date"])}
+        day_en = Enum.find(days_en, fn day -> day["date"] == day_de["date"] end)
 
-        for dish_de <- day_de["dishes"] do
-          dish =
-            Mensa.get_dish_by_name(dish_de["name"]) ||
-              dish_from_json(dish_de)
-              |> Mensa.change_dish()
-              |> Repo.insert_or_update!()
+        for {dish_de, dish_en} <- Enum.zip(day_de["dishes"], day_en["dishes"]) do
+          dish = Mensa.get_dish_by_name(dish_de["name"]) || create_dish(dish_de, dish_en)
 
           Map.put(date, :dish_id, dish.id)
           |> Repo.insert!(on_conflict: :nothing)
@@ -100,14 +103,17 @@ defmodule Mensaplan.Periodically do
     end
   end
 
-  def dish_from_json(dish) do
+  def create_dish(dish, dish_en) do
     price = dish["prices"]["students"]
 
     %Dish{
       name_de: String.trim(dish["name"]),
+      name_en: String.trim(dish_en["name"]),
       fixed_price: round(price["base_price"] * 100),
       price_per_unit: round(price["price_per_unit"] * 100),
       category: dish["dish_type"]
     }
+    |> Mensa.change_dish()
+    |> Repo.insert!()
   end
 end
