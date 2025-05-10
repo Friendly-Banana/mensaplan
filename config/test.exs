@@ -1,5 +1,7 @@
 import Config
 
+config :mensaplan, :api_token, "secret"
+
 # Configure your database
 #
 # The MIX_TEST_PARTITION environment variable can be used
