@@ -8,7 +8,7 @@ defmodule MensaplanWeb.HomeLive do
   alias Mensaplan.Positions
   alias Mensaplan.Positions.Position
   import MensaplanWeb.Components.Tooltip
-  import MensaplanWeb.Gettext
+  use Gettext, backend: MensaplanWeb.Gettext
   import Mensaplan.Helpers
 
   @impl true

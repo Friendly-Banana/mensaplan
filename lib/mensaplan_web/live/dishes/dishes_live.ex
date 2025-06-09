@@ -4,7 +4,7 @@ defmodule MensaplanWeb.DishesLive do
   import Ecto.Query, warn: false
 
   use MensaplanWeb, :live_view
-  import MensaplanWeb.Gettext
+  use Gettext, backend: MensaplanWeb.Gettext
   alias Mensaplan.Mensa
 
   @categories [

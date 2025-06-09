@@ -43,7 +43,7 @@ defmodule MensaplanWeb do
         layouts: [html: MensaplanWeb.Layouts]
 
       import Plug.Conn
-      import MensaplanWeb.Gettext
+      use Gettext, backend: MensaplanWeb.Gettext
 
       unquote(verified_routes())
     end
@@ -85,7 +85,7 @@ defmodule MensaplanWeb do
       import Phoenix.HTML
       # Core UI components and translation
       import MensaplanWeb.CoreComponents
-      import MensaplanWeb.Gettext
+      use Gettext, backend: MensaplanWeb.Gettext
 
       # Shortcut for generating JS commands
       alias Phoenix.LiveView.JS
