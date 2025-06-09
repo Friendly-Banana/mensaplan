@@ -8,7 +8,7 @@ defmodule MensaplanWeb.DishesLive.DishesComponent do
   @impl true
   def render(assigns) do
     ~H"""
-    <div id="dish-parent" phx-update="stream" class="flex justify-center px-1">
+    <div id="dish-parent" class="flex justify-center px-1">
       <.table id="dishes" rows={@dishes}>
         <:col :let={{_id, dish}} label={gettext("Dish")}>
           <.link navigate={"/" <> Gettext.get_locale(MensaplanWeb.Gettext) <> "/dishes/#{dish.id}"}>
