@@ -6,7 +6,7 @@
       src={Mensaplan.Helpers.proxy_image("https://www.meck-architekten.de/fileadmin/user_upload/meck_architekten_gmbh/Neue_Mensa_auf_dem_Hochschul-_und_Forschungsgelaende_Campus_Garching/MGA_Website_Zeichnungen.png", "trim.width=827,trim.height=827,trim.left=798,trim.top=5437")}
       alt={gettext("Top down view of the mensa")}
       draggable="false"
-      class="w-full h-full border-2 border-gray-500 rounded-md"
+      class="h-[827px] w-[827px] border-2 border-gray-500 rounded-md"
     />
     <div id="position-map" phx-update="stream">
       <%= for {id, position} <- @streams.positions do %>
