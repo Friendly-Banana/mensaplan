@@ -36,7 +36,7 @@ msgstr "Position gelöscht"
 msgid "Position set"
 msgstr "Position gesetzt"
 
-#: lib/mensaplan_web/controllers/page_controller.ex:25
+#: lib/mensaplan_web/controllers/page_controller.ex:24
 #, elixir-autogen, elixir-format
 msgid "Settings updated."
 msgstr "Einstellungen geändert"
@@ -51,7 +51,7 @@ msgstr "Erfolgreich angemeldet."
 msgid "You have been logged out!"
 msgstr "Du wurdest abgemeldet!"
 
-#: lib/mensaplan_web/controllers/page_controller.ex:59
+#: lib/mensaplan_web/controllers/page_controller.ex:58
 #, elixir-autogen, elixir-format
 msgid "You have joined the group."
 msgstr "Du bist der Gruppe beigetreten."

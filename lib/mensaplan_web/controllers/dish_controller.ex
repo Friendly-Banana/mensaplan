@@ -11,6 +11,7 @@ defmodule MensaplanWeb.DishController do
 
     render(conn,
       page_title: name,
+      page_description: gettext("Find out when %{name} was served in the TUM Mensa.", name: name),
       dish: dish,
       served_dates: served_dates
     )

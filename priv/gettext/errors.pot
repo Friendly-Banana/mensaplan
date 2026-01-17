@@ -108,7 +108,7 @@ msgstr ""
 msgid "must be equal to %{number}"
 msgstr ""
 
-#: lib/mensaplan_web/controllers/page_controller.ex:33
+#: lib/mensaplan_web/controllers/page_controller.ex:32
 #, elixir-autogen, elixir-format
 msgid "Failed to update settings."
 msgstr ""
@@ -118,8 +118,8 @@ msgstr ""
 msgid "Group not found"
 msgstr ""
 
-#: lib/mensaplan_web/controllers/page_controller.ex:44
-#: lib/mensaplan_web/controllers/page_controller.ex:68
+#: lib/mensaplan_web/controllers/page_controller.ex:43
+#: lib/mensaplan_web/controllers/page_controller.ex:67
 #, elixir-autogen, elixir-format
 msgid "Invalid invitation link. Please ask for a new one."
 msgstr ""

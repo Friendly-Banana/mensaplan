@@ -229,7 +229,7 @@ msgid "Disappears in [minutes]"
 msgstr "Verschwindet in [Minuten]"
 
 #: lib/mensaplan_web/components/layouts/navbar_links.html.heex:9
-#: lib/mensaplan_web/controllers/page_controller.ex:8
+#: lib/mensaplan_web/controllers/page_controller.ex:9
 #, elixir-autogen, elixir-format
 msgid "About"
 msgstr "Über"
@@ -279,7 +279,7 @@ msgstr "Abmelden"
 msgid "Make Positions public by default"
 msgstr "Positionen standardmäßig öffentlich machen"
 
-#: lib/mensaplan_web/controllers/page_controller.ex:16
+#: lib/mensaplan_web/controllers/page_controller.ex:15
 #: lib/mensaplan_web/controllers/page_html/settings.html.heex:4
 #, elixir-autogen, elixir-format
 msgid "Settings"
@@ -330,13 +330,12 @@ msgstr "Mensaplan verwendet den Namen, der mit deiner Anmelde-Methode verknüpft
 msgid "Public positions allow you to connect with new people and potentially make new friends. You can discover other users who are also dining at TUM Mensa and reach out to them for a meal together. It's a great way to expand your social circle."
 msgstr "Öffentliche Positionen ermöglichen es dir, neue Leute kennenzulernen und neue Freunde zu finden. Du kannst andere Benutzer entdecken, die auch in der TUM Mensa essen und sie kontaktieren, um gemeinsam zu essen. Es ist eine großartige Möglichkeit, deinen Freundeskreis zu erweitern."
 
-#: lib/mensaplan_web/components/layouts/root.html.heex:18
-#: lib/mensaplan_web/components/layouts/root.html.heex:26
+#: lib/mensaplan_web/components/layouts/root.html.heex:19
 #, elixir-autogen, elixir-format
 msgid "The hottest tool in Garching to find friends in the TUM Mensa. Checkout today's menu complete with ratings to guide your culinary journey."
 msgstr "Das angesagteste Tool in Garching, um Freunde in der TUM Mensa zu finden. Schau dir das heutige Menü an, ergänzt durch Bewertungen um dich auf deiner kulinarischen Reise zu begleiten."
 
-#: lib/mensaplan_web/components/layouts/root.html.heex:71
+#: lib/mensaplan_web/components/layouts/root.html.heex:64
 #, elixir-autogen, elixir-format
 msgid "Version %{version}"
 msgstr "Version %{version}"
@@ -400,13 +399,13 @@ msgstr "Teuer"
 msgid "Category"
 msgstr "Kategorie"
 
-#: lib/mensaplan_web/components/layouts/root.html.heex:49
-#: lib/mensaplan_web/components/layouts/root.html.heex:52
+#: lib/mensaplan_web/components/layouts/root.html.heex:42
+#: lib/mensaplan_web/components/layouts/root.html.heex:45
 #, elixir-autogen, elixir-format
 msgid "Homepage"
 msgstr "Startseite"
 
-#: lib/mensaplan_web/components/layouts/root.html.heex:66
+#: lib/mensaplan_web/components/layouts/root.html.heex:59
 #, elixir-autogen, elixir-format
 msgid "food cover"
 msgstr "Abdeckhaube"
@@ -448,11 +447,6 @@ msgid_plural "This dish was offered %{count} times."
 msgstr[0] "Dieses Gericht wurde bisher einmal angeboten."
 msgstr[1] "Dieses Gericht wurde bisher %{count}-mal angeboten."
 
-#: lib/mensaplan_web/controllers/page_controller.ex:12
-#, elixir-autogen, elixir-format
-msgid "About TUM Mensa"
-msgstr "Über die TUM Mensa"
-
 #: lib/mensaplan_web/controllers/page_html/about.html.heex:70
 #, elixir-autogen, elixir-format
 msgid "Mensaplan is your ultimate tool for finding friends and food at the %{tumensa} in Garching. Our platform connects TUM students in real-time, helping you locate your friends and discover today's dishes. Originally a private Discord bot, it is now accessible to everyone."
@@ -472,3 +466,13 @@ msgstr "Studierende essen in der Mensa am TUM Campus Garching"
 #, elixir-autogen, elixir-format
 msgid "The TU Mensa this website refers to is the main cafeteria at the Technical University of Munich's Garching campus. With a capacity of 2,000 seats, it serves over 7,300 meals daily. Built after award winning plans by %{meck}, it replaced the old Mensa after three years of construction in %{sept2019}."
 msgstr "Die TU Mensa, auf die sich diese Website bezieht, ist die Mensa der Technischen Universität München auf dem Campus Garching. In den Räumen mit ca. 2000 Sitzplätzen können täglich 7.300 Essen ausgegeben werden. Gebaut nach den preisgekrönten Plänen von %{meck}, ersetzte es nach dreijähriger Bauzeit im %{sept2019} die alte Mensa."
+
+#: lib/mensaplan_web/controllers/dish_controller.ex:14
+#, elixir-autogen, elixir-format
+msgid "Find out when %{name} was served in the TUM Mensa."
+msgstr "Finde heraus, wann %{name} in der TUM Mensa serviert wurde."
+
+#: lib/mensaplan_web/controllers/page_controller.ex:10
+#, elixir-autogen, elixir-format
+msgid "Learn more about Mensaplan, the helper for the TUM Mensa."
+msgstr "Lerne mehr über Mensaplan, den Helfer für die TUM Mensa."

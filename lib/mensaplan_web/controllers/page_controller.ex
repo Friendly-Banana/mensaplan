@@ -5,7 +5,10 @@ defmodule MensaplanWeb.PageController do
   alias Mensaplan.Accounts
 
   def about(conn, _params) do
-    render(conn, :about, page_title: gettext("About"))
+    render(conn, :about,
+      page_title: gettext("About"),
+      page_description: gettext("Learn more about Mensaplan, the helper for the TUM Mensa.")
+    )
   end
 
   def settings(conn, _params) do

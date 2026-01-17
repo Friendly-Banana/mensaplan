@@ -14,15 +14,8 @@
     />
     <meta
       name="description"
-      content={
-        gettext(
-          "The hottest tool in Garching to find friends in the TUM Mensa. Checkout today's menu complete with ratings to guide your culinary journey."
-        )
-      }
-    />
-    <meta
       property="og:description"
-      content={
+      content={assigns[:page_description] ||
         gettext(
           "The hottest tool in Garching to find friends in the TUM Mensa. Checkout today's menu complete with ratings to guide your culinary journey."
         )
