@@ -1,13 +1,13 @@
 <.flash_group flash={@flash} />
 
 <div class="mx-auto px-6 py-4 flex flex-col gap-8">
-  <h1 class="text-3xl font-bold text-center"><%= gettext("Settings") %></h1>
+  <h1 class="text-3xl font-bold text-center">{gettext("Settings")}</h1>
 
   <div class="flex items-center justify-center">
     <.avatar user={@user} class="mr-4" />
     <div>
-      <h2 class="text-xl font-bold"><%= @user.name %></h2>
-      <p :if={Map.has_key?(@user, :email)} class="text-gray-500"><%= @user.email %></p>
+      <h2 class="text-xl font-bold">{@user.name}</h2>
+      <p :if={Map.has_key?(@user, :email)} class="text-gray-500">{@user.email}</p>
     </div>
   </div>
 
@@ -21,7 +21,7 @@
     />
     <div class="flex justify-center mt-12">
       <.button>
-        <%= gettext("Save Changes") %>
+        {gettext("Save Changes")}
       </.button>
     </div>
   </form>

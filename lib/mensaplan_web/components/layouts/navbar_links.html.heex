@@ -1,12 +1,12 @@
 <div class="flex flex-col sm:flex-row font-semibold sm:ml-4 justify-evenly">
   <a class="p-4 sm:py-2 text-gray-500 hover:bg-blue-50 hover:text-blue-600 rounded" href="/">
-    <%= gettext("Home") %>
+    {gettext("Home")}
   </a>
   <a class="p-4 sm:py-2 text-gray-500 hover:bg-blue-50 hover:text-blue-600 rounded" href="/dishes">
-    <%= gettext("Dishes") %>
+    {gettext("Dishes")}
   </a>
   <a class="p-4 sm:py-2 text-gray-500 hover:bg-blue-50 hover:text-blue-600 rounded" href="/about">
-    <%= gettext("About") %>
+    {gettext("About")}
   </a>
 </div>
 
@@ -39,13 +39,13 @@
     href={~p"/auth/logout"}
     class="m-2 py-3 sm:py-2 px-6 text-button bg-red-600 hover:bg-red-700 text-white"
   >
-    <%= gettext("Log out") %>
+    {gettext("Log out")}
   </a>
 <% else %>
   <a
     class="m-2 sm:m-3 py-3 sm:py-2 px-6 text-button bg-blue-500 hover:bg-blue-600 text-white focus:outline-offset-2"
     href="/auth/discord"
   >
-    <%= gettext("Sign In") %>
+    {gettext("Sign In")}
   </a>
 <% end %>

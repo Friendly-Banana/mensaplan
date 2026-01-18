@@ -7,7 +7,7 @@ defmodule MensaplanWeb.GroupLive.FormComponent do
     ~H"""
     <div>
       <.header>
-        <%= gettext("New Group") %>
+        {gettext("New Group")}
       </.header>
 
       <.simple_form
@@ -20,7 +20,7 @@ defmodule MensaplanWeb.GroupLive.FormComponent do
         <.input field={@form[:name]} type="text" label={gettext("Name")} />
         <.input field={@form[:avatar]} type="text" label={gettext("URL to Group Avatar")} />
         <:actions>
-          <.button phx-disable-with={gettext("Creating...")}><%= gettext("Create Group") %></.button>
+          <.button phx-disable-with={gettext("Creating...")}>{gettext("Create Group")}</.button>
         </:actions>
       </.simple_form>
     </div>

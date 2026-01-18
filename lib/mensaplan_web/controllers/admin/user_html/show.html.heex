@@ -1,6 +1,6 @@
 <div class="mx-auto">
   <.header>
-    User <%= @user.id %>
+    User {@user.id}
     <:subtitle>This is a user record from your database.</:subtitle>
     <:actions>
       <.link href={~p"/admin/users/#{@user}/edit"}>
@@ -10,10 +10,10 @@
   </.header>
 
   <.list>
-    <:item title="Auth"><%= @user.auth_id %></:item>
-    <:item title="Name"><%= @user.name %></:item>
-    <:item title="Avatar"><%= @user.avatar %></:item>
-    <:item title="Default public"><%= @user.default_public %></:item>
+    <:item title="Auth">{@user.auth_id}</:item>
+    <:item title="Name">{@user.name}</:item>
+    <:item title="Avatar">{@user.avatar}</:item>
+    <:item title="Default public">{@user.default_public}</:item>
   </.list>
 
   <.back navigate={~p"/admin/users"}>Back to users</.back>

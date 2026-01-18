@@ -9,10 +9,10 @@
   </.header>
 
   <.table id="users" rows={@users} row_click={&JS.navigate(~p"/admin/users/#{&1}")}>
-    <:col :let={user} label="Auth"><%= user.auth_id %></:col>
-    <:col :let={user} label="Name"><%= user.name %></:col>
+    <:col :let={user} label="Auth">{user.auth_id}</:col>
+    <:col :let={user} label="Name">{user.name}</:col>
     <:col :let={user} label="Avatar"><.avatar user={user} /></:col>
-    <:col :let={user} label="Default public"><%= user.default_public %></:col>
+    <:col :let={user} label="Default public">{user.default_public}</:col>
     <:action :let={user}>
       <div class="sr-only">
         <.link navigate={~p"/admin/users/#{user}"}>Show</.link>

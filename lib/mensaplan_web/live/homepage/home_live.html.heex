@@ -3,7 +3,12 @@
 <div class="flex flex-wrap justify-center gap-8">
   <div class="relative h-full" id="drop-target">
     <img
-      src={Mensaplan.Helpers.proxy_image("https://meck-architekten.de/media/pages/projekte/neue-mensa-auf-dem-hochschul-und-forschungsgelande-campus-garching-erstausstattung/12e08f0744-1762204675/mga-4-x2000-q80.jpg", "")}
+      src={
+        Mensaplan.Helpers.proxy_image(
+          "https://meck-architekten.de/media/pages/projekte/neue-mensa-auf-dem-hochschul-und-forschungsgelande-campus-garching-erstausstattung/12e08f0744-1762204675/mga-4-x2000-q80.jpg",
+          ""
+        )
+      }
       alt={gettext("Top down view of the mensa")}
       draggable="false"
       class="h-[827px] w-[827px] border-2 border-gray-500 rounded-md"
@@ -67,12 +72,12 @@
           phx-click="position_clear"
           class="!bg-gray-200/75 hover:!bg-gray-300/80 !text-gray-900"
         >
-          <%= gettext("Clear Position") %>
+          {gettext("Clear Position")}
         </.button>
 
         <.tooltip content={gettext("Tip: Double click on the map to set your position.")}>
           <.button id="set-position">
-            <%= gettext("Set Position") %>
+            {gettext("Set Position")}
           </.button>
         </.tooltip>
       </:actions>
@@ -80,10 +85,10 @@
 
     <div class="mx-6 lg:m-0 lg:mt-4">
       <.header>
-        <%= gettext("Your Groups") %>
+        {gettext("Your Groups")}
         <:actions>
           <.button phx-click={locale_patch("/groups/new")}>
-            <%= gettext("New Group") %>
+            {gettext("New Group")}
           </.button>
         </:actions>
       </.header>
@@ -96,10 +101,10 @@
         }
       >
         <:col :let={{_id, group}} label={gettext("Avatar")}><.avatar user={group} /></:col>
-        <:col :let={{_id, group}} label={gettext("Name")}><%= group.name %></:col>
+        <:col :let={{_id, group}} label={gettext("Name")}>{group.name}</:col>
         <:action :let={{_id, group}}>
           <.link :if={group.owner_id == @user.id} phx-click={locale_patch("/groups/#{group.id}")}>
-            <%= gettext("Edit") %>
+            {gettext("Edit")}
           </.link>
         </:action>
         <:action :let={{id, group}}>
@@ -107,7 +112,7 @@
             phx-click={JS.push("group_leave", value: %{id: group.id}) |> hide(id)}
             data-confirm={gettext("Are you sure you want to leave this group?")}
           >
-            <%= gettext("Leave") %>
+            {gettext("Leave")}
           </.link>
         </:action>
       </.table>
@@ -116,7 +121,7 @@
 
   <%= if @any_dishes do %>
     <details open>
-      <summary class="text-center text-lg font-semibold"><%= gettext("Today's Menu") %></summary>
+      <summary class="text-center text-lg font-semibold">{gettext("Today's Menu")}</summary>
       <.live_component
         id={:dishes}
         module={MensaplanWeb.DishesLive.DishesComponent}
@@ -125,7 +130,7 @@
       />
     </details>
   <% else %>
-    <p><%= gettext("No dishes available today.") %></p>
+    <p>{gettext("No dishes available today.")}</p>
   <% end %>
 </div>
 

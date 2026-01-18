@@ -7,7 +7,10 @@ defmodule MensaplanWeb.Admin.PageController do
   def overview(conn, _params) do
     random_image = Enum.random(@cat_images)
 
-    render(conn, :overview, page_title: "Admin Page", random_image: "/images/cats/#{random_image}")
+    render(conn, :overview,
+      page_title: "Admin Page",
+      random_image: "/images/cats/#{random_image}"
+    )
   end
 
   def fetch_dishes(conn, %{"date" => date}) do

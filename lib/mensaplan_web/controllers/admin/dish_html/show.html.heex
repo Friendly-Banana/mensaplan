@@ -1,6 +1,6 @@
 <div class="mx-auto">
   <.header>
-    Dish <%= @dish.id %>
+    Dish {@dish.id}
     <:subtitle>This is a dish record from your database.</:subtitle>
     <:actions>
       <.link href={~p"/admin/dishes/#{@dish}/edit"}>
@@ -10,11 +10,11 @@
   </.header>
 
   <.list>
-    <:item title="Name de"><%= @dish.name_de %></:item>
-    <:item title="Name en"><%= @dish.name_en %></:item>
-    <:item title="Fixed Price"><%= @dish.fixed_price %></:item>
-    <:item title="Per Unit Price"><%= @dish.price_per_unit %></:item>
-    <:item title="Category"><%= @dish.category %></:item>
+    <:item title="Name de">{@dish.name_de}</:item>
+    <:item title="Name en">{@dish.name_en}</:item>
+    <:item title="Fixed Price">{@dish.fixed_price}</:item>
+    <:item title="Per Unit Price">{@dish.price_per_unit}</:item>
+    <:item title="Category">{@dish.category}</:item>
   </.list>
 
   <.back navigate={~p"/admin/dishes"}>Back to dishes</.back>

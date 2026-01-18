@@ -12,16 +12,16 @@ defmodule MensaplanWeb.DishesLive.DishesComponent do
       <.table id="dishes" rows={@dishes}>
         <:col :let={{_id, dish}} label={gettext("Dish")}>
           <.link navigate={"/" <> Gettext.get_locale(MensaplanWeb.Gettext) <> "/dishes/#{dish.id}"}>
-            <p><%= Dish.get_locale_name(dish) %></p>
+            <p>{Dish.get_locale_name(dish)}</p>
             <p class="text-sm text-gray-500">
-              <%= Gettext.dgettext(MensaplanWeb.Gettext, "dishes", dish.category) %>
+              {Gettext.dgettext(MensaplanWeb.Gettext, "dishes", dish.category)}
             </p>
           </.link>
         </:col>
         <:col :let={{_id, dish}} label={gettext("Price for students")}>
-          <%= Helpers.price(dish) %>
+          {Helpers.price(dish)}
         </:col>
-        <:col :let={{_id, dish}} :if={!@user} label={gettext("Dishlikes")}><%= dish.likes %></:col>
+        <:col :let={{_id, dish}} :if={!@user} label={gettext("Dishlikes")}>{dish.likes}</:col>
 
         <:action :let={{_id, dish}} :if={@user}>
           <%= if dish.user_likes > 0 do %>
@@ -37,7 +37,7 @@ defmodule MensaplanWeb.DishesLive.DishesComponent do
           <% end %>
         </:action>
         <:action :let={{_id, dish}} :if={@user}>
-          <.tooltip content="Dishlikes"><%= dish.likes %></.tooltip>
+          <.tooltip content="Dishlikes">{dish.likes}</.tooltip>
         </:action>
         <:action :let={{_id, dish}} :if={@user}>
           <%= if dish.user_likes < 0 do %>

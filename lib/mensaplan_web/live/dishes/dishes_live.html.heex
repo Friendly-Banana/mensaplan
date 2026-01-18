@@ -2,74 +2,74 @@
 
 <form phx-change="apply" class="flex flex-wrap items-center justify-center gap-2 sm:gap-4">
   <label>
-    <%= gettext("Category") %>
+    {gettext("Category")}
     <select name="category" class="border-gray-300 rounded-md shadow-sm ml-1">
-      <option value="all"><%= dgettext("dishes", "All") %></option>
+      <option value="all">{dgettext("dishes", "All")}</option>
       <option value="Pasta" selected={@category == "Pasta"}>
-        <%= dgettext("dishes", "Pasta") %>
+        {dgettext("dishes", "Pasta")}
       </option>
       <option value="Pizza" selected={@category == "Pizza"}>
-        <%= dgettext("dishes", "Pizza") %>
+        {dgettext("dishes", "Pizza")}
       </option>
       <option value="Grill" selected={@category == "Grill"}>
-        <%= dgettext("dishes", "Grill") %>
+        {dgettext("dishes", "Grill")}
       </option>
-      <option value="Wok" selected={@category == "Wok"}><%= dgettext("dishes", "Wok") %></option>
+      <option value="Wok" selected={@category == "Wok"}>{dgettext("dishes", "Wok")}</option>
       <option value="Studitopf" selected={@category == "Studitopf"}>
-        <%= dgettext("dishes", "Studitopf") %>
+        {dgettext("dishes", "Studitopf")}
       </option>
       <option value="Fleisch" selected={@category == "Fleisch"}>
-        <%= dgettext("dishes", "Fleisch") %>
+        {dgettext("dishes", "Fleisch")}
       </option>
       <option value="Vegetarisch/fleischlos" selected={@category == "Vegetarisch/fleischlos"}>
-        <%= dgettext("dishes", "Vegetarisch/fleischlos") %>
+        {dgettext("dishes", "Vegetarisch/fleischlos")}
       </option>
       <option value="Vegan" selected={@category == "Vegan"}>
-        <%= dgettext("dishes", "Vegan") %>
+        {dgettext("dishes", "Vegan")}
       </option>
       <option value="Tagessupe, Brot, Obst" selected={@category == "Tagessupe, Brot, Obst"}>
-        <%= dgettext("dishes", "Tagessupe, Brot, Obst") %>
+        {dgettext("dishes", "Tagessupe, Brot, Obst")}
       </option>
       <option value="Dessert (Glas)" selected={@category == "Dessert (Glas)"}>
-        <%= dgettext("dishes", "Dessert (Glas)") %>
+        {dgettext("dishes", "Dessert (Glas)")}
       </option>
       <option value="Beilagen" selected={@category == "Beilagen"}>
-        <%= dgettext("dishes", "Beilagen") %>
+        {dgettext("dishes", "Beilagen")}
       </option>
       <option value="Salat" selected={@category == "Salat"}>
-        <%= dgettext("dishes", "Salat") %>
+        {dgettext("dishes", "Salat")}
       </option>
       <option value="Obst" selected={@category == "Obst"}>
-        <%= dgettext("dishes", "Obst") %>
+        {dgettext("dishes", "Obst")}
       </option>
       <option value="Fisch" selected={@category == "Fisch"}>
-        <%= dgettext("dishes", "Fisch") %>
+        {dgettext("dishes", "Fisch")}
       </option>
       <option value="Süßspeise" selected={@category == "Süßspeise"}>
-        <%= dgettext("dishes", "Süßspeise") %>
+        {dgettext("dishes", "Süßspeise")}
       </option>
       <option value="Special" selected={@category == "Special"}>
-        <%= dgettext("dishes", "Special") %>
+        {dgettext("dishes", "Special")}
       </option>
     </select>
   </label>
   <label>
-    <%= gettext("Sort by") %>
+    {gettext("Sort by")}
     <select name="sort" class="border-gray-300 rounded-md shadow-sm ml-1">
-      <option value="name"><%= gettext("Name") %></option>
-      <option value="likes" selected={@sort == "likes"}><%= gettext("Dishlikes") %></option>
+      <option value="name">{gettext("Name")}</option>
+      <option value="likes" selected={@sort == "likes"}>{gettext("Dishlikes")}</option>
       <option value="price_asc" selected={@sort == "price_asc"}>
-        <%= gettext("Cheapest") %>
+        {gettext("Cheapest")}
       </option>
       <option value="price_desc" selected={@sort == "price_desc"}>
-        <%= gettext("Most Expensive") %>
+        {gettext("Most Expensive")}
       </option>
-      <option value="amount" selected={@sort == "amount"}><%= gettext("Occurences") %></option>
+      <option value="amount" selected={@sort == "amount"}>{gettext("Occurences")}</option>
     </select>
   </label>
   <noscript>
     <.button>
-      <%= gettext("Apply") %>
+      {gettext("Apply")}
     </.button>
   </noscript>
 </form>

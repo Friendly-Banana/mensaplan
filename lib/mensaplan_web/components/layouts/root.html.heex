@@ -15,10 +15,11 @@
     <meta
       name="description"
       property="og:description"
-      content={assigns[:page_description] ||
-        gettext(
-          "The hottest tool in Garching to find friends in the TUM Mensa. Checkout today's menu complete with ratings to guide your culinary journey."
-        )
+      content={
+        assigns[:page_description] ||
+          gettext(
+            "The hottest tool in Garching to find friends in the TUM Mensa. Checkout today's menu complete with ratings to guide your culinary journey."
+          )
       }
     />
     <% host = MensaplanWeb.Endpoint.url() %>
@@ -42,7 +43,7 @@
       content={(assigns[:page_title] || gettext("Homepage")) <> " · Mensaplan"}
     />
     <.live_title suffix=" · Mensaplan">
-      <%= assigns[:page_title] || gettext("Homepage") %>
+      {assigns[:page_title] || gettext("Homepage")}
     </.live_title>
     <link phx-track-static rel="stylesheet" href={~p"/assets/app.css"} />
     <script defer phx-track-static type="text/javascript" src={~p"/assets/app.js"}>
@@ -51,17 +52,17 @@
   <body class="bg-white antialiased flex flex-col min-h-screen">
     <.navbar conn={@conn} />
 
-    <%= @inner_content %>
+    {@inner_content}
 
     <div class="grow"></div>
     <footer>
       <div class="flex flex-col sm:flex-row items-center justify-evenly p-2 text-sm text-bo">
         <img class="h-4 w-4" src={~p"/images/logo.svg"} alt={gettext("food cover")} />
         <span>
-          ©<%= Mensaplan.Helpers.local_now().year %> Gabriel
+          ©{Mensaplan.Helpers.local_now().year} Gabriel
         </span>
         <span>
-          <%= gettext("Version %{version}", version: Application.spec(:mensaplan, :vsn)) %>
+          {gettext("Version %{version}", version: Application.spec(:mensaplan, :vsn))}
         </span>
       </div>
     </footer>

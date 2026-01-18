@@ -32,12 +32,12 @@ defmodule MensaplanWeb.Components.Tooltip do
 
     ~H"""
     <div id={assigns[:id]} class="group relative inline-block">
-      <%= render_slot(@inner_block) %>
+      {render_slot(@inner_block)}
       <div {@tooltip_attrs}>
         <%= if is_bitstring(@content) do %>
-          <%= @content %>
+          {@content}
         <% else %>
-          <%= render_slot(@content) %>
+          {render_slot(@content)}
         <% end %>
       </div>
     </div>

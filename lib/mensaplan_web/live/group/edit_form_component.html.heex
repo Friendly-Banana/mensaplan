@@ -1,6 +1,6 @@
 <div>
   <.header>
-    <%= @title %>
+    {@title}
   </.header>
 
   <.simple_form
@@ -14,13 +14,13 @@
     <.input field={@form[:avatar]} type="text" label={gettext("URL to Group Avatar")} />
 
     <:actions>
-      <.button phx-disable-with={gettext("Saving...")}><%= gettext("Save Changes") %></.button>
+      <.button phx-disable-with={gettext("Saving...")}>{gettext("Save Changes")}</.button>
     </:actions>
   </.simple_form>
 
   <div>
     <.header>
-      <%= gettext("Members") %>
+      {gettext("Members")}
       <:actions>
         <input
           :if={@invite}
@@ -35,7 +35,7 @@
             phx-click={JS.push("invite")}
             phx-disable-with={gettext("Generating...")}
           >
-            <%= gettext("New Invite") %>
+            {gettext("New Invite")}
           </.button>
         </.tooltip>
       </:actions>
@@ -43,7 +43,7 @@
 
     <.table id="members" rows={@form.data.members} row_id={fn m -> "member-#{m.id}" end}>
       <:col :let={member} label={gettext("Avatar")}><.avatar user={member} /></:col>
-      <:col :let={member} label={gettext("Name")}><%= member.name %></:col>
+      <:col :let={member} label={gettext("Name")}>{member.name}</:col>
       <:action :let={member}>
         <.link
           data-confirm={gettext("Are you sure you want to kick this user?")}
@@ -51,7 +51,7 @@
             JS.push("group_kick", value: %{user_id: member.id}) |> hide("#member-#{member.id}")
           }
         >
-          <%= gettext("Kick") %>
+          {gettext("Kick")}
         </.link>
       </:action>
       <:action :let={member}>
@@ -59,7 +59,7 @@
           data-confirm={gettext("Are you sure you want to change the owner?")}
           phx-click={JS.push("group_change_owner", value: %{user_id: member.id})}
         >
-          <%= gettext("Make Owner") %>
+          {gettext("Make Owner")}
         </.link>
       </:action>
     </.table>
@@ -70,6 +70,6 @@
     data-confirm={gettext("Are you sure you want to delete this group?")}
     phx-click={JS.push("group_delete")}
   >
-    <%= gettext("Delete Group") %>
+    {gettext("Delete Group")}
   </.button>
 </div>

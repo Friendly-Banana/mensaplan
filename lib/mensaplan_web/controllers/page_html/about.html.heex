@@ -5,8 +5,8 @@
     class="w-full h-[30vh] object-cover object-bottom filter brightness-50 text-white bg-black"
   />
   <div class="absolute inset-0 flex flex-col items-center justify-center text-white drop-shadow-md">
-    <h1 class="text-3xl font-bold mb-1"><%= gettext("About Mensaplan") %></h1>
-    <h2 class="text-2xl"><%= gettext("Find friends and food!") %></h2>
+    <h1 class="text-3xl font-bold mb-1">{gettext("About Mensaplan")}</h1>
+    <h2 class="text-2xl">{gettext("Find friends and food!")}</h2>
   </div>
   <a
     target="_blank"
@@ -43,11 +43,11 @@
 >
   <div itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
     <h2 itemprop="name">
-      <%= gettext("What is the TU Mensa?") %>
+      {gettext("What is the TU Mensa?")}
     </h2>
     <div itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
       <p itemprop="text">
-        <%= raw(
+        {raw(
           gettext(
             "The TU Mensa this website refers to is the main cafeteria at the Technical University of Munich's Garching campus. With a capacity of 2,000 seats, it serves over 7,300 meals daily. Built after award winning plans by %{meck}, it replaced the old Mensa after three years of construction in %{sept2019}.",
             meck:
@@ -55,108 +55,108 @@
             sept2019:
               "<a target='_blank' href='https://www.tum.de/aktuelles/alle-meldungen/pressemitteilungen/detail/35678'>September 2019</a>"
           )
-        ) %>
+        )}
       </p>
     </div>
   </div>
 
   <div itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
     <h2 itemprop="name">
-      <%= gettext("What is Mensaplan?") %>
+      {gettext("What is Mensaplan?")}
     </h2>
     <div itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
       <p itemprop="text">
-        <%= raw(
+        {raw(
           gettext(
             "Mensaplan is your ultimate tool for finding friends and food at the %{tumensa} in Garching. Our platform connects TUM students in real-time, helping you locate your friends and discover today's dishes. Originally a private Discord bot, it is now accessible to everyone.",
             tumensa:
               "<a target='_blank' href='https://www.studierendenwerk-muenchen-oberbayern.de/mensa/standorte-und-oeffnungszeiten/garching/'> TUM Mensa </a>"
           )
-        ) %>
+        )}
       </p>
     </div>
   </div>
 
   <div itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
     <h2 itemprop="name">
-      <%= gettext("Why Mensaplan?") %>
+      {gettext("Why Mensaplan?")}
     </h2>
     <div itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
       <p itemprop="text">
-        <%= gettext(
+        {gettext(
           "Mensaplan offers real-time positioning, displays today's dishes, and provides long-term analytics about dish popularity. Whether you're looking for a lunch buddy or deciding what to eat, Mensaplan has got you covered."
-        ) %>
+        )}
       </p>
     </div>
   </div>
 
   <div itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
     <h2 itemprop="name">
-      <%= gettext("How can I set my position?") %>
+      {gettext("How can I set my position?")}
     </h2>
     <div itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
       <p itemprop="text">
-        <%= gettext(
+        {gettext(
           "To set your position on the map, double click on the place where you are. You can also first click the position to move the avatar and then use the \"Set Position\" button."
-        ) %>
+        )}
       </p>
     </div>
   </div>
 
   <div itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
     <h2 itemprop="name">
-      <%= gettext("What are public positions?") %>
+      {gettext("What are public positions?")}
     </h2>
     <div itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
       <p itemprop="text">
-        <%= gettext(
+        {gettext(
           "By default, positions on Mensaplan are only visible to users you share a group with. Public positions, on the other hand, are visible to all users, including anonymous visitors."
-        ) %><br />
-        <%= gettext(
+        )}<br />
+        {gettext(
           "Public positions allow you to connect with new people and potentially make new friends. You can discover other users who are also dining at TUM Mensa and reach out to them for a meal together. It's a great way to expand your social circle."
-        ) %>
+        )}
       </p>
     </div>
   </div>
 
   <div itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
     <h2 itemprop="name">
-      <%= gettext("Can I change my username?") %>
+      {gettext("Can I change my username?")}
     </h2>
     <div itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
       <p itemprop="text">
-        <%= gettext(
+        {gettext(
           "Mensaplan uses the name associated with your login method. If you log in via Discord, Mensaplan will use your Discord username. After you changed your username, please log out and log in again to update your name in Mensaplan."
-        ) %>
+        )}
       </p>
     </div>
   </div>
 
   <div itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
     <h2 itemprop="name">
-      <%= gettext("How can I report a bug or issue?") %>
+      {gettext("How can I report a bug or issue?")}
     </h2>
     <div itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
       <p itemprop="text">
-        <%= raw(
+        {raw(
           gettext(
             "If you encounter any bugs or issues while using Mensaplan, please report them on %{link}. Please provide detailed information about the problem you are facing, including any error messages or screenshots if possible.",
             link:
               "<a target='_blank' href='https://github.com/Friendly-Banana/mensaplan/issues'>GitHub</a>"
           )
-        ) %>
+        )}
       </p>
     </div>
   </div>
 </main>
 
 <small class="text-gray-500 text-center">
-  <%= raw(
+  {raw(
     gettext("All icons in the mensa map are %{free_icons} used under %{license}",
       free_icons:
         "<a target='_blank' href='https://github.com/free-icons/free-icons'> Free Icons </a>",
       license:
         "<a target='_blank' href='https://creativecommons.org/licenses/by/4.0/'> CC BY 4.0 </a>"
     )
-  ) %>
+  )}
 </small>

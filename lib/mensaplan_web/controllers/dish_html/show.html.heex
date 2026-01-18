@@ -1,18 +1,18 @@
 <div class="container mx-auto px-6 py-4 text-lg space-y-4 leading-6">
   <.header>
-    <span><%= @page_title %></span>
+    <span>{@page_title}</span>
     <:subtitle>
-      <%= ngettext(
+      {ngettext(
         "This dish was offered one time.",
         "This dish was offered %{count} times.",
         Enum.count(@served_dates)
-      ) %>
+      )}
       <details data-nosnippet class="text-zinc-600">
         <summary>
-          <%= gettext("Show dates") %>
+          {gettext("Show dates")}
         </summary>
         <noscript>
-          <%= Enum.join(@served_dates, ", ") %>
+          {Enum.join(@served_dates, ", ")}
         </noscript>
         <span id="served-dates"></span>
       </details>
@@ -21,9 +21,9 @@
 
   <.list>
     <:item title={gettext("Price for students")}>
-      <%= Mensaplan.Helpers.price(@dish) %>
+      {Mensaplan.Helpers.price(@dish)}
     </:item>
-    <:item title={gettext("Category")}><span><%= @dish.category %></span></:item>
+    <:item title={gettext("Category")}><span>{@dish.category}</span></:item>
   </.list>
 
   <div id="calendar" class="hidden text-center" data-served-dates={Jason.encode!(@served_dates)}>
