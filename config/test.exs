@@ -1,7 +1,5 @@
 import Config
 
-config :mensaplan, :api_token, "secret"
-
 # Configure your database
 #
 # The MIX_TEST_PARTITION environment variable can be used
@@ -22,10 +20,10 @@ config :mensaplan, MensaplanWeb.Endpoint,
   secret_key_base: "BnSl9sqcReP0eVPj+iUSboIBq5EZq/ur5sCTLaLjLZsgbu4G3YxydMbgjMzl0U68",
   server: false
 
-# In test we don't send emails.
+# In test we don't send emails
 config :mensaplan, Mensaplan.Mailer, adapter: Swoosh.Adapters.Test
 
-# Disable swoosh api client as it is only required for production adapters.
+# Disable swoosh api client as it is only required for production adapters
 config :swoosh, :api_client, false
 
 # Print only warnings and errors during test
@@ -34,6 +32,10 @@ config :logger, level: :warning
 # Initialize plugs at runtime for faster test compilation
 config :phoenix, :plug_init_mode, :runtime
 
+# Enable helpful, but potentially expensive runtime checks
 config :phoenix_live_view,
-  # Enable helpful, but potentially expensive runtime checks
   enable_expensive_runtime_checks: true
+
+# Sort query params output of verified routes for robust url comparisons
+config :phoenix,
+  sort_verified_routes_query_params: true

@@ -38,12 +38,11 @@ defmodule MensaplanWeb do
 
   def controller do
     quote do
-      use Phoenix.Controller,
-        formats: [:html, :json],
-        layouts: [html: MensaplanWeb.Layouts]
+      use Phoenix.Controller, formats: [:html, :json]
+
+      use Gettext, backend: MensaplanWeb.Gettext
 
       import Plug.Conn
-      use Gettext, backend: MensaplanWeb.Gettext
 
       unquote(verified_routes())
     end
@@ -51,8 +50,7 @@ defmodule MensaplanWeb do
 
   def live_view do
     quote do
-      use Phoenix.LiveView,
-        layout: {MensaplanWeb.Layouts, :app}
+      use Phoenix.LiveView
 
       unquote(html_helpers())
     end
@@ -81,14 +79,17 @@ defmodule MensaplanWeb do
 
   defp html_helpers do
     quote do
-      # HTML escaping functionality
-      import Phoenix.HTML
-      # Core UI components and translation
-      import MensaplanWeb.CoreComponents
+      # Translation
       use Gettext, backend: MensaplanWeb.Gettext
 
-      # Shortcut for generating JS commands
+      # HTML escaping functionality
+      import Phoenix.HTML
+      # Core UI components
+      import MensaplanWeb.CoreComponents
+
+      # Common modules used in templates
       alias Phoenix.LiveView.JS
+      alias MensaplanWeb.Layouts
 
       # Routes generation with the ~p sigil
       unquote(verified_routes())

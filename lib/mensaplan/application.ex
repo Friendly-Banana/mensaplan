@@ -12,8 +12,6 @@ defmodule Mensaplan.Application do
       Mensaplan.Repo,
       {DNSCluster, query: Application.get_env(:mensaplan, :dns_cluster_query) || :ignore},
       {Phoenix.PubSub, name: Mensaplan.PubSub},
-      # Start the Finch HTTP client for sending emails
-      {Finch, name: Mensaplan.Finch},
       # Start a worker by calling: Mensaplan.Worker.start_link(arg)
       # {Mensaplan.Worker, arg},
       # Start to serve requests, typically the last entry
