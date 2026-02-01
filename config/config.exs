@@ -8,11 +8,12 @@
 import Config
 
 config :mensaplan,
+  api_token: "secret",
   environment: config_env(),
   ecto_repos: [Mensaplan.Repo],
   generators: [timestamp_type: :utc_datetime]
 
-# Configures the endpoint
+# Configure the endpoint
 config :mensaplan, MensaplanWeb.Endpoint,
   url: [host: "localhost"],
   adapter: Bandit.PhoenixAdapter,
@@ -23,7 +24,7 @@ config :mensaplan, MensaplanWeb.Endpoint,
   pubsub_server: Mensaplan.PubSub,
   live_view: [signing_salt: "wQKgjBhl"]
 
-# Configures the mailer
+# Configure the mailer
 #
 # By default it uses the "Local" adapter which stores the emails
 # locally. You can see the emails in your browser, at "/dev/mailbox".
@@ -39,12 +40,12 @@ config :ueberauth, Ueberauth,
 
 # Configure esbuild (the version is required)
 config :esbuild,
-  version: "0.17.11",
+  version: "0.25.4",
   mensaplan: [
     args:
-      ~w(js/app.js --bundle --target=es2017 --outdir=../priv/static/assets --external:/fonts/* --external:/images/*),
+      ~w(js/app.js --bundle --target=es2022 --outdir=../priv/static/assets --external:/fonts/* --external:/images/*),
     cd: Path.expand("../assets", __DIR__),
-    env: %{"NODE_PATH" => Path.expand("../deps", __DIR__)}
+    env: %{"NODE_PATH" => [Path.expand("../deps", __DIR__), Mix.Project.build_path()]}
   ]
 
 # Configure tailwind (the version is required)
@@ -59,8 +60,8 @@ config :tailwind,
     cd: Path.expand("../assets", __DIR__)
   ]
 
-# Configures Elixir's Logger
-config :logger, :console,
+# Configure Elixir's Logger
+config :logger, :default_formatter,
   format: "$time $metadata[$level] $message\n",
   metadata: [:request_id]
 

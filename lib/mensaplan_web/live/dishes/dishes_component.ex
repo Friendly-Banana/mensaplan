@@ -11,7 +11,7 @@ defmodule MensaplanWeb.DishesLive.DishesComponent do
     <div id="dish-parent" class="flex justify-center px-1">
       <.table id="dishes" rows={@dishes}>
         <:col :let={{_id, dish}} label={gettext("Dish")}>
-          <.link navigate={"/" <> Gettext.get_locale(MensaplanWeb.Gettext) <> "/dishes/#{dish.id}"}>
+          <.link href={"/" <> Gettext.get_locale(MensaplanWeb.Gettext) <> "/dishes/#{dish.id}"}>
             <p>{Dish.get_locale_name(dish)}</p>
             <p class="text-sm text-gray-500">
               {Gettext.dgettext(MensaplanWeb.Gettext, "dishes", dish.category)}

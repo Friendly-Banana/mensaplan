@@ -412,7 +412,7 @@ msgstr "Abdeckhaube"
 
 #: lib/mensaplan_web/live/dishes/dishes_live.html.heex:67
 #, elixir-autogen, elixir-format
-msgid "Occurences"
+msgid "Occurrences"
 msgstr "Häufigkeit"
 
 #: lib/mensaplan_web/controllers/page_html/about.html.heex:65
