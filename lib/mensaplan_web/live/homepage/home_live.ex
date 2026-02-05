@@ -69,9 +69,9 @@ defmodule MensaplanWeb.HomeLive do
   def handle_event("position_save", %{"position" => position_params}, socket) do
     Positions.expire_all_positions(socket.assigns.user.id)
 
-    m = Map.put(position_params, "owner_id", socket.assigns.user.id)
+    pos = Map.put(position_params, "owner_id", socket.assigns.user.id)
 
-    case Positions.create_position(m) do
+    case Positions.create_position(pos) do
       {:ok, position} ->
         Phoenix.PubSub.broadcast(Mensaplan.PubSub, "positions", {:position_saved, position})
 
@@ -193,10 +193,11 @@ defmodule MensaplanWeb.HomeLive do
   end
 
   defp is_position_visible?(position, socket) do
-    position.owner_id == socket.assigns.user.id or
-      Enum.any?(position.owner.groups, fn group ->
-        Enum.member?(socket.assigns.user.groups, group)
-      end)
+    !is_nil(socket.assigns.user) and
+      (position.owner_id == socket.assigns.user.id or
+         Enum.any?(position.owner.groups, fn group ->
+           Enum.member?(socket.assigns.user.groups, group)
+         end))
   end
 
   defp position_to_map(%Position{} = position) do

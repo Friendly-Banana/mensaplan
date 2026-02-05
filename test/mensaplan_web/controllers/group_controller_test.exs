@@ -23,7 +23,7 @@ defmodule MensaplanWeb.GroupControllerTest do
   end
 
   test "get or create creates a group", %{conn: conn} do
-    conn = post(conn, ~p"/api/groups/server/#{@create_attrs.server_id}", group: @create_attrs)
+    conn = post(conn, ~p"/api/groups", group: @create_attrs)
 
     resp = json_response(conn, 201)
 
@@ -37,7 +37,7 @@ defmodule MensaplanWeb.GroupControllerTest do
     {:ok, group} =
       Mensaplan.Accounts.create_group(user, Map.put(@create_attrs, :owner_id, user.id))
 
-    conn = post(conn, ~p"/api/groups/server/#{group.server_id}", group: %{})
+    conn = post(conn, ~p"/api/groups", group: %{server_id: @create_attrs.server_id})
 
     resp = json_response(conn, 200)
 
@@ -46,7 +46,7 @@ defmodule MensaplanWeb.GroupControllerTest do
   end
 
   test "renders errors when data is invalid", %{conn: conn} do
-    conn = post(conn, ~p"/api/groups/server/99999", group: @invalid_attrs)
+    conn = post(conn, ~p"/api/groups", group: @invalid_attrs)
     assert json_response(conn, 422)["errors"] != %{}
   end
 

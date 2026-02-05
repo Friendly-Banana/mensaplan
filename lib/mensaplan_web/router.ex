@@ -29,13 +29,13 @@ defmodule MensaplanWeb.Router do
     pipe_through :api
 
     post "/users/auth/:auth_id", UserController, :get_or_create
-    post "/groups/server/:server_id", GroupController, :get_or_create
+    post "/groups", GroupController, :get_or_create
+    post "/groups/join", GroupController, :join_group
     put "/groups/:id", GroupController, :update
     delete "/groups/:id", GroupController, :delete
-    post "/groups/join", GroupController, :join_group
+    get "/positions/server/:server_id", PositionController, :positions_for_server
     post "/positions/", PositionController, :create_for_user
     delete "/positions/user/:auth_id", PositionController, :expire_for_user
-    get "/positions/server/:server_id", PositionController, :positions_for_server
   end
 
   scope "/auth", MensaplanWeb do

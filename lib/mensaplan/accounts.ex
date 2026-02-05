@@ -40,6 +40,8 @@ defmodule Mensaplan.Accounts do
       change_group(group)
       |> Ecto.Changeset.put_assoc(:members, [user | group.members])
       |> Repo.update!()
+    else
+      group
     end
   end
 
