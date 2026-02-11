@@ -11,7 +11,7 @@
       }
       alt={gettext("Top down view of the mensa")}
       draggable="false"
-      class="h-[827px] w-[827px] border-2 border-gray-500 rounded-md"
+      class="w-[827px] border-2 border-gray-500 rounded-md"
     />
     <div id="position-map" phx-update="stream">
       <%= for {id, position} <- @streams.positions do %>
